@@ -12,10 +12,12 @@ public class camera_logic : MonoBehaviour
     public float offSetY = 0;
     public float offSetX = 0;
 
-    public int PlayerHugFactor = 5;
+    // How close the camera stays to the player's body
+    public int PlayerHugFactor = 10;
 
     Vector3 parentPoint;
     Vector2 halfPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +35,10 @@ public class camera_logic : MonoBehaviour
         halfPoint += (Vector2)parentPoint;
         halfPoint.y += offSetY;
         halfPoint.x += offSetX;
-        // if the Player is not forced to stop in place, look at point is close to 1/3 the distance where mouse is
-    //    if(!Parent.GetComponent<Player>().mandatedStop)
-            transform.position = halfPoint;
+
+        // if the Player is not forced to stop in place, look at point is close to where mouse is
+        //    if(!Parent.GetComponent<Player>().mandatedStop)
+        transform.position = halfPoint;
 
 
     }
