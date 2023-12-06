@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Particle
   layers:
   - Default
   - TransparentFX
@@ -38,21 +39,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 250078561
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer 1
-    uniqueID: 250078561
-    locked: 0
-  - name: New Layer 2
+  - name: Player Layer
     uniqueID: 806343635
     locked: 0
-  - name: New Layer 3
+  - name: New Layer 2
     uniqueID: 4068357337
     locked: 0
-  - name: New Layer 4
+  - name: New Layer 3
     uniqueID: 2378782799
     locked: 0
-  - name: New Layer 5
+  - name: New Layer 4
+    uniqueID: 2541920645
+    locked: 0
+  - name: Foreground
     uniqueID: 422382231
     locked: 0
