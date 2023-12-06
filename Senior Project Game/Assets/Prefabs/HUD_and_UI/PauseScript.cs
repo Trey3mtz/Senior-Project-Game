@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
 {
@@ -53,5 +55,10 @@ public class PauseScript : MonoBehaviour
         #else
             Application.Quit();
         #endif
+    }
+
+    public void RestartScene(){
+         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+         Time.timeScale = originalTimescale;
     }
 }
