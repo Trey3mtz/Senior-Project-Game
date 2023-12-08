@@ -10,9 +10,10 @@ public class Grab_script : MonoBehaviour
     [SerializeField] DistanceJoint2D thisJoint;
     [SerializeField] GameObject parentObject;
 
-    public bool inRange = false;
+    public bool isInRange = false;
 
-    // Start is called before the first frame update
+    // NOTE: This grabbing script is usable for any entity/gameobject, so long as it has some collider set to isTrigger and has a distance joint.
+    // It is ENCOURAGED to reuse this for later interesting AI behaviors and interactions.
     void Start()
     {
         if(!grabHitbox)
@@ -21,23 +22,45 @@ public class Grab_script : MonoBehaviour
             thisJoint = this.GetComponentInParent<DistanceJoint2D>();
         if(!parentObject)
             parentObject = this.gameObject.transform.parent.gameObject;
+
+        thisJoint.enabled = false;
     }
 
+    /****************************************************************************************************
 
-    // If inside grab range, check for a rigidbody and attach it to the joint
+    LOGIC DESCRIPTION:
+        If inside grab hitbox, check for a rigidbody and attach that rigidbody to a DistanceJoint2D.
+        If nothing is in the hitbox, decouple any currently attached rigidbody from the DistanceJoint2D.
+
+    */
     void OnTriggerEnter2D(Collider2D collider)
      {
         if(collider.gameObject.TryGetComponent<Rigidbody2D>( out Rigidbody2D rb))
         {
-                inRange = true;
+                isInRange = true;
                 thisJoint.connectedBody = collider.attachedRigidbody;       
         }
      }
 
-    // If nothing is in grab range, disconnect any attached rigidbodies
     void OnTriggerExit2D(Collider2D collider)
     {
         thisJoint.connectedBody = null;
-        inRange = false;
+        isInRange = false;
+    }
+
+    /*****************************************************************************************************
+
+    These following functions below are for non-player entities to call and use later.
+    
+    */ 
+    public void EnableGrab()
+    {
+        if(isInRange)
+            thisJoint.enabled = true;
+    }
+
+    public void DisableGrab()
+    {
+        thisJoint.enabled = false;
     }
 }

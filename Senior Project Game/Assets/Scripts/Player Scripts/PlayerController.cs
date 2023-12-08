@@ -41,16 +41,52 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Read the direction values for movement
-        movedirection = move.ReadValue<Vector2>();
+        /**************************************************************************************************
+        
+            Movement:
 
-        // If grab was just pressed and something is in range, you isGrabbing
-        // If you let go of the button OR nothing is in range, you ain't isGrabbing
+                -Reads the values given and put them into a variable for movement
+                -Variable is used in the FixedUpdate below for physics purposes
+        */
+        movedirection = move.ReadValue<Vector2>();
+        
+        /**************************************************************************************************
+        
+            Grab:
+
+                -If grab was just pressed and something is in range, you isGrabbing
+                -If you let go of the button OR nothing is in range, you ain't isGrabbing      
+        */
         if(grab.WasPerformedThisFrame() && this.gameObject.GetComponent<DistanceJoint2D>().connectedBody)
             isGrabbing = this.gameObject.GetComponent<DistanceJoint2D>().enabled = true;
         else if(!grab.IsInProgress() || !this.gameObject.GetComponent<DistanceJoint2D>().connectedBody)
             isGrabbing = this.gameObject.GetComponent<DistanceJoint2D>().enabled = false;
 
+
+        /**************************************************************************************************
+        
+            Inventory:
+
+                -...
+                -...      
+        */
+
+
+        /**************************************************************************************************
+        
+            Pause Game:
+
+                -...
+                -...      
+        */
+
+        /**************************************************************************************************
+        
+            Use Item in hand:
+
+                -...
+                -...      
+        */
         
         
     }
