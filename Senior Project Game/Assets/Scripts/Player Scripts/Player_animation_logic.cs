@@ -23,8 +23,13 @@ public class Player_animation_logic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log("Is they grabbin? " + playerController.isGrabbing);
         // Faces the correct direction on the x-axis, and animates moving.
         if(playerController.playerControls.Player.Move.IsInProgress()){
+        
+        // If grabbing don't look the other way
+        if(!playerController.isGrabbing)
             animatorController.OrientateBody(playerController.playerControls.Player.Move.ReadValue<Vector2>().x);
 
             if(playerController.playerControls.Player.Move.ReadValue<Vector2>().y > 0)
@@ -38,10 +43,8 @@ public class Player_animation_logic : MonoBehaviour
           animatorController.PlayIntegerAnimation("Movestate",0);
             
 
-    //if(playerController.playerControls.Player.Move.IsInProgress())
-    //     Debug.Log("Moving right now");
-    // else
-    //     Debug.Log("Not moving");
+
+
 
     }
 
