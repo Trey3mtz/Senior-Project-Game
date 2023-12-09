@@ -23,8 +23,11 @@ public class Player_animation_logic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If game is paused, do not follow through this script's update
+        if(playerController.isPaused)
+            return;
+        else
 
-        Debug.Log("Is they grabbin? " + playerController.isGrabbing);
         // Faces the correct direction on the x-axis, and animates moving.
         if(playerController.playerControls.Player.Move.IsInProgress()){
         
