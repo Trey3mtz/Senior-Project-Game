@@ -10,7 +10,7 @@ public class AnimatorController : MonoBehaviour
     private float originalScaleX;
     private bool originalFlipX;
 
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
 
     private void Awake()
     {
