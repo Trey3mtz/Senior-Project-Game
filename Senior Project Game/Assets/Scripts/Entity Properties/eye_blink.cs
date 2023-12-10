@@ -10,6 +10,12 @@ public class eye_blink : MonoBehaviour
     public int double_blink_counter = 3;
     public int counter;
 
+    [Header("Is this the Player?")]
+    public bool isPlayer;
+    [SerializeField] PlayerController playerController;
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +23,20 @@ public class eye_blink : MonoBehaviour
         spriteRenderer.enabled = false;
         counter = double_blink_counter;
 
+        //if(isPlayer)
+            
+
         StartCoroutine(WaitForBlink());
+    }
+
+    void Update()
+    {
+        if(isPlayer && (playerController.playerControls.Player.Move.WasPerformedThisFrame() || playerController.isGrabbing))
+        {
+            spriteRenderer.enabled = false;
+        }
+
+            
     }
 
      IEnumerator WaitForBlink()

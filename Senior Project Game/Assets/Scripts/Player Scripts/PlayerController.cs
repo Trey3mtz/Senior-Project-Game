@@ -5,31 +5,39 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeReference] PauseScript pauseScript;
 
     public Rigidbody2D rb;
     public float movespeed = 15f;
     public PlayerControls playerControls;
 
+    private Inventory inventory;
+
     private InputAction pause;
-    private InputAction inventory;
+    private InputAction inventoryOpen;
     private InputAction move;
     private InputAction grab;
+    private InputAction useItem;
 
     public bool isGrabbing = false;
-    private bool canGrab = false;
-
+    public bool isPaused = false;
+    public bool isInventory = false;
 
     Vector3 movedirection = Vector3.zero;
     
     private void Awake()
     {
         playerControls = new PlayerControls();
+        inventory = new Inventory();
     }
 
     void OnEnable()
     {
         move = playerControls.Player.Move;
         grab = playerControls.Player.Grab;
+        pause = playerControls.Player.Pause;
+        useItem = playerControls.Player.Item;
+        inventoryOpen = playerControls.Player.Inventory;
         playerControls.Enable();
     }
 
@@ -64,30 +72,53 @@ public class PlayerController : MonoBehaviour
 
 
         /**************************************************************************************************
-        
-            Inventory:
+        BIG DESIGN QUESTION:   Should we NOT pause the game while looking at inventoryOpen to create more tension?
+            inventoryOpen:
 
-                -...
-                -...      
+                -Opens Inventory UI if it isn't open
+                -Closes Inventory UI if it is open already
         */
-
+        if(inventoryOpen.WasPerformedThisFrame() && !isInventory)
+        {
+            pauseScript.openInventory();
+            isInventory = true;
+        }   
+        else if(inventoryOpen.WasPerformedThisFrame() && isInventory)
+        {
+            pauseScript.closeInventory();
+            isInventory = false;
+        }
 
         /**************************************************************************************************
         
             Pause Game:
 
-                -...
-                -...      
+                -If pause is pressed and isn't yet paused, pause game
+                -If pause is pressed and it is already paused, unpause the game
         */
+        if(pause.WasPerformedThisFrame() && !isPaused)
+        {
+            pauseScript.gamePause();
+            isPaused = true;
+        }   
+        else if(pause.WasPerformedThisFrame() && isPaused)
+        {
+            pauseScript.gameUnpause();
+            isPaused = false;
+        }
 
+    
         /**************************************************************************************************
-        
+        Future Note:    Usable items will be a class or scriptable object?
             Use Item in hand:
 
                 -...
                 -...      
         */
-        
+        if(useItem.WasPerformedThisFrame())
+        {
+
+        }
         
     }
 
