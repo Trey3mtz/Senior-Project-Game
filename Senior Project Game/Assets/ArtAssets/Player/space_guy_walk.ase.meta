@@ -181,8 +181,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 104
+      x: 21
+      y: 4
       width: 8
       height: 12
     spriteID: d4bd4ef074795554e8404f6839f81fc6
@@ -193,7 +193,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 104}
+    uvTransform: {x: 21, y: 4}
   - name: space_guy_walk_Frame_1
     originalName: 
     pivot: {x: 0.5, y: -0.33333334}
@@ -202,7 +202,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 21
-      y: 4
+      y: 24
       width: 8
       height: 12
     spriteID: cd41b7ba818c71749a7bd990c1a3a668
@@ -213,7 +213,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 4}
+    uvTransform: {x: 21, y: 24}
   - name: space_guy_walk_Frame_2
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -222,7 +222,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 21
-      y: 24
+      y: 44
       width: 8
       height: 12
     spriteID: e138497de0b88fc4ea587a6fa38da70c
@@ -233,7 +233,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 24}
+    uvTransform: {x: 21, y: 44}
   - name: space_guy_walk_Frame_3
     originalName: 
     pivot: {x: 0.5, y: -0.33333334}
@@ -242,7 +242,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 21
-      y: 44
+      y: 64
       width: 8
       height: 12
     spriteID: 0bef5bc5be7456d49ac04fa6ca6c8caf
@@ -253,7 +253,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 44}
+    uvTransform: {x: 21, y: 64}
   - name: space_guy_walk_Frame_4
     originalName: 
     pivot: {x: 0.5, y: -0.27272728}
@@ -342,7 +342,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 21
-      y: 64
+      y: 84
       width: 8
       height: 12
     spriteID: 94684f545845b15488dacf85ea22ed64
@@ -353,7 +353,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 64}
+    uvTransform: {x: 21, y: 84}
   - name: space_guy_walk_Frame_9
     originalName: 
     pivot: {x: 0.33333334, y: -4.5}
@@ -402,7 +402,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 21
-      y: 84
+      y: 104
       width: 8
       height: 12
     spriteID: 3d3cd3b241648f242ac7f73909c6d71c
@@ -413,28 +413,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 84}
-  - name: space_guy_walk_Frame_12
-    originalName: 
-    pivot: {x: 0.375, y: -0.25}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 21
-      y: 104
-      width: 8
-      height: 12
-    spriteID: 69b66e1c8cc0b37438b361cd8ad8f4e1
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
     uvTransform: {x: 21, y: 104}
-  - name: space_guy_walk_Frame_13
+  - name: space_guy_walk_Frame_12
     originalName: 
     pivot: {x: 0.375, y: -0.25}
     alignment: 9
@@ -445,7 +425,7 @@ ScriptedImporter:
       y: 4
       width: 8
       height: 12
-    spriteID: 4158e5069ca1e8a4c8bd20b8ebd30069
+    spriteID: 69b66e1c8cc0b37438b361cd8ad8f4e1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -454,6 +434,26 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 37, y: 4}
+  - name: space_guy_walk_Frame_13
+    originalName: 
+    pivot: {x: 0.375, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 37
+      y: 24
+      width: 8
+      height: 12
+    spriteID: 4158e5069ca1e8a4c8bd20b8ebd30069
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 37, y: 24}
   - name: space_guy_walk_Frame_14
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -522,7 +522,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 37
-      y: 24
+      y: 44
       width: 8
       height: 12
     spriteID: 8ed714c20bf17f542943a3b66cc7020c
@@ -533,17 +533,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 24}
+    uvTransform: {x: 37, y: 44}
   - name: space_guy_walk_Frame_18
     originalName: 
-    pivot: {x: 0.625, y: -0.25}
+    pivot: {x: 0.44444445, y: -0.25}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 44
-      width: 8
+      x: 4
+      y: 64
+      width: 9
       height: 12
     spriteID: 59c8bd34772789a44bbd2173743c764e
     spriteBone: []
@@ -553,7 +553,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 44}
+    uvTransform: {x: 4, y: 64}
   - name: space_guy_walk_Frame_19
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -562,7 +562,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 64
+      y: 84
       width: 9
       height: 12
     spriteID: b9cbb72077c38bf42b6eb0399b4a2ef7
@@ -573,7 +573,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 64}
+    uvTransform: {x: 4, y: 84}
   - name: space_guy_walk_Frame_20
     originalName: 
     pivot: {x: 0.44444445, y: -0.25}
@@ -582,7 +582,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 84
+      y: 104
       width: 9
       height: 12
     spriteID: 3cb5ed66d6ab41c4c90e495d47a85c98
@@ -593,7 +593,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 84}
+    uvTransform: {x: 4, y: 104}
   - name: space_guy_walk_Frame_21
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -870,9 +870,9 @@ ScriptedImporter:
     - name: space_guy_walk_Frame_18
       frameIndex: 18
       cellRect:
-        x: 3
+        x: 4
         y: 3
-        width: 8
+        width: 9
         height: 12
       spriteId: 59c8bd34772789a44bbd2173743c764e
     - name: space_guy_walk_Frame_19
