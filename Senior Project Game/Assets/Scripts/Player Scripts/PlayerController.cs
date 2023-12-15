@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeReference] PauseScript pauseScript;
+    [SerializeField] Camera _Camera;
 
     public Rigidbody2D rb;
     public float movespeed = 15f;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private InputAction pause;
     private InputAction inventoryOpen;
+    private InputAction look;
     private InputAction move;
     private InputAction grab;
     private InputAction useItem;
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isInventory = false;
 
     Vector3 movedirection = Vector3.zero;
+    public Vector2 lookdirection = Vector2.zero;
     
     private void Awake()
     {
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         move = playerControls.Player.Move;
         grab = playerControls.Player.Grab;
+        look = playerControls.Player.Look;
         pause = playerControls.Player.Pause;
         useItem = playerControls.Player.Item;
         inventoryOpen = playerControls.Player.Inventory;
@@ -57,6 +61,15 @@ public class PlayerController : MonoBehaviour
                 -Variable is used in the FixedUpdate below for physics purposes
         */
         movedirection = move.ReadValue<Vector2>();
+
+        /**************************************************************************************************
+        
+            Look:
+
+                -Reads the values given and put them into a variable for camera control
+                -
+        */
+        lookdirection = _Camera.ScreenToWorldPoint(look.ReadValue<Vector2>());
         
         /**************************************************************************************************
         

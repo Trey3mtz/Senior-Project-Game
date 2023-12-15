@@ -6,6 +6,14 @@ using UnityEngine.Rendering.Universal;
 
 namespace WorldTime
 {
+    /**************************************************************************************
+
+    Description:    This script changes the Global Light based on the percetage of day left.
+                    If something else needs to be added in a gradual manner, this would be 
+                    the script to modify.
+    
+    */
+
     public class Day_Cycle : MonoBehaviour
     {
         private Light2D _light;

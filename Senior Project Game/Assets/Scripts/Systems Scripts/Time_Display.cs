@@ -6,6 +6,13 @@ using UnityEngine;
 
 namespace WorldTime
 {
+    /**************************************************************************************
+    
+        Description:    This script simply can display the Hour and Minute of 
+                        the day. Should be used together with a canvas to show numbers.
+
+    */
+
     [RequireComponent(typeof(TMP_Text))]
     
     public class Time_Display : MonoBehaviour
