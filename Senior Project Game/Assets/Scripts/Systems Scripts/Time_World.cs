@@ -5,6 +5,15 @@ using UnityEngine;
 
 namespace WorldTime
 {
+
+    /****************************************************************************************
+
+        Description:    This script continually adds time to a counter or clock. 
+                        This is the basis for the world's time of day function.
+    
+    
+    */
+
     public class Time_World : MonoBehaviour
     {
         public event EventHandler<TimeSpan> WorldTimeChanged;

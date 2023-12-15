@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class camera_logic : MonoBehaviour
 {
 
     [SerializeReference] GameObject Parent;
+    [SerializeReference] PlayerController playerController;
     Transform parent;
 
     //[SerializeField] GameObject forcedLookAt;
@@ -15,14 +17,14 @@ public class camera_logic : MonoBehaviour
     // How close the camera stays to the player's body
     public int PlayerHugFactor = 10;
 
-    Vector3 parentPoint;
+    Vector2 parentPoint;
     Vector2 halfPoint;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerController = this.gameObject.GetComponentInParent<PlayerController>();
         parent = Parent.GetComponentInParent<Transform>();
-        
     }
 
     // Update is called once per frame
@@ -30,7 +32,7 @@ public class camera_logic : MonoBehaviour
     {
         parentPoint = parent.position;
 
-        halfPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition) - parentPoint;
+        halfPoint = playerController.lookdirection - parentPoint;
         halfPoint = halfPoint/PlayerHugFactor;
         halfPoint += (Vector2)parentPoint;
         halfPoint.y += offSetY;
