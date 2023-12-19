@@ -1,58 +1,76 @@
-using System.Collections;
+
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using System.Collections.Generic;
 
-public class LightFlicker : MonoBehaviour
-{
-    public new Light2D light;
-    public float minIntensity = 0f;
-    public float maxIntensity = 0.2f;
-    [Range(1, 50)]
-    public int smoothing = 5;
 
-    Queue<float> smoothQueue;
-    float lastSum = 0;
+/********************************************************************
+        Useful for things like campfires and torches!
+*/ 
 
-    public void Reset()
+  public class LightFlicker : MonoBehaviour
     {
-        smoothQueue.Clear();
-        lastSum = 0;
-    }
+        [SerializeField] public float m_PositionJitterScale = 0.09f;
+    
+        [SerializeField] public float m_RotationJitterScale = 2.3f;
 
-    void Start()
-    {
-        smoothQueue = new Queue<float>(smoothing);
-        // External or internal light?
-        if (light == null)
+        [SerializeField] public float m_IntensityJitterScale = 2f;
+
+        [SerializeField] public float m_Timescale = 3f;
+    
+        private Vector3 m_InitialPosition;
+        private float m_InitialIntensity;
+        private Quaternion m_InitialRotation;
+
+        private float m_XSeed;
+        private float m_YSeed;
+        private float m_ZSeed;
+
+        private Light2D m_Light;
+
+        private float m_flickerIntensityOffset = 1f;
+        public float flickerIntensityOffset => m_flickerIntensityOffset;
+        public float modifiedIntensity => m_InitialIntensity + m_flickerIntensityOffset;
+
+
+        void Start()
         {
-            light = GetComponent<Light2D>();
+            Random.InitState(gameObject.GetInstanceID());
+            m_XSeed = Random.value*248;
+            m_YSeed = Random.value*248;
+            m_ZSeed = Random.value*248;
+
+            m_Light = GetComponent<Light2D>();
+            m_InitialIntensity = m_Light.intensity;
+            m_InitialPosition = transform.localPosition;
+            m_InitialRotation = transform.localRotation;
+        }
+
+        void Update()
+        {
+            float x = Time.time * m_Timescale + m_XSeed;
+            float y = Time.time * m_Timescale + m_YSeed;
+            float z = Time.time * m_Timescale + m_ZSeed;
+
+            Vector3 Noise = PerlinNoise3D(new Vector3(x, y, z), 2, 1);
+            Noise = Noise * 2 - Vector3.one;
+
+            transform.SetLocalPositionAndRotation(m_InitialPosition + Noise * m_PositionJitterScale, m_InitialRotation * Quaternion.Euler(Noise * m_RotationJitterScale)); // Neat
+
+            m_flickerIntensityOffset = Noise.x * m_IntensityJitterScale;
+            m_Light.intensity = modifiedIntensity;
+        }
+
+        private Vector3 PerlinNoise3D(Vector3 uv, int Octaves, float freq)
+        {
+            Vector3 output = Vector3.zero;
+            for (int i = 0; i < Octaves; i++)
+            {
+                output.x += Mathf.PerlinNoise1D(uv.x * freq * (i + 1));
+                output.y += Mathf.PerlinNoise1D(uv.y * freq * (i + 1));
+                output.z += Mathf.PerlinNoise1D(uv.z * freq * (i + 1));
+            
+            }
+
+            return output;
         }
     }
-
-    void Update()
-    {
-        if (light == null)
-            return;
-
-        // pop off an item if too big
-        while (smoothQueue.Count >= smoothing)
-        {
-            lastSum -= smoothQueue.Dequeue();
-        }
-
-        float newVal = Random.Range(minIntensity, maxIntensity);
-        smoothQueue.Enqueue(newVal);
-        lastSum += newVal;
-
-        StartCoroutine(Delay());
-        
-    }
-
-    IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(.5f);
-        light.intensity = lastSum / (float)smoothQueue.Count;
-    }
-
-}
