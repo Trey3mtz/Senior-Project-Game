@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TL.Core
+namespace TL.UtilityAI
 {
     public abstract class Consideration : ScriptableObject
     {

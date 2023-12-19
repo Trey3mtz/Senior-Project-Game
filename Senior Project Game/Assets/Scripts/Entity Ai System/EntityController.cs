@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TL.Core 
+namespace TL.UtilityAI
 {
     public class EntityController : MonoBehaviour
     {
@@ -15,15 +15,11 @@ namespace TL.Core
         // Start is called before the first frame update
         void Start()
         {
-           mover = GetComponent<MoveController>();
+            mover = GetComponent<MoveController>();
             aiBrain = GetComponent<AIBrain>();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
+
     }
 }
 

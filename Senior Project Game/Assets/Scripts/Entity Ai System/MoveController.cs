@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace TL.Core
+namespace TL.UtilityAI
 {
     public class MoveController : MonoBehaviour
     {
