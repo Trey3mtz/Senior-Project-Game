@@ -1,7 +1,6 @@
 //using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
-using Unity.Entities;
 using Unity.Jobs;
 using Unity.Burst;
 using Unity.Mathematics;
