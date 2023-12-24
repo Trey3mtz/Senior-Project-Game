@@ -35,6 +35,8 @@ public class Pathfinding : MonoBehaviour
 
             NativeArray<PathNode> pathNodeArray = new NativeArray<PathNode>(gridSize.x * gridSize.y, Allocator.Temp);
 
+            // This for creates a grid with default isWalkable to all pathnodes
+            // Future uses will simply recieve an outside grid somehow to be usable.
             for (int x = 0; x < gridSize.x; x++) {
                 for (int y = 0; y < gridSize.y; y++) {
                     PathNode pathNode = new PathNode();
