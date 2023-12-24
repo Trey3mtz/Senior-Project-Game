@@ -12,6 +12,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] SpriteRenderer border;
     [SerializeField] SpriteRenderer fill;
 
+    Coroutine hideHP;
+
     PlayerHealthBar playerHP;
     private bool yesPlayer = false;
     // Start is called before the first frame update
@@ -39,6 +41,7 @@ public class HealthBar : MonoBehaviour
         }
         _hp = Mathf.Clamp(_hp + amt, 0, MaxHP);
         _fill.localScale = new Vector3((float)(_hp)/MaxHP, _fill.localScale.y, _fill.localScale.z);
+
 
 
         if(yesPlayer)
@@ -76,7 +79,11 @@ public class HealthBar : MonoBehaviour
         border.enabled = true;
         fill.enabled = true;
 
-        StartCoroutine(HideTimer());
+        // Resets the countdown to hide health
+        if(hideHP != null)
+            StopCoroutine(hideHP);
+        
+        hideHP = StartCoroutine(HideTimer());
     }
 
     public void HideHealth()
