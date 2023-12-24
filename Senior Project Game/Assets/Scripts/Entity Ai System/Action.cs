@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 
-namespace TL.Core
+namespace TL.UtilityAI
 {
     public abstract class Action : ScriptableObject
     {
@@ -25,7 +26,7 @@ namespace TL.Core
             score = 0;
          }
 
-        public abstract void Execute();
+        public abstract void Execute(EntityController npc);
 
     }
 }
