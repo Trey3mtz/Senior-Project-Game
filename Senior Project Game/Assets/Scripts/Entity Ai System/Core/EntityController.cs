@@ -19,7 +19,24 @@ namespace TL.UtilityAI
             aiBrain = GetComponent<AIBrain>();
         }
 
+        #region Coroutine
 
+        public void DoSleep(float time)
+        {
+            StartCoroutine(SleepCoroutine(time));
+        }
+
+        IEnumerator SleepCoroutine(float time)
+        {
+            float counter = time;
+            while(counter > 0)
+            {
+                yield return new WaitForSeconds(1f);
+                counter--;
+            }
+        }
+
+        #endregion
     }
 }
 

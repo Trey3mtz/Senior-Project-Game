@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace TL.UtilityAI.Actions
 {
-    [CreateAssetMenu(fileName = "Chase", menuName = "UtilityAI/Actions/Chase")]
-    public class Chase : Action
+    [CreateAssetMenu(fileName = "Eat", menuName = "UtilityAI/Actions/Eat")]
+    public class Eat : Action
     {
         public override void Execute(EntityController thisEntity)
         {
-            // Place logic here
+           // thisEntity.stats.hunger -= 1;// Place logic to sleep here
         }
     }
 }
-

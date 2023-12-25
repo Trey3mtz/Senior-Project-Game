@@ -8,12 +8,12 @@ namespace TL.UtilityAI
     public class AIBrain : MonoBehaviour
     {
         public Action bestAction { get; set;}
-        private EntityController npc;
+        private EntityController thisEntity;
 
         // Start is called before the first frame update
         void Start()
         {
-            npc = GetComponent<EntityController>();
+            thisEntity = GetComponent<EntityController>();
         }
 
         // Update is called once per frame
