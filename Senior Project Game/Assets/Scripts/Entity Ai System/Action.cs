@@ -26,7 +26,7 @@ namespace TL.UtilityAI
             score = 0;
          }
 
-        public abstract void Execute(EntityController npc);
+        public abstract void Execute(EntityController thisEntity);
 
     }
 }
