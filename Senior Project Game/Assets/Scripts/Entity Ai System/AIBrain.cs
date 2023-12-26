@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TL.UtilityAI
+namespace GameSystems.UtilityAI
 {
     public class AIBrain : MonoBehaviour
     {
         public Action bestAction { get; set;}
+        public bool isFinishedDeciding { get; set;}
+
         private EntityController thisEntity;
 
+        
         // Start is called before the first frame update
         void Start()
         {
             thisEntity = GetComponent<EntityController>();
         }
 
-        // Update is called once per frame
+        // Choose a best action for thisEntity from it's list of available actions
         void Update()
         {
-            
+            if(bestAction is null)
+            {
+                ChooseBestAction(thisEntity.actionsAvailable);
+            }
         }
 
         // Loops through all possible actions to find the highest scoring action
@@ -38,6 +44,7 @@ namespace TL.UtilityAI
             }
 
             bestAction = actionsAvailable[nextBestActionIndex];
+            isFinishedDeciding = true;
         }
 
         // Loops through all Considerations of an action

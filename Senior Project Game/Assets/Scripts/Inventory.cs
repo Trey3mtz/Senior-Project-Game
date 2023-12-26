@@ -20,7 +20,7 @@ public class Inventory
 
     public void RemoveItem(Item item)
     {
-
+         itemList.Remove(item);
     }
 
     public void ConsumeItem(Item item)
