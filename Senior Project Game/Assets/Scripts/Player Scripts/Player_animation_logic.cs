@@ -27,7 +27,7 @@ public class Player_animation_logic : MonoBehaviour
     void Update()
     {
         // If game is paused, do not follow through this script's update
-        if(playerController.isPaused)
+        if(playerController.gameManager.isPaused)
             return;
         else
 

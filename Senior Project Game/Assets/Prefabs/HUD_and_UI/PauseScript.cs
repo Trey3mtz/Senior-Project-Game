@@ -10,14 +10,14 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject gameInventoryUI;
 
     private float originalTimescale;
-    private bool isPaused = false;
+    public bool isPaused;
 
     public void gamePause()
     {
         gamePauseUI.SetActive(true);
-        isPaused = true;
+      
         originalTimescale = Time.timeScale;
-        
+        isPaused = true;
         Time.timeScale = 0;
 
         GameObject.Find("Focal Point").GetComponent<camera_logic>().enabled = false;
@@ -26,8 +26,8 @@ public class PauseScript : MonoBehaviour
     public void gameUnpause()
     {
         gamePauseUI.SetActive(false);
-        isPaused = false;
         Time.timeScale = originalTimescale;
+        isPaused = false;
 
         GameObject.Find("Focal Point").GetComponent<camera_logic>().enabled = true;    
     }

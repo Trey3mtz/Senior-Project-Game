@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TL.UtilityAI.Actions
+namespace GameSystems.UtilityAI.Actions
 {
     [CreateAssetMenu(fileName = "Eat", menuName = "UtilityAI/Actions/Eat")]
     public class Eat : Action

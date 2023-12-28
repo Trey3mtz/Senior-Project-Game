@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeReference] PauseScript pauseScript;
+    [SerializeReference] public GameManager gameManager;
     [SerializeField] Camera _Camera;
+    [SerializeField] private Inventory_UI UI_inventory;
+    private Collect_World_Item collect_item;
 
     public Rigidbody2D rb;
     public float movespeed = 15f;
@@ -22,7 +24,6 @@ public class PlayerController : MonoBehaviour
     private InputAction useItem;
 
     public bool isGrabbing = false;
-    public bool isPaused = false;
     public bool isInventory = false;
 
     Vector3 movedirection = Vector3.zero;
@@ -30,8 +31,16 @@ public class PlayerController : MonoBehaviour
     
     private void Awake()
     {
+        gameManager = GameObject.FindAnyObjectByType<GameManager>();
+        collect_item = GetComponentInChildren<Collect_World_Item>();
         playerControls = new PlayerControls();
+    }
+
+    private void Start()
+    {
         inventory = new Inventory();
+        UI_inventory.SetInventory(inventory);
+        collect_item.SetInventory(inventory);
     }
 
     void OnEnable()
@@ -49,6 +58,8 @@ public class PlayerController : MonoBehaviour
     {
         playerControls.Disable();
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -93,12 +104,12 @@ public class PlayerController : MonoBehaviour
         */
         if(inventoryOpen.WasPerformedThisFrame() && !isInventory)
         {
-            pauseScript.openInventory();
+            gameManager.OpenInventory();
             isInventory = true;
         }   
         else if(inventoryOpen.WasPerformedThisFrame() && isInventory)
         {
-            pauseScript.closeInventory();
+            gameManager.CloseInventory();
             isInventory = false;
         }
 
@@ -109,15 +120,15 @@ public class PlayerController : MonoBehaviour
                 -If pause is pressed and isn't yet paused, pause game
                 -If pause is pressed and it is already paused, unpause the game
         */
-        if(pause.WasPerformedThisFrame() && !isPaused)
+        if(pause.WasPerformedThisFrame() && !gameManager.isPaused)
         {
-            pauseScript.gamePause();
-            isPaused = true;
+            gameManager.PauseGame();
+            gameManager.isPaused = true;
         }   
-        else if(pause.WasPerformedThisFrame() && isPaused)
+        else if(pause.WasPerformedThisFrame() && gameManager.isPaused)
         {
-            pauseScript.gameUnpause();
-            isPaused = false;
+            gameManager.UnpauseGame();
+            gameManager.isPaused = false;
         }
 
     
