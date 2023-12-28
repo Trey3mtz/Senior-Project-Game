@@ -13,7 +13,7 @@ namespace GameSystems.UtilityAI
         Stone,
         Iron,
         Grass,
-        Meat,
+        RawMeat,
         Fish
     }
 
