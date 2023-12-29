@@ -16,4 +16,5 @@ public class Item_Assets : MonoBehaviour
     public Sprite meatSprite;
     public Sprite woodSprite;
     public Sprite weaponSprite;
+    public Sprite medicineSprite;
 }

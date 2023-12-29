@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeReference] public GameManager gameManager;
+    [SerializeReference] public GameStateManager gameStateManager;
     [SerializeField] Camera _Camera;
     [SerializeField] private Inventory_UI UI_inventory;
     private Collect_World_Item collect_item;
@@ -24,14 +24,13 @@ public class PlayerController : MonoBehaviour
     private InputAction useItem;
 
     public bool isGrabbing = false;
-    public bool isInventory = false;
 
     Vector3 movedirection = Vector3.zero;
     public Vector2 lookdirection = Vector2.zero;
     
     private void Awake()
     {
-        gameManager = GameObject.FindAnyObjectByType<GameManager>();
+        gameStateManager = GameObject.FindAnyObjectByType<GameStateManager>();
         collect_item = GetComponentInChildren<Collect_World_Item>();
         playerControls = new PlayerControls();
     }
@@ -102,15 +101,15 @@ public class PlayerController : MonoBehaviour
                 -Opens Inventory UI if it isn't open
                 -Closes Inventory UI if it is open already
         */
-        if(inventoryOpen.WasPerformedThisFrame() && !isInventory)
+        if(inventoryOpen.WasPerformedThisFrame() && !gameStateManager.isInventory && !gameStateManager.isPaused)
         {
-            gameManager.OpenInventory();
-            isInventory = true;
+            gameStateManager.OpenInventory();
+            gameStateManager.isInventory = true;
         }   
-        else if(inventoryOpen.WasPerformedThisFrame() && isInventory)
+        else if(inventoryOpen.WasPerformedThisFrame() && gameStateManager.isInventory)
         {
-            gameManager.CloseInventory();
-            isInventory = false;
+            gameStateManager.CloseInventory();
+            gameStateManager.isInventory = false;
         }
 
         /**************************************************************************************************
@@ -120,15 +119,15 @@ public class PlayerController : MonoBehaviour
                 -If pause is pressed and isn't yet paused, pause game
                 -If pause is pressed and it is already paused, unpause the game
         */
-        if(pause.WasPerformedThisFrame() && !gameManager.isPaused)
+        if(pause.WasPerformedThisFrame() && !gameStateManager.isPaused)
         {
-            gameManager.PauseGame();
-            gameManager.isPaused = true;
+            gameStateManager.PauseGame();
+            gameStateManager.isPaused = true;
         }   
-        else if(pause.WasPerformedThisFrame() && gameManager.isPaused)
+        else if(pause.WasPerformedThisFrame() && gameStateManager.isPaused)
         {
-            gameManager.UnpauseGame();
-            gameManager.isPaused = false;
+            gameStateManager.UnpauseGame();
+            gameStateManager.isPaused = false;
         }
 
     

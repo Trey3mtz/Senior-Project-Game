@@ -1,7 +1,8 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameStateManager : MonoBehaviour
 {
 
     [SerializeField] GameObject HUD_UI;
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject GameOver_UI;
 
     public bool isPaused;
+    public bool isInventory;
 
     private float originalTimescale = 1;
 
@@ -23,8 +25,10 @@ public class GameManager : MonoBehaviour
     {
         PausedGame_UI.SetActive(true);
         HUD_UI.SetActive(false);
+        Inventory_UI.SetActive(false);
         Time.timeScale = 0;
         isPaused = true;
+        isInventory = false;
     }
 
     public void UnpauseGame()
@@ -38,11 +42,13 @@ public class GameManager : MonoBehaviour
     public void OpenInventory()
     {
         Inventory_UI.SetActive(true);
+        isInventory = true;
     }
 
     public void CloseInventory()
     {
         Inventory_UI.SetActive(false);
+        isInventory = false;
     }
 
     

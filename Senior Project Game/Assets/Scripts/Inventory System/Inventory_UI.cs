@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting.ReorderableList;
 
 public class Inventory_UI : MonoBehaviour
 {
@@ -53,7 +55,13 @@ public class Inventory_UI : MonoBehaviour
 
                 Image image = itemSlotRectTransform.Find("Item Icon").GetComponent<Image>();
                 image.sprite = item.GetSprite();
-                
+
+                TextMeshProUGUI uiText = itemSlotRectTransform.Find("Item Amount").GetComponent<TextMeshProUGUI>();
+                if(item.amount > 1)
+                    uiText.SetText("x" + item.amount.ToString());
+                else
+                    uiText.SetText("");
+
                 x++;
 
                 if(x > 3){ x = 0; y++; }

@@ -12,7 +12,7 @@ public class Player_animation_logic : MonoBehaviour
     //  audio for sfx
     [SerializeField] AudioSource walkSFX;
     [SerializeField] AudioSource pushpullSFX;
-    AudioSource currentsound;
+    private AudioSource currentsound;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class Player_animation_logic : MonoBehaviour
     void Update()
     {
         // If game is paused, do not follow through this script's update
-        if(playerController.gameManager.isPaused)
+        if(playerController.gameStateManager.isPaused)
             return;
         else
 
