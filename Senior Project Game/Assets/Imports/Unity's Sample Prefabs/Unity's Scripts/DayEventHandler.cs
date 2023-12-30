@@ -5,12 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 #if UNITY_EDITOR
-using HappyHarvest;
 using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
     /// <summary>
     /// Allow to define events that will be triggered at given time in the day. An event have a start and end time which

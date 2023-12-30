@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HappyHarvest
+namespace Cyrcadian.temp
 {
     public abstract class Item : ScriptableObject, IDatabaseEntry
     {
@@ -15,11 +15,15 @@ namespace HappyHarvest
         public bool Consumable = true;
         public int BuyPrice = -1;
 
-        [Tooltip("Prefab that will be instantiated in the player hand when this is equipped")]
+        [Tooltip("Prefab that will be instantiated in the player 'hand' when this is equipped")]
+        // 'Hand' in this context means it is what will be used when you left click
+        // Typically this prefab will just be a transform and a spriterenderer, however we can get creative
         public GameObject VisualPrefab;
+
+        [Tooltip("This animation played by the player's animator when 'Using' this item")]
         public string PlayerAnimatorTriggerUse = "GenericToolSwing";
         
-        [Tooltip("Sound triggered when using the item")]
+        [Tooltip("Sounds triggered when using the item")]
         public AudioClip[] UseSound;
 
         public abstract bool CanUse(Vector3Int target);

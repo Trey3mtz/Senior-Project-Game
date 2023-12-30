@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO.Pipes;
 using UnityEngine;
 
-namespace GameSystems.UtilityAI
+namespace Cyrcadian.UtilityAI
 {
     public abstract class Action : ScriptableObject
     {

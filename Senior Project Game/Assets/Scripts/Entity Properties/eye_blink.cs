@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Cyrcadian
+{
+
 public class eye_blink : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -87,4 +90,5 @@ public class eye_blink : MonoBehaviour
 
          StartCoroutine(WaitForBlink());
     }
+}
 }

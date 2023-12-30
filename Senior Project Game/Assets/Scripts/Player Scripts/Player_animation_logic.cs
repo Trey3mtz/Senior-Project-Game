@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+namespace Cyrcadian
+{
+
 public class Player_animation_logic : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
@@ -86,4 +89,5 @@ public class Player_animation_logic : MonoBehaviour
         currentsound = sfx;
         
     }   
+}
 }

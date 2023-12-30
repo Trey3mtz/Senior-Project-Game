@@ -4,6 +4,9 @@ using Unity.Entities;
 using Unity.VisualScripting;
 using UnityEngine;
 
+namespace Cyrcadian
+{
+
 public class Collect_World_Item : MonoBehaviour
 {
     
@@ -29,4 +32,5 @@ public class Collect_World_Item : MonoBehaviour
             item.DestroySelf();
         }
     }
+}
 }

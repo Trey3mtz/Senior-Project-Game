@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace WorldTime
+namespace Cyrcadian.WorldTime
 {
     /*****************************************************************************************************
     

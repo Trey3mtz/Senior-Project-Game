@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+namespace Cyrcadian
+{
+
 public class camera_logic : MonoBehaviour
 {
 
@@ -44,4 +47,5 @@ public class camera_logic : MonoBehaviour
 
 
     }
+}
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace Cyrcadian
+{
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeReference] public GameStateManager gameStateManager;
@@ -150,4 +153,5 @@ public class PlayerController : MonoBehaviour
         // Moves Player by applying a force in a direction on their rigidbody.
         rb.AddForce(new Vector2(movedirection.x, movedirection.y) * movespeed * 2.5f);
     }
+}
 }

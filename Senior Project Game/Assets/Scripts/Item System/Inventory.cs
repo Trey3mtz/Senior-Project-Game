@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
+namespace Cyrcadian
+{
+
 public class Inventory 
 {
     public event EventHandler onInventoryChanged;
@@ -12,13 +15,6 @@ public class Inventory
     public Inventory()
     {
         itemList = new List<Item>();
-
-        AddItem(new Item{ itemType = Item.item_type.Meat, amount = 1});
-        AddItem(new Item{ itemType = Item.item_type.Weapon, amount = 1});
-        AddItem(new Item{ itemType = Item.item_type.Meat, amount = 1});
-        AddItem(new Item{ itemType = Item.item_type.Weapon, amount = 1});
-        AddItem(new Item{ itemType = Item.item_type.Meat, amount = 1});
-
         Debug.Log("Inventory Test");
     }
 
@@ -34,7 +30,7 @@ public class Inventory
             bool isAlreadyInInventory = false;
             foreach(Item inventoryItem in itemList)
             {
-                if(inventoryItem.itemType == item.itemType && inventoryItem.amount < 100)
+                if(inventoryItem.UniqueID == item.UniqueID && inventoryItem.amount <= inventoryItem.MaxStackSize)
                 {
                     inventoryItem.amount += item.amount;
                     isAlreadyInInventory = true;
@@ -59,6 +55,7 @@ public class Inventory
 
     public void ConsumeItem(Item item)
     {
-        
+    
     }
+}
 }

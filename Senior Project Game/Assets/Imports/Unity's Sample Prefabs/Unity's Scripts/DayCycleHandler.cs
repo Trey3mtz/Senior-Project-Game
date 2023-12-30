@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace HappyHarvest
         /// </summary>
         public void Tick()
         {
-            UpdateLight(GameManager.Instance.CurrentDayRatio);
+            //UpdateLight(Day_Cycle.Perce);
         }
 
         public void UpdateLight(float ratio)
@@ -267,6 +267,6 @@ namespace HappyHarvest
 #endif
 
 
-
+    
 
 }

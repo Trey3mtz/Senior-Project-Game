@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
     /// <summary>
     /// When a weather is set on this system, it will find all WeatherSystemElement in the scene and enable the one that

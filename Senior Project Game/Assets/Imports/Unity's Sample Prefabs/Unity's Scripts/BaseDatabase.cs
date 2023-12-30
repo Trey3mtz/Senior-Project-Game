@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
     public interface IDatabaseEntry
     {

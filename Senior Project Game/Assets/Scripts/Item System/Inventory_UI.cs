@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.ReorderableList;
 
+namespace Cyrcadian
+{
+
 public class Inventory_UI : MonoBehaviour
 {
     private Inventory inventory;
@@ -54,7 +57,7 @@ public class Inventory_UI : MonoBehaviour
                 itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize * -1);
 
                 Image image = itemSlotRectTransform.Find("Item Icon").GetComponent<Image>();
-                image.sprite = item.GetSprite();
+                image.sprite = item.ItemSprite;
 
                 TextMeshProUGUI uiText = itemSlotRectTransform.Find("Item Amount").GetComponent<TextMeshProUGUI>();
                 if(item.amount > 1)
@@ -69,4 +72,5 @@ public class Inventory_UI : MonoBehaviour
     }
 
 
+}
 }

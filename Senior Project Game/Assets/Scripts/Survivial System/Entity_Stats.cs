@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameSystems.UtilityAI
+namespace Cyrcadian.UtilityAI
 {
     public class Entity_Stats : ScriptableObject
     {

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
-    [CreateAssetMenu(fileName = "ItemDatabase", menuName = "2D Farming/Item Database")]
+    [CreateAssetMenu(fileName = "ItemDatabase", menuName = "2D Survial/Item Database")]
     public class ItemDatabase : BaseDatabase<Item>
     {
        

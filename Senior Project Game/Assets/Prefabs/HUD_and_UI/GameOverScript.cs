@@ -4,6 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Cyrcadian;
+
+/****************************************************************************
+
+            [ WARNING ] [ DEPRICATED ]
+
+        This script is purely for reference from a previous project.
+        Once We are certain it is no longer useful as a refernce to building the game,
+        Delete this script from the project.
+
+        DO NOT try using this script for the game.
+*/
 
 public class GameOverScript : MonoBehaviour
 {

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using HappyHarvest;
 using UnityEngine;
 
 
-namespace HappyHarvest
+namespace Cyrcadian
 {
 //execute late to be sure the manager are instantiated 
     [DefaultExecutionOrder(999)]

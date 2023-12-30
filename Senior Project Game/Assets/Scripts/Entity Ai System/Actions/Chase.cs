@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameSystems.UtilityAI.Actions
+namespace Cyrcadian.UtilityAI.Actions
 {
     [CreateAssetMenu(fileName = "Chase", menuName = "UtilityAI/Actions/Chase")]
     public class Chase : Action
