@@ -1,61 +1,123 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
 namespace Cyrcadian
 {
-
-public class Inventory 
-{
-    public event EventHandler onInventoryChanged;
-    private List<Item> itemList;
-
-    public Inventory()
+    [Serializable]
+    public class Inventory 
     {
-        itemList = new List<Item>();
-        Debug.Log("Inventory Test");
-    }
-
-    public List<Item> GetItemList()
-    {
-        return itemList;
-    }
-
-    public void AddItem(Item item)
-    {
-        if(item.IsStackable())
+        public const int InventorySize = 12;
+        public event EventHandler onInventoryChanged;
+        public void Awake()
         {
-            bool isAlreadyInInventory = false;
-            foreach(Item inventoryItem in itemList)
+            Debug.Log("Inventory is awake");
+        }
+
+        [Serializable]
+        public class InventoryEntry
+        {
+            public Item item;
+            public int stackSize;
+        }
+
+        public List<InventoryEntry> _Inventory = new List<InventoryEntry>();
+
+        public List<InventoryEntry> GetInventory()
+        {   
+            return _Inventory;
+        }
+
+        public void AddItem(Item newItem,  int amountAdd)
+        {
+            if(newItem.IsStackable())
             {
-                if(inventoryItem.UniqueID == item.UniqueID && inventoryItem.amount <= inventoryItem.MaxStackSize)
+                bool isAlreadyInInventory = false;
+                foreach(InventoryEntry inventoryEntry in _Inventory)
                 {
-                    inventoryItem.amount += item.amount;
-                    isAlreadyInInventory = true;
+                    if(inventoryEntry.item.UniqueID == newItem.UniqueID && inventoryEntry.stackSize <= inventoryEntry.item.MaxStackSize)
+                    {     
+                        inventoryEntry.stackSize += amountAdd;
+                        isAlreadyInInventory = true;
+                    }
+                }
+                if(!isAlreadyInInventory)
+                {
+                    _Inventory.Add(new InventoryEntry(){ item = newItem, stackSize = amountAdd });
+                }   
+            }
+            else
+            {
+                _Inventory.Add(new InventoryEntry(){ item = newItem, stackSize = amountAdd });
+            }
+                
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RemoveItem(InventoryEntry entry)
+        {
+            _Inventory.Remove(entry);
+            //_Inventory.TrimExcess();
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void RemoveItemAt(int entryIndex)
+        {
+            _Inventory.RemoveAt(entryIndex);
+            //_Inventory.TrimExcess();
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ConsumeItem(Item item)
+        {
+        
+        }
+
+        
+        // Save the content of the inventory in the given list.
+        public void Save(ref List<InventorySaveData> data)
+        {
+            foreach (InventoryEntry entry in _Inventory)
+            {
+                if (entry.item != null)
+                {
+                    data.Add(new InventorySaveData()
+                    {
+                        ItemID = entry.item.UniqueID,
+                        AmountHeld = entry.stackSize                        
+                    });
+                }
+                else
+                {
+                    data.Add(null);
                 }
             }
-            if(!isAlreadyInInventory)   
-                itemList.Add(item); 
         }
-        else
+
+        // Load the content in the given list inside that inventory.
+        public void Load(List<InventorySaveData> data)
         {
-            itemList.Add(item);
+            for (int i = 0; i < data.Count; ++i)
+            {
+                if (data[i] != null)
+                {
+                    _Inventory[i].item = GameManager.Instance.ItemDatabase.GetFromID(data[i].ItemID);
+                    _Inventory[i].stackSize = data[i].AmountHeld;
+                }
+                else
+                {
+                    _Inventory[i].item = null;
+                    _Inventory[i].stackSize = 0;
+                }
+            }
         }
-            
-        onInventoryChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RemoveItem(Item item)
-    {
-         itemList.Remove(item);
-         onInventoryChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void ConsumeItem(Item item)
-    {
-    
-    }
+[Serializable]
+public class InventorySaveData
+{
+    public string ItemID;
+    public int AmountHeld;
 }
 }

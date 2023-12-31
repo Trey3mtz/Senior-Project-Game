@@ -19,7 +19,7 @@ using Cyrcadian;
 
 public class GameOverScript : MonoBehaviour
 {
-
+/*
 [SerializeField] GameObject gameOverUI;
 [SerializeField] GameObject gameWonUI;
 [SerializeField] GameObject gamePauseUI;
@@ -151,5 +151,5 @@ public IEnumerator coroutine;
         yield return new WaitForSecondsRealtime(slowdownDuration);
 
         Time.timeScale = 1f;
-    }
+    }*/
 }

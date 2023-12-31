@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Cyrcadian
+namespace Cyrcadian.PlayerSystems
 {
 
 public class Player_animation_logic : MonoBehaviour

@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Cyrcadian
+using Cyrcadian.PlayerSystems.InventorySystem;
+
+
+namespace Cyrcadian.PlayerSystems
 {
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeReference] public GameStateManager gameStateManager;
+
     [SerializeField] Camera _Camera;
-    [SerializeField] private Inventory_UI UI_inventory;
-    private Collect_World_Item collect_item;
+
 
     public Rigidbody2D rb;
     public float movespeed = 15f;
     public PlayerControls playerControls;
 
-    private Inventory inventory;
+    private PlayerData playerData;
 
     private InputAction pause;
     private InputAction inventoryOpen;
@@ -33,17 +36,13 @@ public class PlayerController : MonoBehaviour
     
     private void Awake()
     {
-        gameStateManager = GameObject.FindAnyObjectByType<GameStateManager>();
-        collect_item = GetComponentInChildren<Collect_World_Item>();
+        gameStateManager = FindAnyObjectByType<GameStateManager>();
+
+        playerData = GetComponent<PlayerData>();
         playerControls = new PlayerControls();
     }
 
-    private void Start()
-    {
-        inventory = new Inventory();
-        UI_inventory.SetInventory(inventory);
-        collect_item.SetInventory(inventory);
-    }
+
 
     void OnEnable()
     {
@@ -154,4 +153,8 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(new Vector2(movedirection.x, movedirection.y) * movespeed * 2.5f);
     }
 }
+
+
+
+
 }

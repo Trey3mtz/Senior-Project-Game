@@ -13,7 +13,7 @@ public class World_Item_SPAWNER : MonoBehaviour
     private void Start()
     {
         World_Item.SpawnWorldItem(transform.position, item);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
     
 }

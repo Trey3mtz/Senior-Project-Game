@@ -102,7 +102,7 @@ namespace Cyrcadian
             base.OnInspectorGUI();
             if (EditorGUI.EndChangeCheck())
             {
-                Debug.Log("Updating eather");
+                Debug.Log("Updating weather");
                 (target as WeatherSystem).EditorWeatherUpdate();
             }
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+using Cyrcadian.PlayerSystems;
+
 namespace Cyrcadian
 {
     /// <summary>
@@ -26,25 +28,30 @@ namespace Cyrcadian
         public static GameManager Instance 
         {
             get
-            {
+            {     
 #if UNITY_EDITOR
                 if (!Application.isPlaying || s_IsQuitting)
-                    return null;
+                {
+                    //return null;
+                    return s_Instance;
+                }
+                
+                    
                 
                 if (s_Instance == null)
                 {
                     //in editor, we can start any scene to test, so we are not sure the game manager will have been
                     //created by the first scene starting the game. So we load it manually. This check is useless in
                     //player build as the 1st scene will have created the GameManager so it will always exists.
-                    //Instantiate(Resources.Load<GameManager>("GameManager"));
+                   Instantiate(Resources.Load<GameManager>("GameManager"));
                 }
 #endif
-                return s_Instance;
+             return s_Instance;
             }
         }
+       
 
-        //public TerrainManager Terrain { get; set; }
-        public PlayerController Player { get; set; }
+        public PlayerData PlayerData { get; set; }
         public DayCycleHandler DayCycleHandler { get; set; }
         public WeatherSystem WeatherSystem { get; set; }
         public CinemachineVirtualCamera MainCamera { get; set; }
@@ -55,19 +62,19 @@ namespace Cyrcadian
         // Will return the ratio of time for the current day between 0 (00:00) and 1 (23:59).
         public float CurrentDayRatio => m_CurrentTimeOfTheDay / DayDurationInSeconds;
 
-        [Header("Market")] 
-        public Item[] MarketEntries;
+        //[Header("Market")] 
+        //public Item[] MarketEntries;
         
         [Header("Time settings")]
         [Min(1.0f)] 
         public float DayDurationInSeconds;
         public float StartingTime = 0.0f;
 
-        //[Header("Data")] 
-        //public ItemDatabase ItemDatabase;
+        [Header("Data")] 
+        public ItemDatabase ItemDatabase;
         //public CropDatabase CropDatabase;
 
-        //public Storage Storage;
+        public Storage Storage;
 
         private bool m_IsTicking;
         
@@ -77,26 +84,26 @@ namespace Cyrcadian
         private float m_CurrentTimeOfTheDay;
 
         private void Awake()
-        {
+        { Debug.Log("GM Awake");   
             s_Instance = this;
             DontDestroyOnLoad(gameObject);
             
             m_IsTicking = true;
             
-            //ItemDatabase.Init();
+            ItemDatabase.Init();
             //CropDatabase.Init();
             
-            //Storage = new Storage();
+            Storage = new Storage();
             
             m_CurrentTimeOfTheDay = StartingTime;
-            
+
             //we need to ensure that we don't have a day length at 0, otherwise we will get stuck into infinite loop in update
             //(and a day with 0 length makes no sense)
             if (DayDurationInSeconds <= 0.0f)
             {
                 DayDurationInSeconds = 1.0f;
                 Debug.LogError("The day length on the GameManager is set to 0, the length need to be set to a positive value");
-            }
+            }            Debug.Log("GM awake successful");
         }
 
         private void Start()
@@ -149,20 +156,19 @@ namespace Cyrcadian
         public void Pause()
         {
             m_IsTicking = false;
-           // Player.ToggleControl(false);
         }
 
         public void Resume()
         {
             m_IsTicking = true;
-           // Player.ToggleControl(true);
         }
 
         public void RegisterSpawn(SpawnPoint spawn)
-        {
-            if (Player == null && spawn.SpawnIndex == 0)
+        {   
+            if (PlayerData == null && spawn.SpawnIndex == 0)
             { //if we have no player, we need to create one
-                Instantiate(Resources.Load<PlayerController>("Character"));
+                //Instantiate(Resources.Load<PlayerData>("Player"));
+                Debug.Log("No playerdata");
                 spawn.SpawnHere();
             }
             
@@ -176,7 +182,7 @@ namespace Cyrcadian
 
         public void MoveTo(int targetScene, int targetSpawn)
         {
-            Pause();
+            //Pause();
             //SaveSystem.SaveSceneData();
     /*        UIHandler.FadeToBlack(() =>
             {

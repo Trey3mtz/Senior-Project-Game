@@ -4,7 +4,7 @@ using UnityEngine;
 using Cyrcadian;
 
 
-    [CreateAssetMenu(fileName = "Meat", menuName = "2D Survial/Item Database/Meat")]
+    [CreateAssetMenu(fileName = "Meat", menuName = "2D Survial/Items/Meat")]
     public class Meat : Item
     {
         public override bool CanUse(Vector3Int target)

@@ -25,7 +25,7 @@ namespace Cyrcadian
 
         public void SpawnHere()
         {
-            var playerTransform = GameManager.Instance.Player.transform;
+            var playerTransform = GameManager.Instance.PlayerData.transform;
             
             playerTransform.position = transform.position;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
 namespace Cyrcadian
@@ -33,11 +34,13 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
     public GameObject VisualPrefab;
     public string PlayerAnimatorTriggerUse = "GenericToolSwing";
 
+    [Tooltip("This is the prefab that you will see when it is dropped into the world, out of inventory")]
+    public GameObject WorldItemPrefab;
+
     [Tooltip("Sound triggered when using the item")]
     public AudioClip[] UseSound;
 
     public item_type itemType;
-    public int amount;
 
     // CanUse needs to see if it can be used on this tile, Use is the abstract logic of using that item
     public abstract bool CanUse(Vector3Int target);

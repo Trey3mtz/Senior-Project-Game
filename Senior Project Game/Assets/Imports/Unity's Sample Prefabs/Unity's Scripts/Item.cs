@@ -1,5 +1,5 @@
 using UnityEngine;
-
+/*
 namespace Cyrcadian.temp
 {
     public abstract class Item : ScriptableObject, IDatabaseEntry
@@ -35,4 +35,4 @@ namespace Cyrcadian.temp
             return true;
         }
     }
-}
+}*/

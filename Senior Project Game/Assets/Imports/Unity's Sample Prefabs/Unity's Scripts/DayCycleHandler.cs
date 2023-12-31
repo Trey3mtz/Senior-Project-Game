@@ -50,7 +50,7 @@ namespace Cyrcadian
         private List<LightInterpolator> m_LightBlenders = new();
 
         private void Awake()
-        {
+        { 
             GameManager.Instance.DayCycleHandler = this;
         }
 
