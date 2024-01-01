@@ -37,14 +37,6 @@ public class PlayerHealthBar : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if(pHP.wasHit())
-        {
-
-        }
-    }
-
     public void ChangeHealth(int amt)
     {   
         if(_hp > Mathf.Clamp(_hp + amt, 0, MaxHP))

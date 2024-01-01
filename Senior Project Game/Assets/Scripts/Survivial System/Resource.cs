@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameSystems.UtilityAI
+namespace Cyrcadian.UtilityAI
 {
     // These are the resource types inside of the game, remove or add more as needed.
 

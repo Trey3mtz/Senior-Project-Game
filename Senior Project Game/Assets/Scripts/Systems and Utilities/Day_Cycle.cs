@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-namespace WorldTime
+namespace Cyrcadian.WorldTime
 {
     /**************************************************************************************
 
@@ -41,7 +41,7 @@ namespace WorldTime
             _light.color = gradient.Evaluate(PercentOfDay(newTime));
         }
 
-        private float PercentOfDay(TimeSpan timeSpan)
+        public float PercentOfDay(TimeSpan timeSpan)
         {
             return(float)timeSpan.TotalMinutes % Time_Constants.MinutesInDay / Time_Constants.MinutesInDay;
         }

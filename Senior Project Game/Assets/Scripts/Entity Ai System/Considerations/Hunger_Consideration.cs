@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameSystems.UtilityAI.Considerations
+namespace Cyrcadian.UtilityAI.Considerations
 {
     [CreateAssetMenu(fileName = "Hunger", menuName = "UtilityAI/Consideration/Hunger")]
     public class Hunger_Consideration : Consideration

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameSystems.UtilityAI.Actions
+namespace Cyrcadian.UtilityAI.Actions
 {
     [CreateAssetMenu(fileName = "Sleep", menuName = "UtilityAI/Actions/Sleep")]
     public class Sleep : Action

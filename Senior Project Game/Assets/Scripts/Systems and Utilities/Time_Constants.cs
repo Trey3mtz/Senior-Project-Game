@@ -1,5 +1,5 @@
 
-namespace WorldTime
+namespace Cyrcadian.WorldTime
 {
     // This is simply the constant used to calculate all world clock info. It is the real world minutes in a day.                       
 

@@ -4,10 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Cyrcadian;
+
+/****************************************************************************
+
+            [ WARNING ] [ DEPRICATED ]
+
+        This script is purely for reference from a previous project.
+        Once We are certain it is no longer useful as a refernce to building the game,
+        Delete this script from the project.
+
+        DO NOT try using this script for the game.
+*/
 
 public class GameOverScript : MonoBehaviour
 {
-
+/*
 [SerializeField] GameObject gameOverUI;
 [SerializeField] GameObject gameWonUI;
 [SerializeField] GameObject gamePauseUI;
@@ -139,5 +151,5 @@ public IEnumerator coroutine;
         yield return new WaitForSecondsRealtime(slowdownDuration);
 
         Time.timeScale = 1f;
-    }
+    }*/
 }
