@@ -10,10 +10,6 @@ namespace Cyrcadian
     {
         public const int InventorySize = 12;
         public event EventHandler onInventoryChanged;
-        public void Awake()
-        {
-            Debug.Log("Inventory is awake");
-        }
 
         [Serializable]
         public class InventoryEntry
@@ -97,18 +93,21 @@ namespace Cyrcadian
 
         // Load the content in the given list inside that inventory.
         public void Load(List<InventorySaveData> data)
-        {
-            for (int i = 0; i < data.Count; ++i)
+        { 
+            _Inventory.Clear();
+            foreach (InventorySaveData entry in data)
             {
-                if (data[i] != null)
+                if (entry.ItemID != null)
                 {
-                    _Inventory[i].item = GameManager.Instance.ItemDatabase.GetFromID(data[i].ItemID);
-                    _Inventory[i].stackSize = data[i].AmountHeld;
+                    _Inventory.Add(new InventoryEntry()
+                     {
+                        item = GameManager.Instance.ItemDatabase.GetFromID(entry.ItemID),
+                        stackSize = entry.AmountHeld
+                     });
                 }
                 else
                 {
-                    _Inventory[i].item = null;
-                    _Inventory[i].stackSize = 0;
+                   _Inventory.Add(null);
                 }
             }
         }

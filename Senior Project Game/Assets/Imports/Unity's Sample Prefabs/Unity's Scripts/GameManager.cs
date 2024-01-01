@@ -30,10 +30,10 @@ namespace Cyrcadian
             get
             {     
 #if UNITY_EDITOR
-                if (!Application.isPlaying || s_IsQuitting)
+                if (!Application.isPlaying|| s_IsQuitting )
                 {
                     //return null;
-                    return s_Instance;
+                    //return s_Instance;
                 }
                 
                     
@@ -84,7 +84,7 @@ namespace Cyrcadian
         private float m_CurrentTimeOfTheDay;
 
         private void Awake()
-        { Debug.Log("GM Awake");   
+        { 
             s_Instance = this;
             DontDestroyOnLoad(gameObject);
             
@@ -103,7 +103,7 @@ namespace Cyrcadian
             {
                 DayDurationInSeconds = 1.0f;
                 Debug.LogError("The day length on the GameManager is set to 0, the length need to be set to a positive value");
-            }            Debug.Log("GM awake successful");
+            }         
         }
 
         private void Start()

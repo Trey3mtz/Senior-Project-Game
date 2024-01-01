@@ -1,3 +1,4 @@
+using Cyrcadian.PlayerSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,6 +52,15 @@ public class GameStateManager : MonoBehaviour
         isInventory = false;
     }
 
+    public void SaveGame()
+    {
+        SaveSystem.Save();
+    }
+
+    public void LoadGame()
+    {
+        SaveSystem.Load();
+    }
     
     // GameOver will need refactoring once that system is being worked on
     // This is just a place holder for now

@@ -41,11 +41,10 @@ namespace Cyrcadian.PlayerSystems
         public static void Save()
         {
             GameManager.Instance.PlayerData.Save(ref s_CurrentData.playerData);
-            GameManager.Instance.DayCycleHandler.Save(ref s_CurrentData.TimeSaveData);
+            //GameManager.Instance.DayCycleHandler.Save(ref s_CurrentData.TimeSaveData);
 
             string savefile = Application.persistentDataPath + "/save.sav";
-            if(File.Exists(savefile))
-            {
+
                 try
                 {
                     if (File.Exists(savefile))
@@ -54,40 +53,40 @@ namespace Cyrcadian.PlayerSystems
                         File.Delete(savefile);
                     }
                     else
-                        Debug.Log("Writing file for the first time!");
+                        {Debug.Log("Writing file for the first time!");}
                     
                     using FileStream stream = File.Create(savefile);
                     stream.Close();
-
-                    File.WriteAllText(savefile, JsonConvert.SerializeObject(s_CurrentData));
+                        {Debug.Log("Closed stream!");}
+                    File.WriteAllText(savefile, JsonConvert.SerializeObject(s_CurrentData, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 }
                 catch (Exception e)
                 {
                     Debug.LogError($"Unable to save data due to: {e.Message} {e.StackTrace}");
                 
                 }
-            }
         }
+        
 
         public static void Load()
         {
             string savefile = Application.persistentDataPath + "/save.sav";
-            string content = File.ReadAllText(savefile);
 
-                if (!File.Exists(savefile))
+
+            if (!File.Exists(savefile))
+            {
+                Debug.LogError($"Cannot load file at {savefile}. File does not exist!");
+                throw new FileNotFoundException($"{savefile} does not exist!");
+            }   
+                try
+                {     
+                    s_CurrentData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(savefile));
+                }  
+                catch (Exception e)
                 {
-                    Debug.LogError($"Cannot load file at {savefile}. File does not exist!");
-                    throw new FileNotFoundException($"{savefile} does not exist!");
-                }
-                    try
-                    {
-                        s_CurrentData = JsonConvert.DeserializeObject<SaveData>(content);
-                    }
-                    catch (Exception e)
-                    {
                         Debug.LogError($"Failed to load data due to: {e.Message} {e.StackTrace}");
                         throw e;
-                    }
+                }
             SceneManager.sceneLoaded += SceneLoaded;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
@@ -95,7 +94,7 @@ namespace Cyrcadian.PlayerSystems
         static void SceneLoaded(Scene scene, LoadSceneMode mode)
         {
             GameManager.Instance.PlayerData.Load(s_CurrentData.playerData);
-            GameManager.Instance.DayCycleHandler.Load(s_CurrentData.TimeSaveData);
+           // GameManager.Instance.DayCycleHandler.Load(s_CurrentData.TimeSaveData);
             //GameManager.Instance.Terrain.Load(s_CurrentData.TerrainData);
 
             SceneManager.sceneLoaded -= SceneLoaded;

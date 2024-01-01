@@ -42,14 +42,13 @@ namespace Cyrcadian
                     Destroy(gameObject);
                     return;
                 }
-
-                GameManager.Instance.PlayerData = this;
+                                
                 collect_item = GetComponentInChildren<Collect_World_Item>();
-
                 // IF there isn't another Player with playerdata, dont destroy this object on Load. 
                 // For debugging, in case someone accidentally places a second player down.
                 //if(!FindAnyObjectByType<PlayerData>())
-                //    DontDestroyOnLoad(gameObject);
+                    GameManager.Instance.PlayerData = this;
+                    //DontDestroyOnLoad(gameObject);
             }
 
             private void Start()
