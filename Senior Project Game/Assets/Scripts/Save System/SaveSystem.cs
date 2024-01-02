@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System;
+using Cyrcadian.WorldTime;
 
 namespace Cyrcadian.PlayerSystems
 {
@@ -22,7 +23,7 @@ namespace Cyrcadian.PlayerSystems
         public struct SaveData
         {
             public PlayerSaveData playerData;
-            public DayCycleHandlerSaveData TimeSaveData;
+            public WorldTimeSaveData TimeSaveData;
             public SaveData[] ScenesData;
         }            
         
@@ -41,7 +42,7 @@ namespace Cyrcadian.PlayerSystems
         public static void Save()
         {
             GameManager.Instance.PlayerData.Save(ref s_CurrentData.playerData);
-            //GameManager.Instance.DayCycleHandler.Save(ref s_CurrentData.TimeSaveData);
+            GameManager.Instance.Time_World.Save(ref s_CurrentData.TimeSaveData);
 
             string savefile = Application.persistentDataPath + "/save.sav";
 
@@ -94,7 +95,7 @@ namespace Cyrcadian.PlayerSystems
         static void SceneLoaded(Scene scene, LoadSceneMode mode)
         {
             GameManager.Instance.PlayerData.Load(s_CurrentData.playerData);
-           // GameManager.Instance.DayCycleHandler.Load(s_CurrentData.TimeSaveData);
+            GameManager.Instance.Time_World.Load(s_CurrentData.TimeSaveData);
             //GameManager.Instance.Terrain.Load(s_CurrentData.TerrainData);
 
             SceneManager.sceneLoaded -= SceneLoaded;

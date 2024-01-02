@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 using Cyrcadian.PlayerSystems;
+using Cyrcadian.WorldTime;
 
 namespace Cyrcadian
 {
@@ -52,7 +53,8 @@ namespace Cyrcadian
        
 
         public PlayerData PlayerData { get; set; }
-        public DayCycleHandler DayCycleHandler { get; set; }
+        public DayCycleHandler DayCycleHandler { get; set; } 
+        public Time_World Time_World { get; set; }
         public WeatherSystem WeatherSystem { get; set; }
         public CinemachineVirtualCamera MainCamera { get; set; }
         public Tilemap WalkSurfaceTilemap { get; set; }
