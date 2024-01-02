@@ -17,6 +17,7 @@ namespace Cyrcadian.WorldTime
     public class Day_Cycle : MonoBehaviour
     {
         private Light2D _light;
+        private float percetageDaylight;
 
         [SerializeField]
         private Time_World world_time;
@@ -37,13 +38,21 @@ namespace Cyrcadian.WorldTime
 
         private void OnWorldTimeChanged(object sender, TimeSpan newTime)
         {
-
-            _light.color = gradient.Evaluate(PercentOfDay(newTime));
+            _light.intensity = PercentOfDay(newTime);
+            //_light.color = gradient.Evaluate(percetageDaylight);
+            
         }
 
         public float PercentOfDay(TimeSpan timeSpan)
         {
-            return(float)timeSpan.TotalMinutes % Time_Constants.MinutesInDay / Time_Constants.MinutesInDay;
+            percetageDaylight = (float)timeSpan.TotalMinutes % Time_Constants.MinutesInDay / Time_Constants.MinutesInDay;
+            return percetageDaylight;
+        }
+
+        
+        public float GetPercentageOfDay()
+        {
+            return percetageDaylight;
         }
     }
 }

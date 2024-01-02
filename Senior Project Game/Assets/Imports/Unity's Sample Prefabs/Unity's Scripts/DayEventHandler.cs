@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
-namespace Cyrcadian
+namespace Cyrcadian.WorldTime
 {
     /// <summary>
     /// Allow to define events that will be triggered at given time in the day. An event have a start and end time which

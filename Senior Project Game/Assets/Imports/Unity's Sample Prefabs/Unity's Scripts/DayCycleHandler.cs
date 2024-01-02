@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
-namespace Cyrcadian
+namespace Cyrcadian.WorldTime
 {
 
     /// <summary>
@@ -22,6 +22,7 @@ namespace Cyrcadian
     public class DayCycleHandler : MonoBehaviour
     {
         public Transform LightsRoot;
+        private Day_Cycle day_Cycle;
         
         [Header("Day Light")]
         public Light2D DayLight;
@@ -52,6 +53,7 @@ namespace Cyrcadian
         private void Awake()
         { 
             GameManager.Instance.DayCycleHandler = this;
+            day_Cycle = FindAnyObjectByType<Day_Cycle>();
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Cyrcadian
         /// </summary>
         public void Tick()
         {
-            //UpdateLight(Day_Cycle.Perce);
+            UpdateLight(day_Cycle.GetPercentageOfDay());
         }
 
         public void UpdateLight(float ratio)
