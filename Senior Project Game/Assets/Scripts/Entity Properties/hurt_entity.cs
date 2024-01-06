@@ -29,7 +29,7 @@ public class Hurt_entity : MonoBehaviour
             case 13:
                     Vector3 direction = collider.transform.position-transform.position;
 
-                    if(!hp.wasHit())       
+                    if(!hp.wasHit())
                        break;
 
                     if(direction.x >= 0)

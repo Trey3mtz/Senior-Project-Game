@@ -21,6 +21,11 @@ ScriptedImporter:
   - first:
       type: UnityEngine:AnimationClip
       assembly: UnityEngine.AnimationModule
+      name: Player Death
+    second: {fileID: 7400000, guid: bba7be9e154ed154fbd5ff84bd34be93, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
       name: Player Drag
     second: {fileID: 7400000, guid: ecf85abdec6f1e548a4a2b1df291bc3e, type: 2}
   - first:
@@ -33,6 +38,11 @@ ScriptedImporter:
       assembly: UnityEngine.AnimationModule
       name: Player Hold-Idle
     second: {fileID: 7400000, guid: 9c3626c0abae56345b0509402ea0e343, type: 2}
+  - first:
+      type: UnityEngine:AnimationClip
+      assembly: UnityEngine.AnimationModule
+      name: Player Hurt
+    second: {fileID: 7400000, guid: 2b78076226d1a754ea9ac0dabc3fe46f, type: 2}
   - first:
       type: UnityEngine:AnimationClip
       assembly: UnityEngine.AnimationModule
@@ -150,7 +160,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638385510729895759
+  platformSettingsDirtyTick: 638401555658599605
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -181,8 +191,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 4
+      x: 44
+      y: 144
       width: 8
       height: 12
     spriteID: d4bd4ef074795554e8404f6839f81fc6
@@ -193,7 +203,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 4}
+    uvTransform: {x: 44, y: 144}
   - name: space_guy_walk_Frame_1
     originalName: 
     pivot: {x: 0.5, y: -0.33333334}
@@ -201,8 +211,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 24
+      x: 44
+      y: 164
       width: 8
       height: 12
     spriteID: cd41b7ba818c71749a7bd990c1a3a668
@@ -213,7 +223,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 24}
+    uvTransform: {x: 44, y: 164}
   - name: space_guy_walk_Frame_2
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -221,8 +231,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 44
+      x: 44
+      y: 184
       width: 8
       height: 12
     spriteID: e138497de0b88fc4ea587a6fa38da70c
@@ -233,7 +243,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 44}
+    uvTransform: {x: 44, y: 184}
   - name: space_guy_walk_Frame_3
     originalName: 
     pivot: {x: 0.375, y: -0.33333334}
@@ -241,8 +251,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 64
+      x: 44
+      y: 204
       width: 8
       height: 12
     spriteID: 0bef5bc5be7456d49ac04fa6ca6c8caf
@@ -253,7 +263,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 64}
+    uvTransform: {x: 44, y: 204}
   - name: space_guy_walk_Frame_4
     originalName: 
     pivot: {x: 0.5, y: -0.27272728}
@@ -261,8 +271,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 44
+      x: 63
+      y: 224
       width: 8
       height: 11
     spriteID: 3e0f4ab14977f4e4387d93b761e92ba6
@@ -273,7 +283,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 44}
+    uvTransform: {x: 63, y: 224}
   - name: space_guy_walk_Frame_5
     originalName: 
     pivot: {x: 0.5, y: -0.36363637}
@@ -281,8 +291,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 63
+      x: 79
+      y: 4
       width: 8
       height: 11
     spriteID: 7235d600e8feb7e4289dcd8cc2aa94bd
@@ -293,7 +303,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 63}
+    uvTransform: {x: 79, y: 4}
   - name: space_guy_walk_Frame_6
     originalName: 
     pivot: {x: 0.5, y: -0.27272728}
@@ -301,8 +311,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 82
+      x: 79
+      y: 23
       width: 8
       height: 11
     spriteID: 8b759be9ac9d03a42af733d84ca2e719
@@ -313,7 +323,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 82}
+    uvTransform: {x: 79, y: 23}
   - name: space_guy_walk_Frame_7
     originalName: 
     pivot: {x: 0.5714286, y: -0.36363637}
@@ -321,8 +331,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 101
+      x: 79
+      y: 42
       width: 8
       height: 11
     spriteID: 8b093149a3363f54e985e7da1e84e067
@@ -333,7 +343,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 101}
+    uvTransform: {x: 79, y: 42}
   - name: space_guy_walk_Frame_8
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -341,8 +351,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 84
+      x: 44
+      y: 224
       width: 8
       height: 12
     spriteID: 94684f545845b15488dacf85ea22ed64
@@ -353,7 +363,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 84}
+    uvTransform: {x: 44, y: 224}
   - name: space_guy_walk_Frame_9
     originalName: 
     pivot: {x: 0.33333334, y: -4.5}
@@ -361,8 +371,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 120
+      x: 25
+      y: 244
       width: 3
       height: 2
     spriteID: 3369b2263c608ea46bbb8baa52df6397
@@ -373,7 +383,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 120}
+    uvTransform: {x: 25, y: 244}
   - name: space_guy_walk_Frame_10
     originalName: 
     pivot: {x: 0.5, y: -0.27272728}
@@ -381,8 +391,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 69
-      y: 4
+      x: 79
+      y: 61
       width: 8
       height: 11
     spriteID: 6f1033964026f2d4da791ddf92087a0e
@@ -393,7 +403,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 69, y: 4}
+    uvTransform: {x: 79, y: 61}
   - name: space_guy_walk_Frame_11
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -401,8 +411,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
-      y: 104
+      x: 63
+      y: 4
       width: 8
       height: 12
     spriteID: 3d3cd3b241648f242ac7f73909c6d71c
@@ -413,7 +423,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 21, y: 104}
+    uvTransform: {x: 63, y: 4}
   - name: space_guy_walk_Frame_12
     originalName: 
     pivot: {x: 0.375, y: -0.25}
@@ -421,8 +431,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 4
+      x: 63
+      y: 24
       width: 8
       height: 12
     spriteID: 69b66e1c8cc0b37438b361cd8ad8f4e1
@@ -433,7 +443,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 4}
+    uvTransform: {x: 63, y: 24}
   - name: space_guy_walk_Frame_13
     originalName: 
     pivot: {x: 0.375, y: -0.25}
@@ -441,8 +451,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 24
+      x: 63
+      y: 44
       width: 8
       height: 12
     spriteID: 4158e5069ca1e8a4c8bd20b8ebd30069
@@ -453,7 +463,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 24}
+    uvTransform: {x: 63, y: 44}
   - name: space_guy_walk_Frame_14
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -461,8 +471,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
+      x: 44
+      y: 24
       width: 9
       height: 12
     spriteID: 971da9facef472040b6d5bcd28df213b
@@ -473,7 +483,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 44, y: 24}
   - name: space_guy_walk_Frame_15
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -481,8 +491,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 24
+      x: 44
+      y: 44
       width: 9
       height: 12
     spriteID: d8021950a1e842d49a9749c70ca4fdf3
@@ -493,7 +503,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 24}
+    uvTransform: {x: 44, y: 44}
   - name: space_guy_walk_Frame_16
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -501,8 +511,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 44
+      x: 44
+      y: 64
       width: 9
       height: 12
     spriteID: d11e51f12b1e19548bb5c7046c71396e
@@ -513,7 +523,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 44}
+    uvTransform: {x: 44, y: 64}
   - name: space_guy_walk_Frame_17
     originalName: 
     pivot: {x: 0.375, y: -0.25}
@@ -521,8 +531,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 44
+      x: 63
+      y: 64
       width: 8
       height: 12
     spriteID: 8ed714c20bf17f542943a3b66cc7020c
@@ -533,7 +543,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 44}
+    uvTransform: {x: 63, y: 64}
   - name: space_guy_walk_Frame_18
     originalName: 
     pivot: {x: 0.44444445, y: -0.25}
@@ -541,8 +551,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 64
+      x: 44
+      y: 84
       width: 9
       height: 12
     spriteID: 59c8bd34772789a44bbd2173743c764e
@@ -553,7 +563,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 64}
+    uvTransform: {x: 44, y: 84}
   - name: space_guy_walk_Frame_19
     originalName: 
     pivot: {x: 0.33333334, y: -0.25}
@@ -561,8 +571,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 84
+      x: 44
+      y: 104
       width: 9
       height: 12
     spriteID: b9cbb72077c38bf42b6eb0399b4a2ef7
@@ -573,7 +583,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 84}
+    uvTransform: {x: 44, y: 104}
   - name: space_guy_walk_Frame_20
     originalName: 
     pivot: {x: 0.44444445, y: -0.25}
@@ -581,8 +591,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 104
+      x: 44
+      y: 124
       width: 9
       height: 12
     spriteID: 3cb5ed66d6ab41c4c90e495d47a85c98
@@ -593,7 +603,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 104}
+    uvTransform: {x: 44, y: 124}
   - name: space_guy_walk_Frame_21
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -601,8 +611,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 64
+      x: 63
+      y: 84
       width: 8
       height: 12
     spriteID: 60cd1c5707cd8d545949b5a40fe25ea6
@@ -613,7 +623,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 64}
+    uvTransform: {x: 63, y: 84}
   - name: space_guy_walk_Frame_22
     originalName: 
     pivot: {x: 0.75, y: -0.25}
@@ -621,8 +631,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 84
+      x: 63
+      y: 104
       width: 8
       height: 12
     spriteID: b47963669bd4acf4ebdf85c99e3b2d92
@@ -633,7 +643,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 84}
+    uvTransform: {x: 63, y: 104}
   - name: space_guy_walk_Frame_23
     originalName: 
     pivot: {x: 0.75, y: -0.25}
@@ -641,8 +651,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 37
-      y: 104
+      x: 63
+      y: 124
       width: 8
       height: 12
     spriteID: 9e028cb3cf00b8f4abab287cbcf79eb1
@@ -653,7 +663,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 37, y: 104}
+    uvTransform: {x: 63, y: 124}
   - name: space_guy_walk_Frame_24
     originalName: 
     pivot: {x: 0.625, y: -0.25}
@@ -661,8 +671,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 4
+      x: 63
+      y: 144
       width: 8
       height: 12
     spriteID: 3c79810cb4d7fb9498c6482ec14ddf20
@@ -673,7 +683,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 4}
+    uvTransform: {x: 63, y: 144}
   - name: space_guy_walk_Frame_25
     originalName: 
     pivot: {x: 0.5, y: -0.25}
@@ -681,8 +691,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 53
-      y: 24
+      x: 63
+      y: 164
       width: 8
       height: 12
     spriteID: ecd8bf6eac493f24d8862cd5ba1ce96a
@@ -693,18 +703,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 53, y: 24}
+    uvTransform: {x: 63, y: 164}
   - name: space_guy_walk_Frame_26
     originalName: 
-    pivot: {x: 0, y: -1.4}
+    pivot: {x: 0.61538464, y: -0.33333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 69
-      y: 23
-      width: 3
-      height: 5
+      x: 4
+      y: 4
+      width: 13
+      height: 12
     spriteID: 50b8295db5a73934aadd64abd6755d9a
     spriteBone: []
     spriteOutline: []
@@ -713,7 +723,547 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 69, y: 23}
+    uvTransform: {x: 4, y: 4}
+  - name: space_guy_walk_Frame_28
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 44
+      width: 11
+      height: 12
+    spriteID: 0aef8091ddc762148b5f64defc1855cd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 44}
+  - name: space_guy_walk_Frame_29
+    originalName: 
+    pivot: {x: 0.5, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 63
+      y: 184
+      width: 8
+      height: 12
+    spriteID: 2a4d88c1952140445862ad881cf37054
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 63, y: 184}
+  - name: space_guy_walk_Frame_30
+    originalName: 
+    pivot: {x: 0.61538464, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 24
+      width: 13
+      height: 12
+    spriteID: a9d62b0a4a0e7f74c846ed0584e1f230
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 24}
+  - name: space_guy_walk_Frame_31
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 64
+      width: 11
+      height: 12
+    spriteID: dfa18776143860747a70467aa3fbcf17
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 64}
+  - name: space_guy_walk_Frame_32
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 84
+      width: 11
+      height: 12
+    spriteID: 1e782b3f8b71e1f4e9c8c9551f242cf8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 84}
+  - name: space_guy_walk_Frame_33
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 104
+      width: 11
+      height: 12
+    spriteID: 9cd7e249dd2bbcd42bd801d0f2a9231a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 104}
+  - name: space_guy_walk_Frame_34
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 124
+      width: 11
+      height: 12
+    spriteID: 2c1e417b896451c4098a58cdc0140cd3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 124}
+  - name: space_guy_walk_Frame_35
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 144
+      width: 11
+      height: 12
+    spriteID: 5caf5e9deaa9cd243a4939048476744b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 144}
+  - name: space_guy_walk_Frame_36
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 164
+      width: 11
+      height: 12
+    spriteID: f0df929ac8f62544692b3cf24e6d7a14
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 164}
+  - name: space_guy_walk_Frame_26
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 184
+      width: 11
+      height: 12
+    spriteID: b10876b30a5856e49ba81d4d80bb9b40
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 184}
+  - name: space_guy_walk_Frame_38
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 204
+      width: 11
+      height: 12
+    spriteID: 6d41c290e3c4a0e4e9f6e2561c3f8692
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 204}
+  - name: space_guy_walk_Frame_39
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 224
+      width: 11
+      height: 12
+    spriteID: e386104ad2b520b4e81d4ed7d33f2b48
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 224}
+  - name: space_guy_walk_Frame_26
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 4
+      width: 11
+      height: 12
+    spriteID: aaae3053f17a0be48b4828fec7fb5bd4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 4}
+  - name: space_guy_walk_Frame_41
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 24
+      width: 11
+      height: 12
+    spriteID: b39bdab627de5864898ebc3a6074fc5c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 24}
+  - name: space_guy_walk_Frame_42
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 44
+      width: 11
+      height: 12
+    spriteID: d582a6ac253b74f4bb4fb8eab4491f7a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 44}
+  - name: space_guy_walk_Frame_43
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 64
+      width: 11
+      height: 12
+    spriteID: b5edcca555cef7849b17ae3a6134501e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 64}
+  - name: space_guy_walk_Frame_44
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 84
+      width: 11
+      height: 12
+    spriteID: d4274fd7c6c990f47a8180be591467ad
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 84}
+  - name: space_guy_walk_Frame_45
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 104
+      width: 11
+      height: 12
+    spriteID: ff87f0cd2304dab4a932fd0e3f5dfe9d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 104}
+  - name: space_guy_walk_Frame_46
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 124
+      width: 11
+      height: 12
+    spriteID: 9c5471b24a35b7d4a9a770f942717aaf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 124}
+  - name: space_guy_walk_Frame_47
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 144
+      width: 11
+      height: 12
+    spriteID: 5e7a32ae3ed2c2c48a885f18f525cbd7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 144}
+  - name: space_guy_walk_Frame_48
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 164
+      width: 11
+      height: 12
+    spriteID: 1d4b351d7692a1c4d97a0b10ad2b29eb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 164}
+  - name: space_guy_walk_Frame_49
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 184
+      width: 11
+      height: 12
+    spriteID: 1abcebc9b50e90b4ba2cc17770025a57
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 184}
+  - name: space_guy_walk_Frame_50
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 204
+      width: 11
+      height: 12
+    spriteID: b86d61f5fc2c95e45a9877f0c5db3c36
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 204}
+  - name: space_guy_walk_Frame_51
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 25
+      y: 224
+      width: 11
+      height: 12
+    spriteID: 49787319ee458234d9990c4f0b043d43
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 224}
+  - name: space_guy_walk_Frame_52
+    originalName: 
+    pivot: {x: 0.54545456, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 4
+      width: 11
+      height: 12
+    spriteID: e891f369a527e6e4ab7ce5d4d2582cda
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 4}
+  - name: space_guy_walk_Frame_26
+    originalName: 
+    pivot: {x: 0.5, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 63
+      y: 204
+      width: 8
+      height: 12
+    spriteID: a618d1ebe1b3fd341b29f42442661c14
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 63, y: 204}
+  - name: space_guy_walk_Frame_26
+    originalName: 
+    pivot: {x: 0, y: -1.4}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 63
+      y: 243
+      width: 3
+      height: 5
+    spriteID: 60746840983c91545b30fed3e8e49044
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 63, y: 243}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -931,6 +1481,222 @@ ScriptedImporter:
         width: 8
         height: 12
       spriteId: ecd8bf6eac493f24d8862cd5ba1ce96a
+    - name: space_guy_walk_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: 0
+        y: 4
+        width: 13
+        height: 12
+      spriteId: 50b8295db5a73934aadd64abd6755d9a
+    - name: space_guy_walk_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 0aef8091ddc762148b5f64defc1855cd
+    - name: space_guy_walk_Frame_29
+      frameIndex: 29
+      cellRect:
+        x: 4
+        y: 3
+        width: 8
+        height: 12
+      spriteId: 2a4d88c1952140445862ad881cf37054
+    - name: space_guy_walk_Frame_30
+      frameIndex: 30
+      cellRect:
+        x: 0
+        y: 4
+        width: 13
+        height: 12
+      spriteId: a9d62b0a4a0e7f74c846ed0584e1f230
+    - name: space_guy_walk_Frame_31
+      frameIndex: 31
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: dfa18776143860747a70467aa3fbcf17
+    - name: space_guy_walk_Frame_32
+      frameIndex: 32
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 1e782b3f8b71e1f4e9c8c9551f242cf8
+    - name: space_guy_walk_Frame_33
+      frameIndex: 33
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 9cd7e249dd2bbcd42bd801d0f2a9231a
+    - name: space_guy_walk_Frame_34
+      frameIndex: 34
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 2c1e417b896451c4098a58cdc0140cd3
+    - name: space_guy_walk_Frame_35
+      frameIndex: 35
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 5caf5e9deaa9cd243a4939048476744b
+    - name: space_guy_walk_Frame_36
+      frameIndex: 36
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: f0df929ac8f62544692b3cf24e6d7a14
+    - name: space_guy_walk_Frame_37
+      frameIndex: 37
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: b10876b30a5856e49ba81d4d80bb9b40
+    - name: space_guy_walk_Frame_38
+      frameIndex: 38
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 6d41c290e3c4a0e4e9f6e2561c3f8692
+    - name: space_guy_walk_Frame_39
+      frameIndex: 39
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: e386104ad2b520b4e81d4ed7d33f2b48
+    - name: space_guy_walk_Frame_40
+      frameIndex: 40
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: aaae3053f17a0be48b4828fec7fb5bd4
+    - name: space_guy_walk_Frame_41
+      frameIndex: 41
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: b39bdab627de5864898ebc3a6074fc5c
+    - name: space_guy_walk_Frame_42
+      frameIndex: 42
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: d582a6ac253b74f4bb4fb8eab4491f7a
+    - name: space_guy_walk_Frame_43
+      frameIndex: 43
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: b5edcca555cef7849b17ae3a6134501e
+    - name: space_guy_walk_Frame_44
+      frameIndex: 44
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: d4274fd7c6c990f47a8180be591467ad
+    - name: space_guy_walk_Frame_45
+      frameIndex: 45
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: ff87f0cd2304dab4a932fd0e3f5dfe9d
+    - name: space_guy_walk_Frame_46
+      frameIndex: 46
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 9c5471b24a35b7d4a9a770f942717aaf
+    - name: space_guy_walk_Frame_47
+      frameIndex: 47
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 5e7a32ae3ed2c2c48a885f18f525cbd7
+    - name: space_guy_walk_Frame_48
+      frameIndex: 48
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 1d4b351d7692a1c4d97a0b10ad2b29eb
+    - name: space_guy_walk_Frame_49
+      frameIndex: 49
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 1abcebc9b50e90b4ba2cc17770025a57
+    - name: space_guy_walk_Frame_50
+      frameIndex: 50
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: b86d61f5fc2c95e45a9877f0c5db3c36
+    - name: space_guy_walk_Frame_51
+      frameIndex: 51
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: 49787319ee458234d9990c4f0b043d43
+    - name: space_guy_walk_Frame_52
+      frameIndex: 52
+      cellRect:
+        x: 2
+        y: 4
+        width: 11
+        height: 12
+      spriteId: e891f369a527e6e4ab7ce5d4d2582cda
+    - name: space_guy_walk_Frame_53
+      frameIndex: 53
+      cellRect:
+        x: 4
+        y: 4
+        width: 8
+        height: 12
+      spriteId: a618d1ebe1b3fd341b29f42442661c14
     - name: space_guy_walk_Frame_26
       frameIndex: 26
       cellRect:
@@ -938,7 +1704,7 @@ ScriptedImporter:
         y: 7
         width: 3
         height: 5
-      spriteId: 50b8295db5a73934aadd64abd6755d9a
+      spriteId: 60746840983c91545b30fed3e8e49044
     linkedCells: []
     parentIndex: -1
   platformSettings:
