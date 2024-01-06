@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Cyrcadian.PlayerSystems
 {
@@ -11,32 +12,45 @@ public class Player_animation_logic : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] AnimatorController animatorController;
     [SerializeField] SpriteRenderer hands;
+    [SerializeField] private HealthBar health;
+    [SerializeField] private PlayerControls controls;
 
     //  audio for sfx
+    [Header("Audio")]
     [SerializeField] AudioSource walkSFX;
     [SerializeField] AudioSource pushpullSFX;
+    [SerializeField] AudioSource hurtSFX;
+    [SerializeField] AudioSource deathSFX;
     private AudioSource currentsound;
+
+    [Header("Animation Timings (seconds)")]
+    [SerializeField] private float hurtTime;
+    private bool isAnimationLocked = false;
+
+    public UnityEvent Death;
 
     // Start is called before the first frame update
     void Start()
     {
         if(playerController == null)
-            playerController = this.gameObject.GetComponentInParent<PlayerController>();
+            playerController = gameObject.GetComponentInParent<PlayerController>();
 
-        animatorController = this.gameObject.GetComponent<AnimatorController>();
+        animatorController = gameObject.GetComponent<AnimatorController>();
+        health = GetComponentInChildren<HealthBar>();
+        controls = playerController.playerControls;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // If game is paused, do not follow through this script's update
-        if(playerController.gameStateManager.isPaused)
+        // If game is paused or the play is hurt, do not follow through this script's update
+        if(playerController.gameStateManager.isPaused || isAnimationLocked)
             return;
         else
 
                 // Faces the correct direction on the x-axis, and animates moving.
-                if(playerController.playerControls.Player.Move.IsInProgress()){
-                    
+                if(playerController.playerControls.Player.Move.IsInProgress())
+                {    
                     // If grabbing do a push or drag animation, else walk normally
                     if(!playerController.isGrabbing)
                     {
@@ -56,7 +70,7 @@ public class Player_animation_logic : MonoBehaviour
                         else
                             animatorController.CrossFade("Player Drag");
                     }
-                        
+                    // Play sfx of the pull, pull, or walk animation    
                     if(playerController.isGrabbing)
                         StartCoroutine(playSound(pushpullSFX));
                     else    
@@ -74,11 +88,37 @@ public class Player_animation_logic : MonoBehaviour
         else if(!playerController.isGrabbing)
             hands.enabled = false;
 
+
+        if(health._hp <= 0)
+            DeadPlayer();
+        else if(health.wasHit())
+            HurtPlayer();
+        
+
+    }
+
+    public void HurtPlayer()
+    {
+        isAnimationLocked = true;
+        animatorController.CrossFade("Player Hurt");
+        StartCoroutine(playSound(hurtSFX));
+        StartCoroutine(animationLockOut(hurtTime));
+        StartCoroutine(controlsLockOut(hurtTime));
+    }
+
+    public void DeadPlayer()
+    {
+        isAnimationLocked = true;
+        controls.Player.Disable();
+        animatorController.CrossFade("Player Death");
+        StartCoroutine(playSound(hurtSFX));
+        StartCoroutine(playSound(deathSFX));
+        Death.Invoke();
     }
 
 
     // Controlls what soundFX is playing
-    IEnumerator playSound(AudioSource sfx)
+    private IEnumerator playSound(AudioSource sfx)
     {       
         if(!sfx.isPlaying){
             sfx.Play();
@@ -87,7 +127,19 @@ public class Player_animation_logic : MonoBehaviour
 
         yield return new WaitForSeconds(.2f);
         currentsound = sfx;
-        
     }   
+
+    private IEnumerator animationLockOut(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isAnimationLocked = false;
+    }
+
+    private IEnumerator controlsLockOut(float time)
+    {
+        controls.Player.Disable();
+        yield return new WaitForSeconds(time);
+        controls.Player.Enable();
+    }    
 }
 }

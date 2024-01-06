@@ -22,9 +22,9 @@ public class Harmful_attack : MonoBehaviour
         switch(collider.gameObject.layer)
         {
            case 10:
-
+           
             if(collider.gameObject.GetComponentInChildren<HealthBar>() != null)
-            {
+            { 
                 collider.GetComponentInChildren<HealthBar>().ChangeHealth(-damage);
 
                 if(SFX != null)

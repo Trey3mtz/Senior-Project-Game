@@ -25,6 +25,10 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         private Image image;
         private int amountStacked;
 
+        [SerializeField] private AudioSource pickupSFX;
+        [SerializeField] private AudioSource slotSFX;
+        [SerializeField] private AudioSource removeSFX;
+
 
         public void InitializeItem(Item newItem, int newIndex, int amount)
         {
@@ -44,6 +48,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
             image.raycastTarget = false;
+            pickupSFX.Play();
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -62,14 +67,16 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
            {
                transform.SetParent(parentAfterDrag);
                image.raycastTarget = true;    
+               slotSFX.Play();
            }
            else
            {
                 Transform playerPosition = GameObject.Find("Player").transform;
                 World_Item.SpawnWorldItem(playerPosition.position, item, amountStacked);
                 parentUI.RemovedItemIndex(thisIndex);
+                removeSFX.Play();
 
-               Destroy(gameObject);          
+               Destroy(gameObject, removeSFX.clip.length);          
            }
        }
     }
