@@ -36,7 +36,8 @@ namespace Cyrcadian
 
             public void Awake()
             {       
-
+               _inventory.InitializeInventory();
+               
                 if (GameManager.Instance.PlayerData != null)
                 {   
                     Destroy(gameObject);
@@ -49,6 +50,7 @@ namespace Cyrcadian
                 //if(!FindAnyObjectByType<PlayerData>())
                     GameManager.Instance.PlayerData = this;
                     //DontDestroyOnLoad(gameObject);
+ 
             }
 
             private void Start()

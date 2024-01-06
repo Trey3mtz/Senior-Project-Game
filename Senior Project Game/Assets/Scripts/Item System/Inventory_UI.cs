@@ -12,8 +12,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
 public class Inventory_UI : MonoBehaviour
 { 
     private Inventory inventory;
-    [SerializeField] public Transform itemSlotContainer;
-    [SerializeField] public Transform itemSlotTemplate;
+    [SerializeField] public Transform itemSlotGrid;
+    [SerializeField] public Transform inventoryItem; 
 
     private void Awake()
     {
@@ -21,62 +21,77 @@ public class Inventory_UI : MonoBehaviour
                 Debug.Log("[Inv_UI(Awake)] Instance of gamemanager was null ");          
     }
 
-    private void Start()
-    {
-        //RefreshInventoryItems();
-    }
-
     // onInventoryChanged from the "Inventory" script subscribes to the event
-    public void SetInventory(Inventory inventory)
+    public void SetInventory(Inventory passedInventory)
     {          
-        this.inventory = inventory;
+        this.inventory = passedInventory;
 
         inventory.onInventoryChanged += Inventory_onInventoryChanged;
         RefreshInventoryItems();
+        SetInventorySlots();
     }
 
-    // An event to be called each time an inventory update happens
+    private void SetInventorySlots()
+    {   
+        int i = 0;
+        foreach(RectTransform Slot in itemSlotGrid)
+        {
+            Slot.GetComponent<InventorySlot>().slotIndex = i;
+            i++;
+        }
+    }
+
+    // An event to be called each time an inventory update happens. For example when something gets added or removed from inventory.
     private void Inventory_onInventoryChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
     }
 
-
-    // X and Y refer to the rows and column numbers of items in our inventory. 0,0 is the top left.
-    // If X is greater than the specified number, it starts again on a new row.
     private void RefreshInventoryItems()
-    {   
-            foreach(Transform child in itemSlotContainer)
+    {       // Clean out the slots in inventory UI
+            foreach(RectTransform Slot in itemSlotGrid)
             {
-                if(child == itemSlotTemplate) continue;
-                Destroy(child.gameObject);
+                foreach(Transform item in Slot)
+                {
+                    Destroy(item.gameObject);
+                }
             }
 
-            int x = 0;
-            int y = 0;
-            float itemSlotCellSize = 137f;
-  
-            foreach(Inventory.InventoryEntry entry in inventory.GetInventory())
-            {
-                RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
-                itemSlotRectTransform.gameObject.SetActive(true);
-                itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize * -1);
+            // index starts at 0
+            // Cache the list of entries from your inventory as we will use its data several times
+            int i = 0;
+            List<Inventory.InventoryEntry> freshInventory = inventory.GetInventory();
 
-                Image image = itemSlotRectTransform.Find("Item Icon").GetComponent<Image>();
-                image.sprite = entry.item.ItemSprite;
 
-                TextMeshProUGUI uiText = itemSlotRectTransform.Find("Item Amount").GetComponent<TextMeshProUGUI>();
-                if(entry.stackSize > 1)
-                    uiText.SetText("x" + entry.stackSize.ToString());
-                else
-                    uiText.SetText("");
+            foreach(RectTransform Slot in itemSlotGrid)
+            {  
+                if(freshInventory[i].item != null)
+                {
+                    RectTransform inventoryItemRectTransform = Instantiate(inventoryItem, Slot).GetComponent<RectTransform>();
+                    inventoryItemRectTransform.gameObject.SetActive(true);
 
-                x++;
+                    // This initializes the item in your inventory as a UI Drag and Droppable item element.
+                    inventoryItemRectTransform.GetComponent<DragDropItem>().InitializeItem(freshInventory[i].item, i, freshInventory[i].stackSize);
 
-                if(x > 3){ x = 0; y++; }
+                    TextMeshProUGUI uiText = inventoryItemRectTransform.Find("Item Amount").GetComponent<TextMeshProUGUI>();
+                    if(freshInventory[i].stackSize > 1)
+                        uiText.SetText("x" + freshInventory[i].stackSize.ToString());
+                    else
+                        uiText.SetText("");
+                }
+
+                i++;
             }
     }
 
+    public void ChangedSlottedItem(int a, int b)
+    {
+        inventory.SwapIndex(a, b);
+    }
 
+    public void RemovedItemIndex(int i)
+    {
+        inventory.RemoveItemAt(i);
+    }
 }
 }

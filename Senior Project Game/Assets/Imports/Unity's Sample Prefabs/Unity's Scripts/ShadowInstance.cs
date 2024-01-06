@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Cyrcadian
+namespace Cyrcadian.WorldTime
 {
 //execute late to be sure the manager are instantiated 
     [DefaultExecutionOrder(999)]

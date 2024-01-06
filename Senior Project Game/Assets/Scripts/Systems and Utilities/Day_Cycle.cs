@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 namespace Cyrcadian.WorldTime
 {
@@ -17,6 +18,13 @@ namespace Cyrcadian.WorldTime
     public class Day_Cycle : MonoBehaviour
     {
         private Light2D _light;
+        private float percetageDaylight;
+
+        // This is used alongside Slerp to return the Y value to be used for the sun's global light intensity. 
+        private Vector3 theoreticalSunPosition;
+        private Vector3 sunRise = new Vector3 (-1,0);
+        private Vector3 sunSet = new Vector3 (1,0);
+        private Vector3 midDay = new Vector3 (0,1);
 
         [SerializeField]
         private Time_World world_time;
@@ -28,6 +36,8 @@ namespace Cyrcadian.WorldTime
         {
             _light = GetComponent<Light2D>();
             world_time.WorldTimeChanged += OnWorldTimeChanged;
+
+            theoreticalSunPosition = sunRise;
         }
 
         private void OnDestroy()
@@ -35,15 +45,37 @@ namespace Cyrcadian.WorldTime
             world_time.WorldTimeChanged -= OnWorldTimeChanged;
         }
 
+        // This method simulates a theoretical sun's rotation around the 2D world, based on the percentage of 
+        // how much time has passed in 1 day. The X-axis is the horizon, and Y-axis is the sun's height.
         private void OnWorldTimeChanged(object sender, TimeSpan newTime)
         {
+            PercentOfDay(newTime);
 
-            _light.color = gradient.Evaluate(PercentOfDay(newTime));
+
+            if(percetageDaylight <= 0.5)
+                theoreticalSunPosition = Vector3.Slerp(sunRise,midDay, PercentageBetweenValues(0, 0.5f, percetageDaylight));
+            else if(percetageDaylight >= 0.5)
+                theoreticalSunPosition = Vector3.Slerp(midDay,sunSet, PercentageBetweenValues(0.5f, 1, percetageDaylight));
+            
+            _light.intensity = theoreticalSunPosition.y;
+            _light.color = gradient.Evaluate(percetageDaylight);
+            
         }
 
-        public float PercentOfDay(TimeSpan timeSpan)
+        public void PercentOfDay(TimeSpan timeSpan)
         {
-            return(float)timeSpan.TotalMinutes % Time_Constants.MinutesInDay / Time_Constants.MinutesInDay;
+            percetageDaylight = (float)timeSpan.TotalMinutes % Time_Constants.MinutesInDay / Time_Constants.MinutesInDay;
+        }
+
+        private float PercentageBetweenValues(float a, float b, float relavtivePosition)
+        {
+            return (relavtivePosition - a)/ (b - a);
+        }
+
+        
+        public float GetPercentageOfDay()
+        {
+            return percetageDaylight;
         }
     }
 }
