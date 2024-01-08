@@ -11,12 +11,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
     {
         public int slotIndex;
 
-        [SerializeField] private Inventory_UI playerInventoryUI;
-
-        private void Awake()
-        {
-            
-        }
+        // This slot is not a child of the Inventory UI, but the HUD UI. 
+        [SerializeField] private Inventory_UI parentUI;
 
         public void EquipInHand(GameObject equipped)
         {
@@ -37,8 +33,12 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 DragDropItem draggedItem = dropped.GetComponent<DragDropItem>();
                 draggedItem.parentAfterDrag = transform;
 
-                playerInventoryUI.ChangedSlottedItem(draggedItem.thisIndex, slotIndex);
+                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
                 draggedItem.thisIndex = slotIndex;
+            }
+            else
+            {
+                
             }
         }
     }

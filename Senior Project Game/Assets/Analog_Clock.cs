@@ -20,6 +20,10 @@ namespace Cyrcadian.WorldTime
 
         private void Awake()
         {   
+            // Use inspector to do this, this is just a precaution and shouldn't be relied on.
+            if(!world_time)
+                world_time = FindAnyObjectByType<Time_World>();
+
             world_time.WorldTimeChanged += OnWorldTimeChanged;
         }
 

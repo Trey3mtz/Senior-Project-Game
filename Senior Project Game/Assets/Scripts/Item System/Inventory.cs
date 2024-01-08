@@ -10,7 +10,7 @@ namespace Cyrcadian
     public class Inventory 
     {
         public event EventHandler onInventoryChanged;
-        public const int initialInventorySize = 12;
+        public const int initialInventorySize = 17;
 
 
         [Serializable]
@@ -20,7 +20,8 @@ namespace Cyrcadian
             public int stackSize;
         }
 
-        public List<InventoryEntry> _Inventory = new List<InventoryEntry>(12);
+        // Inventory entries 0 - 11 are in regular inventory. Entries 12-16 are in Hotbar Quick access.
+        public List<InventoryEntry> _Inventory = new List<InventoryEntry>(initialInventorySize);
 
         public void InitializeInventory()
         {
@@ -33,28 +34,42 @@ namespace Cyrcadian
             return _Inventory;
         }
 
-        // Current limitation: it will add more than the item's limit in some cases, add a case for "stacksize+amountAdd > MaxStackSize" later
+        // This is for when you automatically suck up items.
         public bool AddItem(Item newItem,  int amountAdd)
         {   
             bool foundSpace = false;
             int openSlot = _Inventory.FindIndex(e => e.item == null);
-
+            
             if(newItem.IsStackable())
             {
                 bool isAlreadyInInventory = false;
-
+                int i=0;
                 foreach(InventoryEntry entry in _Inventory)
                 {
-                    if(entry.item != null)
+                    if(entry.item != null && !isAlreadyInInventory)
                         if(entry.item.UniqueID == newItem.UniqueID && entry.stackSize < entry.item.MaxStackSize)
-                        {   
-                            entry.item = newItem;
-                            entry.stackSize += amountAdd;
-                           
-                            isAlreadyInInventory = true;
-                            foundSpace = true;
-                            // There existed a stack of this item, and there was space.
-                        }
+                        { 
+                            if(entry.stackSize + amountAdd <= entry.item.MaxStackSize)
+                             {
+                                entry.stackSize += amountAdd;
+                                isAlreadyInInventory = true;
+                                foundSpace = true;
+                             }   
+                            else
+                            {   // Find the amount spilled over the max, set the stacksize to the max, and do something with the left over
+                                int amountOver = entry.stackSize + amountAdd - entry.item.MaxStackSize; 
+                                entry.stackSize = entry.item.MaxStackSize;
+                                isAlreadyInInventory = true;
+
+                                if(!AddItem(newItem, amountOver))
+                                {
+                                    //{ INVENTORY HAS NO MORE SPACE for the left over } 
+                                } 
+                                else
+                                    foundSpace = true;    
+                            }
+                            // There existed a stack of this item, and there was some space.
+                        }i++;
                 }
 
                 if(!isAlreadyInInventory && openSlot != -1)
@@ -81,13 +96,51 @@ namespace Cyrcadian
             return foundSpace;
         }
 
-        public void SwapIndex(int oldIndex, int newIndex)
+        // This is for when you are choosing which slot to add an item into. Creates a new Entry and decides how it should be added.
+        public void AddItemAt(int entryIndex, Item newItem,  int amountAdd)
         {
+            InventoryEntry newEntry = new InventoryEntry(){ item = newItem, stackSize = amountAdd};
+
+            // If nothing was at index, replace the index with this entry. If there was something, see if they can stack.
+            if(_Inventory[entryIndex].item == null)
+                _Inventory[entryIndex] = newEntry;
+            else
+            { Debug.Log("add " +newItem.UniqueID+" to index " + entryIndex);
+                if(_Inventory[entryIndex].item.UniqueID == newItem.UniqueID && newItem.IsStackable())
+                {  
+                    if(_Inventory[entryIndex].stackSize + amountAdd <= newItem.MaxStackSize)
+                            _Inventory[entryIndex].stackSize += amountAdd;  
+                    else
+                    {   // If there is left over stackamounts, fill up the first stack, and find any spot for the leftover
+                        int amountOver = _Inventory[entryIndex].stackSize + amountAdd - newItem.MaxStackSize; 
+                        _Inventory[entryIndex].stackSize = newItem.MaxStackSize;
+
+                        if(!AddItem(newItem, amountOver))
+                        {
+                            // Aboslutely full, no room left for the leftover amount
+
+                            // Instantiate a world item and its amount to drop out of inventory
+                        }
+                    }
+                }
+                //else { Swap items spots logic handled already in UI's logic}       
+            }
+
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void SwapIndex(int oldIndex, int newIndex)
+        {   Debug.Log("Swapping indexes " + oldIndex + " and " + newIndex);
             InventoryEntry tempEntry = _Inventory[newIndex];
 
             _Inventory[newIndex] = _Inventory[oldIndex];
             _Inventory[oldIndex] = tempEntry;
+
+            Debug.Log(_Inventory[newIndex].item +" is whats in the newindex, and the oldindex holds "+ _Inventory[oldIndex].item );
+
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
+
         public void RemoveItem(InventoryEntry entry)
         {
             _Inventory.Remove(entry);

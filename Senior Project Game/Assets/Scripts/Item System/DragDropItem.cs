@@ -13,20 +13,19 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
     [Serializable]
     public class DragDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {    
-        [SerializeField] public Inventory_UI parentUI;
+        [SerializeField] private Inventory_UI parentUI;
         [HideInInspector] public Transform parentAfterDrag;
         [HideInInspector] public Item item;
-        [HideInInspector] public int thisIndex;
-
+         public int thisIndex;
+         public int amountStacked;
 
         [SerializeField] private float dampeningSpeed = .05f;
         private RectTransform draggingObjectRectTransform;
         private Vector3 veloctiy = Vector3.zero;
         private Image image;
-        private int amountStacked;
+
 
         [SerializeField] private AudioSource pickupSFX;
-        [SerializeField] private AudioSource slotSFX;
         [SerializeField] private AudioSource removeSFX;
 
 
@@ -49,6 +48,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             transform.SetAsLastSibling();
             image.raycastTarget = false;
             pickupSFX.Play();
+
+            parentUI.RemovedItemIndex(thisIndex);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -62,12 +63,11 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
 
        public void OnEndDrag(PointerEventData eventData)
        {
-
            if(eventData.pointerCurrentRaycast.gameObject != null)
-           {
-               transform.SetParent(parentAfterDrag);
-               image.raycastTarget = true;    
-               slotSFX.Play();
+           {          
+                transform.SetParent(parentAfterDrag);
+                image.raycastTarget = true;
+                parentUI.ItemReturnedToSlot(this, thisIndex);
            }
            else
            {
@@ -76,7 +76,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 parentUI.RemovedItemIndex(thisIndex);
                 removeSFX.Play();
 
-               Destroy(gameObject, removeSFX.clip.length);          
+               Destroy(gameObject, removeSFX.clip.length);
            }
        }
     }
