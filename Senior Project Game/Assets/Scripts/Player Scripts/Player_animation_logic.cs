@@ -27,6 +27,7 @@ public class Player_animation_logic : MonoBehaviour
     [SerializeField] private float hurtTime;
     private bool isAnimationLocked = false;
 
+    public UnityEvent Hurt;
     public UnityEvent Death;
 
     // Start is called before the first frame update
@@ -104,6 +105,7 @@ public class Player_animation_logic : MonoBehaviour
         StartCoroutine(playSound(hurtSFX));
         StartCoroutine(animationLockOut(hurtTime));
         StartCoroutine(controlsLockOut(hurtTime));
+        Hurt.Invoke();
     }
 
     public void DeadPlayer()

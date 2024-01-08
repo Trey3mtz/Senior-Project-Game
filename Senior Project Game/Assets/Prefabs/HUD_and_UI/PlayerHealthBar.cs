@@ -15,12 +15,9 @@ public class PlayerHealthBar : MonoBehaviour
     private int _hp;
     private bool justGotHit;
 
-    Animator animator;
     public AnimatorController animatorController;
     
     [SerializeField] GameObject PlayerHP;
-    [SerializeField] GameObject SyringeTip;
-    public GameObject bloodPrefab;
     private HealthBar pHP;
     
 
@@ -32,9 +29,8 @@ public class PlayerHealthBar : MonoBehaviour
         MaxHP = pHP.MaxHP;
         _hp = MaxHP;
         justGotHit = false;
-        animator = GetComponent<Animator>();
-        SetMaxHealth(MaxHP);
 
+        SetMaxHealth(MaxHP);
     }
 
     public void ChangeHealth(int amt)
@@ -67,11 +63,10 @@ public class PlayerHealthBar : MonoBehaviour
             StartCoroutine(deathTiming());
         }
         else if(health > slider.value){
-            animatorController.PlayTriggerAnimation("gainHealth");
+            animatorController.CrossFade("GainHealth");
         }
         else if(health < slider.value){
-            animatorController.PlayTriggerAnimation("hitHealth");
-            StartCoroutine(particleSplash());
+            animatorController.CrossFade("HitHealth");
         }
         
 
@@ -99,14 +94,7 @@ public class PlayerHealthBar : MonoBehaviour
     IEnumerator deathTiming()
     {
         yield return new WaitForSeconds(2f);
-        animatorController.PlayTriggerAnimation("Death");
-    }
-
-    IEnumerator particleSplash()
-    {
-        yield return new WaitForSeconds(0.075f);
-            var particle = Instantiate(bloodPrefab,SyringeTip.transform.position,SyringeTip.transform.rotation);
-            particle.transform.parent = SyringeTip.transform;
+        animatorController.CrossFade("Death");
     }
 
 }

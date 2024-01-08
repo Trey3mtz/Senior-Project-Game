@@ -580,7 +580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 62.7369, y: 7.1968}
+  m_AnchoredPosition: {x: 62.736908, y: 7.1967773}
   m_SizeDelta: {x: 11.4638, y: -3.2314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3261008215352060376
@@ -1334,7 +1334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 38.913513, y: -0.6684}
+  m_AnchoredPosition: {x: 38.913452, y: -0.668396}
   m_SizeDelta: {x: 82.827, y: 50.5688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &835039761087515230
@@ -5056,6 +5056,7 @@ GameObject:
   - component: {fileID: 191385815508337513}
   - component: {fileID: 8130954572312093371}
   - component: {fileID: 3069753766565682680}
+  - component: {fileID: 6240386471902056447}
   m_Layer: 5
   m_Name: PlayerHealthBar
   m_TagString: Untagged
@@ -5183,8 +5184,6 @@ MonoBehaviour:
   MaxHP: 0
   animatorController: {fileID: 8130954572312093371}
   PlayerHP: {fileID: 0}
-  SyringeTip: {fileID: 0}
-  bloodPrefab: {fileID: 3571037551166394187, guid: bb08ea9647c42f94da2e89657d2df984, type: 3}
 --- !u!95 &191385815508337513
 Animator:
   serializedVersion: 5
@@ -5195,7 +5194,7 @@ Animator:
   m_GameObject: {fileID: 7683627758197526092}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8cc71c390b15d1e499a0854c5611d22f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 55b51d7b9670023439e65e63beaad0d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5268,12 +5267,24 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.04, y: 0.18}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!225 &6240386471902056447
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7683627758197526092}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7787980794201854879
 GameObject:
   m_ObjectHideFlags: 0
