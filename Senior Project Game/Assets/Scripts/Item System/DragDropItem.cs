@@ -70,10 +70,10 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 parentUI.ItemReturnedToSlot(this, thisIndex);
            }
            else
-           {
+           {    
                 Transform playerPosition = GameObject.Find("Player").transform;
                 World_Item.SpawnWorldItem(playerPosition.position, item, amountStacked);
-                parentUI.RemovedItemIndex(thisIndex);
+                
                 removeSFX.Play();
 
                Destroy(gameObject, removeSFX.clip.length);
