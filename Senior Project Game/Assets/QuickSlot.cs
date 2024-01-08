@@ -19,7 +19,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             if(transform.childCount == 0)
             {
                 
-    
+        
                 
                
             }
@@ -27,18 +27,20 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
 
         public void OnDrop(PointerEventData eventData)
         {
-            if(transform.childCount == 0)
-            {
                 GameObject dropped = eventData.pointerDrag;
+                // Get rid of the original object, we only need its data. Otherwise clones would be left.
+                Destroy(eventData.pointerDrag);
                 DragDropItem draggedItem = dropped.GetComponent<DragDropItem>();
+            
+            if(transform.childCount == 0)
+            {   
                 draggedItem.parentAfterDrag = transform;
-
                 parentUI.DropItemIntoSlot(draggedItem, slotIndex);
                 draggedItem.thisIndex = slotIndex;
             }
             else
             {
-                
+                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
             }
         }
     }
