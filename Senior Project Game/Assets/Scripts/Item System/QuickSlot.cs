@@ -19,7 +19,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             if(transform.childCount == 0)
             {
                 
-        
+                
                 
                
             }
@@ -42,7 +42,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             {
                 parentUI.DropItemIntoSlot(draggedItem, slotIndex);
             }
-            
+
             slotdropSFX.Play();
         }
     }

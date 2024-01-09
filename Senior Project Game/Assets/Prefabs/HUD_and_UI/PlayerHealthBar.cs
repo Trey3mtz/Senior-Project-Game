@@ -47,7 +47,7 @@ public class PlayerHealthBar : MonoBehaviour
     }
 
     // New Method for Health HUD
-	public void SetMaxHealth(int health)
+	private void SetMaxHealth(int health)
 	{
 		slider.maxValue = MaxHP;
 		slider.value = health;
