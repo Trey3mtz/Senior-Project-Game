@@ -31,8 +31,12 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
 
         public void InitializeItem(Item newItem, int newIndex, int amount)
         {
-            image = GetComponent<Image>();
+            // If in a quickslot on the HUD, inventory UI will not be its parent so we need to double check
             parentUI = GetComponentInParent<Inventory_UI>();
+            if(!parentUI)
+                parentUI = GetComponentInParent<QuickSlot>().parentUI;
+
+            image = GetComponent<Image>();    
             draggingObjectRectTransform = transform as RectTransform;
 
             item = newItem;
@@ -49,6 +53,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             image.raycastTarget = false;
             pickupSFX.Play();
 
+            Debug.Log(parentUI);
             parentUI.RemovedItemIndex(thisIndex);
         }
 

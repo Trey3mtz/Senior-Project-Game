@@ -10,9 +10,9 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
     public class QuickSlot : MonoBehaviour, IDropHandler 
     {
         public int slotIndex;
-
-        // This slot is not a child of the Inventory UI, but the HUD UI. 
-        [SerializeField] private Inventory_UI parentUI;
+        // This slot is not a child of the Inventory UI, but the HUD UI. This will be set in the UI prefab
+        [SerializeField] public Inventory_UI parentUI;
+        [SerializeField] private AudioSource slotdropSFX;
 
         public void EquipInHand(GameObject equipped)
         {
@@ -42,6 +42,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             {
                 parentUI.DropItemIntoSlot(draggedItem, slotIndex);
             }
+            
+            slotdropSFX.Play();
         }
     }
 }
