@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine.AI;
+using System;
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
 {
@@ -19,10 +20,19 @@ public class Inventory_UI : MonoBehaviour
     [SerializeField] public Transform inventoryItem;
     [SerializeField] private AudioSource returnSFX;
 
-        private void Awake()
+    [SerializeField] InventorySlot[] inventorySlots;
+    [SerializeField] QuickSlot[] quickSlots;
+    int selectedSlot = 0;
+
+    private void Awake()
     {
             if (GameManager.Instance == null)
                 Debug.Log("[Inv_UI(Awake)] Instance of gamemanager was null ");          
+    }
+
+    private void Start()
+    {
+        ChangeSelectedSlot(0);
     }
 
     // onInventoryChanged from the "Inventory" script subscribes to the event
@@ -42,13 +52,17 @@ public class Inventory_UI : MonoBehaviour
         foreach(RectTransform Slot in itemSlotGrid)
         {
             Slot.GetComponent<InventorySlot>().slotIndex = i;
+            inventorySlots[i] = Slot.GetComponent<InventorySlot>();
             i++;
         }
 
+        int j = 0;
         foreach(RectTransform Slot in hotbarSlotGrid)
         {
             Slot.GetComponent<QuickSlot>().slotIndex = i;
+            quickSlots[j] = Slot.GetComponent<QuickSlot>();
             i++;
+            j++;
         }
     }
 
@@ -165,6 +179,31 @@ public class Inventory_UI : MonoBehaviour
     {
         returnSFX.Play();
         DropItemIntoSlot(droppedItem, slotIndex);
+    }
+
+    public void ChangeSelectedSlot(int newValue)
+    {
+        int newSlot = selectedSlot - newValue;
+
+        // There are only 5 quickslots, wrap to the other end if out of bounds
+        if(newSlot < 0)
+            newSlot = 4;
+        else if(newSlot > 4)
+            newSlot = 0;
+
+        if(selectedSlot != -1)
+            quickSlots[selectedSlot].Deselect();
+
+        quickSlots[newSlot].Select();
+        selectedSlot = newSlot;
+    }
+
+    public void SelectedSpecificSlot(int newValue)
+    {
+        quickSlots[selectedSlot].Deselect();
+
+        quickSlots[newValue].Select();
+        selectedSlot = newValue;
     }
 }
 }

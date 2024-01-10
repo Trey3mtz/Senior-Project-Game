@@ -53,7 +53,6 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             image.raycastTarget = false;
             pickupSFX.Play();
 
-            Debug.Log(parentUI);
             parentUI.RemovedItemIndex(thisIndex);
         }
 
