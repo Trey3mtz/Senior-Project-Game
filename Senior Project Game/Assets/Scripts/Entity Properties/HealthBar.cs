@@ -28,7 +28,8 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        _hp = MaxHP;
+        if(_hp <= 0)
+            _hp = MaxHP;
         _fill = transform.GetChild(0);
         justGotHit = false;
 
@@ -54,6 +55,11 @@ public class HealthBar : MonoBehaviour
             HideHealth();
         }
            
+    }
+
+    public void SetHealth(int value)
+    {
+        _hp = value;
     }
 
     public int currentHP(){

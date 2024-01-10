@@ -132,14 +132,18 @@ public class PlayerController : MonoBehaviour
 
     /**************************************************************************************************
         Future Note:    Usable items will be a class or scriptable object?
-            Use Item in hand:
+            Use Item in your currently Selected Hotbar Slot:
 
-                -...
-                -...      
+            Use Item Selected:
+
+                -Calls the inventoryUI script to use the item we have currently selected in Hotbar
+                -The players position, and gameobject is passed
+                -We don't know what the item is yet nor what it may do here, so we give it general information    
     */
     private void OnItem(InputAction.CallbackContext context)
     {
-
+        if(!pointerOverUI)
+            _inventoryUI.UseSelectedItem(gameObject.transform.position, gameObject);         
     }
 
     /**************************************************************************************************
@@ -184,6 +188,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /**************************************************************************************************
+        
+            Scroll through Hotbar:
+
+                -Uses the mouse wheel to scroll through the hotbar
+    */
     private void OnScroll(InputAction.CallbackContext context)
     {
         if(context.ReadValue<float>() < 0)
@@ -192,6 +202,13 @@ public class PlayerController : MonoBehaviour
             _inventoryUI.ChangeSelectedSlot(1);
     }
 
+    /**************************************************************************************************
+        
+            Select a specific Hotbar Slot:
+
+                -Keyboard numbers select a specific Hotbar Slot
+                -I thought it was nice to have both scrolling and traditional numbers as hotbar slots
+    */
     private void OnKeyboardNumber(InputAction.CallbackContext context)
     {
         int newValue = context.ReadValue<float>().ConvertTo<int>() -1;
@@ -200,6 +217,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
+// This is founds out if mouse is over UI. If yes, do not try to use the item selected
+bool pointerOverUI = false;
+void Update()
+{
+    pointerOverUI = EventSystem.current.IsPointerOverGameObject();
+}
     
 
     void FixedUpdate()

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,10 +28,16 @@ public class PlayerHealthBar : MonoBehaviour
         PlayerHP = GameObject.Find("PlayerHealth");
         pHP = PlayerHP.GetComponent<HealthBar>();
         MaxHP = pHP.MaxHP;
-        _hp = MaxHP;
+
         justGotHit = false;
 
         SetMaxHealth(MaxHP);
+    }
+
+    void Start()
+    {
+        _hp = pHP._hp;    
+        SetHealth(_hp);
     }
 
     public void ChangeHealth(int amt)
@@ -58,6 +65,7 @@ public class PlayerHealthBar : MonoBehaviour
     // New Method to adjust HUD health based on current HP
     public void SetHealth(int health)
 	{
+        _hp = health;
         if(health <= 0)
         {
             StartCoroutine(deathTiming());
