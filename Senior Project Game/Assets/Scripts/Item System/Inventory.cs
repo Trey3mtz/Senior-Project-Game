@@ -21,7 +21,7 @@ namespace Cyrcadian
         }
 
         // Inventory entries 0 - 11 are in regular inventory. Entries 12-16 are in Hotbar Quick access.
-        public List<InventoryEntry> _Inventory = new List<InventoryEntry>(initialInventorySize);
+        private List<InventoryEntry> _Inventory = new List<InventoryEntry>(initialInventorySize);
 
         public void InitializeInventory()
         {
@@ -155,9 +155,14 @@ namespace Cyrcadian
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void ConsumeItem(Item item)
+        public void ConsumeItem(int entryIndex)
         {
-        
+            _Inventory[entryIndex].stackSize -= 1;
+
+            if(_Inventory[entryIndex].stackSize <= 0)
+                RemoveItemAt(entryIndex);
+
+            onInventoryChanged?.Invoke(this, EventArgs.Empty); 
         }
 
         

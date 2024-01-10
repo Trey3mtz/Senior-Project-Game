@@ -29,13 +29,14 @@ namespace Cyrcadian
                 isPlayer = true;    
         }
 
-        // Right now, hunger is set to full on start, but ideally is saved and loaded
+        // Hunger should be loaded in by a seperate script
         // Will try make this work with both player and non-player things ideally
         // Player will have this visible in HUD but not the npcs
         private void Start()
         {
-            _hunger = StomachSize;
-            SetMaxHunger();
+            if(_hunger <= 0)
+                _hunger = StomachSize;
+
             StartCoroutine(hungerTickDown());    
         }
 
@@ -47,7 +48,7 @@ namespace Cyrcadian
             _hunger = Mathf.Clamp(_hunger + amount, 0, StomachSize);
 
             if(isPlayer)
-                VisualizeHungerChange();
+                VisualizeHunger();
         }
 
         public int CurrentHunger()
@@ -56,16 +57,18 @@ namespace Cyrcadian
         }
 
         // For the Player's HUD
-        private void SetMaxHunger()
+        public void SetHunger(int value)
         {
-            slider.maxValue = StomachSize;
-            slider.value = _hunger;
+            _hunger = value;
 
-            fill.color = gradient.Evaluate(1f);
+            //slider.maxValue = StomachSize;
+
+            if(isPlayer)
+                VisualizeHunger();
         }
         
         // For the Player's HUD
-        private void VisualizeHungerChange()
+        private void VisualizeHunger()
         {
             slider.value = _hunger;
             fill.color = gradient.Evaluate(slider.normalizedValue);

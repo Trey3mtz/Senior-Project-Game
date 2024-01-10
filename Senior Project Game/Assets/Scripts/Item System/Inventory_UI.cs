@@ -6,6 +6,8 @@ using TMPro;
 using Unity.VisualScripting.ReorderableList;
 using UnityEngine.AI;
 using System;
+using Unity.VisualScripting;
+using Unity.Collections;
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
 {
@@ -200,10 +202,31 @@ public class Inventory_UI : MonoBehaviour
 
     public void SelectedSpecificSlot(int newValue)
     {
+        if(newValue < 0 || newValue > quickSlots.Length)
+            return;
+
         quickSlots[selectedSlot].Deselect();
 
         quickSlots[newValue].Select();
         selectedSlot = newValue;
+    }
+
+    // Do nothing if slot is empty. If it's a consumable, tickdown the amount of this item you have in that slot.
+    // Call the item's abstract method Use() for it to do something.
+    public void UseSelectedItem(Vector3 target, GameObject player)
+    {
+        int slot = quickSlots[selectedSlot].UseItemInSlot();
+        if(inventory.GetInventory()[slot].item == null)
+            return;
+
+        Vector3Int newTarget = Vector3Int.CeilToInt(target);
+
+        inventory.GetInventory()[slot].item.Use(newTarget, player);
+
+        // If consumable tickdown stacksize. And if it drops to 0 or less, free up the entry.
+        if(inventory.GetInventory()[slot].item.Consumable)
+            inventory.ConsumeItem(slot); 
+        
     }
 }
 }

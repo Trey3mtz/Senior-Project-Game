@@ -39,12 +39,14 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
 
     [Tooltip("Sound triggered when using the item")]
     public AudioClip[] UseSound;
+    public Vector2 volume = new Vector2(0.5f, 0.5f);
+    public Vector2 pitch = new Vector2(1,1);
 
     public item_type itemType;
 
     // CanUse needs to see if it can be used on this tile, Use is the abstract logic of using that item
     public abstract bool CanUse(Vector3Int target);
-    public abstract bool Use(Vector3Int target);
+    public abstract bool Use(Vector3Int target, GameObject gameObject);
 
     //override this for item that needs a specific target (Like placing stationary box on ground tiles)
     public virtual bool NeedTarget()
@@ -56,6 +58,31 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
     public bool IsStackable()
     {
         return MaxStackSize > 1;
+    }
+
+    public AudioSource PlaySound(AudioSource audioSourceParam = null)
+    {
+        if(UseSound.Length == 0)
+        {
+            Debug.LogWarning($"Missing sound cliops for item {DisplayName}");
+            return null;
+        }
+
+        var source = audioSourceParam;
+        if(source == null)
+        {
+            var obj = new GameObject("Sound", typeof(AudioSource));
+            source = obj.GetComponent<AudioSource>();
+        }
+
+        // Set source config
+        source.clip = UseSound[0];
+
+        source.Play();
+
+        Destroy(source.gameObject, source.clip.length/source.pitch);
+
+        return source;
     }
 }
 
