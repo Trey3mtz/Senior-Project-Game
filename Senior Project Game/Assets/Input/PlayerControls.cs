@@ -80,6 +80,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""77a2e696-5438-4e48-91bb-9e630fdb05ce"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyboardNumber"",
+                    ""type"": ""Button"",
+                    ""id"": ""35d71144-00c0-4ae5-a7ad-a1c43ffc6845"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -366,6 +384,72 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d61efaa-6a5b-45e9-81b4-5780ca53006a"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f5bb830-0257-400b-be27-93dc86660975"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardNumber"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""151ce337-4270-46a0-96fb-5751e321082d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardNumber"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d64d9aa-07a7-4e27-9dfa-398537a2fc64"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardNumber"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a31abbd-a275-4860-b458-300eaed13755"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardNumber"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8dbe347-c261-469c-9e19-b8f0f8be48b8"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""KeyboardNumber"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -959,6 +1043,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         m_Player_Item = m_Player.FindAction("Item", throwIfNotFound: true);
+        m_Player_MouseScroll = m_Player.FindAction("MouseScroll", throwIfNotFound: true);
+        m_Player_KeyboardNumber = m_Player.FindAction("KeyboardNumber", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1038,6 +1124,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_Grab;
     private readonly InputAction m_Player_Item;
+    private readonly InputAction m_Player_MouseScroll;
+    private readonly InputAction m_Player_KeyboardNumber;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1048,6 +1136,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
         public InputAction @Item => m_Wrapper.m_Player_Item;
+        public InputAction @MouseScroll => m_Wrapper.m_Player_MouseScroll;
+        public InputAction @KeyboardNumber => m_Wrapper.m_Player_KeyboardNumber;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1075,6 +1165,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Item.started += instance.OnItem;
             @Item.performed += instance.OnItem;
             @Item.canceled += instance.OnItem;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
+            @KeyboardNumber.started += instance.OnKeyboardNumber;
+            @KeyboardNumber.performed += instance.OnKeyboardNumber;
+            @KeyboardNumber.canceled += instance.OnKeyboardNumber;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1097,6 +1193,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Item.started -= instance.OnItem;
             @Item.performed -= instance.OnItem;
             @Item.canceled -= instance.OnItem;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
+            @KeyboardNumber.started -= instance.OnKeyboardNumber;
+            @KeyboardNumber.performed -= instance.OnKeyboardNumber;
+            @KeyboardNumber.canceled -= instance.OnKeyboardNumber;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1285,6 +1387,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnInventory(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnItem(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
+        void OnKeyboardNumber(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

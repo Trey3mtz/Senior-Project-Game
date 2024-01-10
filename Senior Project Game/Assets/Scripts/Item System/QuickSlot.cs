@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
@@ -13,6 +14,24 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         // This slot is not a child of the Inventory UI, but the HUD UI. This will be set in the UI prefab
         [SerializeField] public Inventory_UI parentUI;
         [SerializeField] private AudioSource slotdropSFX;
+
+        [SerializeField] Image slotImage;
+        [SerializeField] Color selectedColor, notSelectedColor;
+
+        private void Awake()
+        {
+            Deselect();
+        }
+
+        public void Select()
+        {
+            slotImage.color = selectedColor;
+        }
+
+        public void Deselect()
+        {
+            slotImage.color = notSelectedColor;
+        }
 
         public void EquipInHand(GameObject equipped)
         {

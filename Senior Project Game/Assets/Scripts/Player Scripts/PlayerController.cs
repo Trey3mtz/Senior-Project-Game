@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Cyrcadian.PlayerSystems.InventorySystem;
+using Unity.VisualScripting;
 
 
 namespace Cyrcadian.PlayerSystems
@@ -11,7 +12,7 @@ namespace Cyrcadian.PlayerSystems
 public class PlayerController : MonoBehaviour
 {
     [SerializeReference] public GameStateManager gameStateManager;
-
+    [SerializeField] Inventory_UI _inventoryUI;
     [SerializeField] Camera _Camera;
 
 
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private InputAction move;
     private InputAction grab;
     private InputAction useItem;
+    private InputAction mouseScroll;
+    private InputAction keyboardNum;
 
     public bool isGrabbing = false;
 
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour
         pause           = playerControls.FindAction("Pause");
         useItem         = playerControls.FindAction("Item");
         inventoryOpen   = playerControls.FindAction("Inventory");
+        mouseScroll     = playerControls.FindAction("MouseScroll");
+        keyboardNum     = playerControls.FindAction("KeyboardNumber");
     }
 
 
@@ -60,6 +65,8 @@ public class PlayerController : MonoBehaviour
         pause.performed += OnPause;
         useItem.performed += OnItem;
         inventoryOpen.performed += OnInventory;
+        mouseScroll.performed += OnScroll;
+        keyboardNum.performed += OnKeyboardNumber;
         playerControls.Enable();
     }
 
@@ -73,6 +80,8 @@ public class PlayerController : MonoBehaviour
         pause.performed -= OnPause;
         useItem.performed -= OnItem;
         inventoryOpen.performed -= OnInventory;
+        mouseScroll.performed -= OnScroll;
+        keyboardNum.performed -= OnKeyboardNumber;
         playerControls.Disable();
     }
 
@@ -175,6 +184,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnScroll(InputAction.CallbackContext context)
+    {
+        if(context.ReadValue<float>() < 0)
+            _inventoryUI.ChangeSelectedSlot(-1);
+        else if(context.ReadValue<float>() > 0)
+            _inventoryUI.ChangeSelectedSlot(1);
+    }
+
+    private void OnKeyboardNumber(InputAction.CallbackContext context)
+    {
+        int newValue = context.ReadValue<float>().ConvertTo<int>() -1;
+        
+        _inventoryUI.SelectedSpecificSlot(newValue);
+    }
 
 
     
