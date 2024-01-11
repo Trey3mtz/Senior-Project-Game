@@ -27,7 +27,7 @@ public class PlayerHealthBar : MonoBehaviour
         // Grabs Players HealthBar, Sets its maxHP to it's Max, and sets visual HP at that amount
         PlayerHP = GameObject.Find("PlayerHealth");
         pHP = PlayerHP.GetComponent<HealthBar>();
-        MaxHP = pHP.MaxHP;
+        //MaxHP = pHP.MaxHP;
 
         justGotHit = false;
 
@@ -36,8 +36,8 @@ public class PlayerHealthBar : MonoBehaviour
 
     void Start()
     {
-        _hp = pHP._hp;    
-        SetHealth(_hp);
+        //_hp = pHP._hp;    
+        ChangedHealthByAmount(_hp);
     }
 
     public void ChangeHealth(int amt)
@@ -50,7 +50,7 @@ public class PlayerHealthBar : MonoBehaviour
 
         _hp = Mathf.Clamp(_hp + amt, 0, MaxHP);
 
-        SetHealth(_hp);
+        ChangedHealthByAmount(_hp);
     }
 
     // New Method for Health HUD
@@ -63,7 +63,7 @@ public class PlayerHealthBar : MonoBehaviour
 	}
 
     // New Method to adjust HUD health based on current HP
-    public void SetHealth(int health)
+    public void ChangedHealthByAmount(int health)
 	{
         _hp = health;
         if(health <= 0)

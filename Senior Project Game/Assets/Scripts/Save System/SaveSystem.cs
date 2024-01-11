@@ -14,8 +14,8 @@ namespace Cyrcadian.PlayerSystems
         /**************************************************************************
             </> Summary </>
 
-            There is a serializable struct made, SaveData, which holds other structs of data. (Example: PlayerData holds vector3 data for their last position)
-
+            There is a serializable struct made, SaveData, which holds other structs of data.
+            (Example: PlayerData holds vector3 data for their last position)
 
         
         */
@@ -47,7 +47,8 @@ namespace Cyrcadian.PlayerSystems
             string savefile = Application.persistentDataPath + "/save.sav";
 
                 try
-                {
+                {   // Check if the file we want to save even exists.
+                    // If yes, delete that save as we will be writing over it.
                     if (File.Exists(savefile))
                     {
                         Debug.Log("Data exists. Deleting old file and writing a new one!");
@@ -56,15 +57,17 @@ namespace Cyrcadian.PlayerSystems
                     else
                         {Debug.Log("Writing file for the first time!");}
                     
+                    // Using creating a new savefile with Filestream. Make sure to immediately close it afterwards.
                     using FileStream stream = File.Create(savefile);
                     stream.Close();
                         {Debug.Log("Closed stream!");}
+
+                    // This "Serializes" or turns our struct of s_CurrentData into a json readable file.
                     File.WriteAllText(savefile, JsonConvert.SerializeObject(s_CurrentData, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 }
                 catch (Exception e)
                 {
                     Debug.LogError($"Unable to save data due to: {e.Message} {e.StackTrace}");
-                
                 }
         }
         

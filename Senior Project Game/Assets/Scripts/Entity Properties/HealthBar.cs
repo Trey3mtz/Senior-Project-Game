@@ -1,72 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public int MaxHP = 10;
-    public int _hp;
-    private bool justGotHit;
-    private Transform _fill;
+    [SerializeField] int MaxHP = 10;
+    [SerializeField] int _hp;
+    
 
+    [Header("This section is for SpriteRender healthbars, you see them on npcs")]
     [SerializeField] SpriteRenderer border;
-    [SerializeField] SpriteRenderer fill;
+    [SerializeField] SpriteRenderer spriteFill;
 
+    private Transform _fillTransform;
     Coroutine hideHP;
 
-    PlayerHealthBar playerHP;
-    private bool yesPlayer = false;
-    // Start is called before the first frame update
+    [Header("This section is for Player only, or if a HealthBar needs to appear on the Game UI Canvas")]
+    [SerializeField] Slider slider;
+    [SerializeField] Gradient gradient;
+    [SerializeField] Image imageFill;
+    
+    
+    private bool isPlayer = false;
+    private bool justGotHit;
+
     void Awake()
     {
-        if(this.gameObject.CompareTag("Player")){
-            playerHP =  GameObject.Find("PlayerHealthBar").GetComponent<PlayerHealthBar>();
-            yesPlayer = true;
-        }
-           
+        if(this.gameObject.CompareTag("Player"))
+            isPlayer = true;     
     }
 
     void Start()
-    {
+    {   // Failsafe incase something starts out with 0 hp.
         if(_hp <= 0)
             _hp = MaxHP;
-        _fill = transform.GetChild(0);
+
+        _fillTransform = transform.GetChild(0);
         justGotHit = false;
 
         HideHealth();
+        if(isPlayer)
+        {
+            slider.maxValue = MaxHP;
+            VisualizePlayerHealth();
+        } 
     }
 
-    public void ChangeHealth(int amt){
-        if(_hp > Mathf.Clamp(_hp + amt, 0, MaxHP)){
+    // Pass in positive values to heal, and negative values to damage health
+    public void ChangeHealth(int amountChanged)
+    {
+        if(amountChanged < 0)
             justGotHit = true;
-        }
-        _hp = Mathf.Clamp(_hp + amt, 0, MaxHP);
-        _fill.localScale = new Vector3((float)(_hp)/MaxHP, _fill.localScale.y, _fill.localScale.z);
+        
+        // We don't want to overkill/overheal past our health, so we clamp it between 0 and our Max healthpool
+        _hp = Mathf.Clamp(_hp + amountChanged, 0, MaxHP);
 
 
-
-        if(yesPlayer)
-            playerHP.ChangeHealth(amt);
+        if(isPlayer)
+            VisualizePlayerHealth();
         else
             VisualizeHealth();
     
 
-        if(currentHP() <= 0){
-            HideHealth();
-        }
-           
+        if(CurrentHP() <= 0)
+        {   HideHealth();   } 
     }
 
     public void SetHealth(int value)
-    {
-        _hp = value;
-    }
+    {   _hp = value;    }
 
-    public int currentHP(){
-        return _hp;
-    }
+    public int CurrentHP()
+    {   return _hp;     }
 
-    public bool wasHit(){
+    public bool WasHit(){
         if(justGotHit){
             justGotHit = false;
             return true;
@@ -80,10 +87,13 @@ public class HealthBar : MonoBehaviour
         HideHealth();
     }
 
+    // For healthbars that are using Spriterender's and not some Canvas UI
     public void VisualizeHealth()
     {
+        _fillTransform.localScale = new Vector3((float)_hp/MaxHP, _fillTransform.localScale.y, _fillTransform.localScale.z);
+
         border.enabled = true;
-        fill.enabled = true;
+        spriteFill.enabled = true;
 
         // Resets the countdown to hide health
         if(hideHP != null)
@@ -95,6 +105,13 @@ public class HealthBar : MonoBehaviour
     public void HideHealth()
     {
         border.enabled = false;
-        fill.enabled = false;
+        spriteFill.enabled = false;
+    }
+
+    // For the Player's HUD, or any Canvas based Healthbar
+    public void VisualizePlayerHealth()
+    {   
+            slider.value = _hp;
+            spriteFill.color = gradient.Evaluate(slider.normalizedValue);       
     }
 }
