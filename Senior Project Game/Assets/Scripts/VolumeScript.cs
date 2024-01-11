@@ -10,46 +10,56 @@ public class VolumeScript : MonoBehaviour
     [SerializeField] private Volume night_volume;
     [SerializeField] Vignette vignette;
 
-    ColorParameter OriginalColor;
-    private float intensity;
+    [SerializeField] Animator animator;
+    [SerializeField] private AnimatorController animController;
+    [SerializeField] private SpriteRenderer placeholderSprite;
+
+    
     public float totalHurtTime = 0.4f;
     public float DayNightTransition = 5f;
-    
-    void Awake()
+
+
+    private bool justGotHit = false;
+
+    private void Awake()
     {
         hurt_volume.profile.TryGet(out vignette);
-        
-        OriginalColor =  vignette.color;
     }
 
     public void DayBreak()
-    {
-        StartCoroutine(NightTimeLeaves());
-    }
+    {   StartCoroutine(NightTimeLeaves());  }
 
     public void NightFall()
-    {
-        StartCoroutine(NightTimeArrives());
-    }
-
+    {   StartCoroutine(NightTimeArrives()); }
+        
+    
     public void TakeDamage()
-    {
-       hurt_volume.weight = 1;
-       StartCoroutine(LowerVolumeWeightAfterHit());
+    {  
+        animController.CrossFade("Volume Hurt");
+
+        //justGotHit = true;
+        //hurt_volume.weight = 1;
+        
+        //StartCoroutine(LowerVolumeWeightAfterHit());
     }
 
     IEnumerator LowerVolumeWeightAfterHit()
-    {
+    {   
+        justGotHit = false;
         yield return new WaitForSeconds(0.15f);
         float percentageComplete = 0;
         while(hurt_volume.weight > 0)
         {
+            if(justGotHit)
+                yield break;
+
             hurt_volume.weight = Mathf.Lerp(hurt_volume.weight, 0, percentageComplete);
             percentageComplete += Time.deltaTime / (totalHurtTime);
             yield return null;
         }
         
     }
+    
         //Under construction
         IEnumerator NightTimeArrives()
     {

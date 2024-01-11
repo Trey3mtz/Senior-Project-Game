@@ -69,7 +69,7 @@ namespace Cyrcadian
                 data.Inventory = new List<InventorySaveData>();
                 _inventory.Save(ref data.Inventory);
 
-                data.Health = _healthBar.currentHP();
+                data.Health = _healthBar.CurrentHP();
                 data.Hunger = _hungerBar.CurrentHunger();
                 data.Oxygen = _oxygenBar.CurrentHunger();
             }

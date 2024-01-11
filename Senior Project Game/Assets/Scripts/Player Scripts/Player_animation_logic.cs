@@ -90,16 +90,16 @@ public class Player_animation_logic : MonoBehaviour
             hands.enabled = false;
 
 
-        if(health._hp <= 0)
+        if(health.CurrentHP() <= 0)
             DeadPlayer();
-        else if(health.wasHit())
+        else if(health.WasHit())
             HurtPlayer();
         
 
     }
 
     public void HurtPlayer()
-    {
+    {   
         isAnimationLocked = true;
         animatorController.CrossFade("Player Hurt");
         StartCoroutine(playSound(hurtSFX));
