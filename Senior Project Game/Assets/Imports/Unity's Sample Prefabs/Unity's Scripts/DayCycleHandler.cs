@@ -115,17 +115,6 @@ namespace Cyrcadian.WorldTime
                 handler.SetRatio(ratio);
             }
         }
-        
-        public void Save(ref DayCycleHandlerSaveData data)
-        {
-            //data.TimeOfTheDay = m_CurrentTimeOfTheDay;
-        }
-        
-        public void Load(DayCycleHandlerSaveData data)
-        {
-            //m_CurrentTimeOfTheDay = data.TimeOfTheDay;
-            //StartingTime = m_CurrentTimeOfTheDay;
-        }
 
         public static void RegisterShadow(ShadowInstance shadow)
         {
@@ -134,7 +123,7 @@ namespace Cyrcadian.WorldTime
             //allow to be able to previz shadow in editor 
             if (!Application.isPlaying)
             {
-                var instance = GameObject.FindObjectOfType<DayCycleHandler>();
+                var instance = FindObjectOfType<DayCycleHandler>();
                 if (instance != null)
                 {
                     instance.m_Shadows.Add(shadow);
@@ -149,28 +138,7 @@ namespace Cyrcadian.WorldTime
 #endif
         }
 
-        public static void UnregisterShadow(ShadowInstance shadow)
-        {
-#if UNITY_EDITOR
-            //in the editor when not running, we find the instance manually. Less efficient but not a problem at edit time
-            //allow to be able to previz shadow in editor 
-            if (!Application.isPlaying)
-            {
-                var instance = GameObject.FindObjectOfType<DayCycleHandler>();
-                if (instance != null)
-                {
-                    instance.m_Shadows.Remove(shadow);
-                }
-            }
-            else
-            {
-#endif
-                if(GameManager.Instance?.DayCycleHandler != null)
-                    GameManager.Instance.DayCycleHandler.m_Shadows.Remove(shadow);
-#if UNITY_EDITOR
-            }
-#endif
-        }
+
 
         public static void RegisterLightBlender(LightInterpolator interpolator)
         {
