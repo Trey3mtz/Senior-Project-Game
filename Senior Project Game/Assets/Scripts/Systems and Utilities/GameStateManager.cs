@@ -1,3 +1,5 @@
+using System.Collections;
+using Cyrcadian;
 using Cyrcadian.PlayerSystems;
 using TMPro;
 using UnityEngine;
@@ -78,11 +80,11 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void QuitGame()
-    {
+    {   
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
-        #endif
+        #endif      
     }
 }

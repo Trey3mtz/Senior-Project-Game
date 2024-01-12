@@ -18,9 +18,10 @@ namespace Cyrcadian.WorldTime
             DayCycleHandler.RegisterShadow(this);
         }
 
+        // Enrique: No clue what this is for, but this code throws a "some objects were not cleaned up" error
         private void OnDisable()
         {
-            DayCycleHandler.UnregisterShadow(this);
+            //DayCycleHandler.UnregisterShadow(this);
         }
     }
 }

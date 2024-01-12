@@ -26,12 +26,6 @@ public class Inventory_UI : MonoBehaviour
     [SerializeField] QuickSlot[] quickSlots;
     int selectedSlot = 0;
 
-    private void Awake()
-    {
-            if (GameManager.Instance == null)
-                Debug.Log("[Inv_UI(Awake)] Instance of gamemanager was null ");          
-    }
-
     private void Start()
     {
         ChangeSelectedSlot(0);

@@ -3205,9 +3205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a421ea9a9a30db245be6f947fb2704bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StomachSize: 75
+  StomachSize: 150
   _hunger: 0
-  recentlyFed: 0
+  recentlyFed: 1
   hungerTickRate: 2
   recentlyFedDelay: 0
   slider: {fileID: 1396023144362038442}
@@ -3287,9 +3287,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_MinValue: 0
-  m_MaxValue: 50
+  m_MaxValue: 150
   m_WholeNumbers: 1
-  m_Value: 50
+  m_Value: 150
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

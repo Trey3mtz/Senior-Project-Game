@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 
 using Cyrcadian.PlayerSystems;
 using Cyrcadian.WorldTime;
+using TMPro;
 
 namespace Cyrcadian
 {
@@ -14,39 +15,28 @@ namespace Cyrcadian
     /// The GameManager is the entry point to all the game system. It's execution order is set very low to make sure
     /// its Awake function is called as early as possible so the instance if valid on other Scripts. 
     /// </summary>
-    [DefaultExecutionOrder(-9999)]
+    //[DefaultExecutionOrder(-9999)]
     public class GameManager : MonoBehaviour
     {
         private static GameManager s_Instance;
-        
-        
-#if UNITY_EDITOR
-        //As our manager run first, it will also be destroyed first when the app will be exiting, which lead to s_Instance
-        //to become null and so will trigger another instantiate in edit mode (as we dynamically instantiate the Manager)
-        //so this is set to true when destroyed, so we do not reinstantiate a new one
-        private static bool s_IsQuitting = false;
-#endif
         public static GameManager Instance 
-        {
+        { 
             get
-            {     
-#if UNITY_EDITOR
-                if (!Application.isPlaying|| s_IsQuitting )
-                {
-                    //return null;
-                    //return s_Instance;
+            {   
+                if(!s_Instance)
+                {  
+                    // NOTE: Read docs to see directory requirements for Resources.Load! 
+                    // https://docs.unity3d.com/ScriptReference/Resources.Load.html
+                    var prefab = Resources.Load<GameObject>("GameManager");
+                    // Create the prefab in the scene
+                    var inScene = Instantiate<GameObject>(prefab);
+                    // Try to find the instance inside the prefab
+                    s_Instance = inScene.GetComponentInChildren<GameManager>();
+                    // Guess there isn't one, add one
+                    if (!s_Instance) s_Instance = inScene.AddComponent<GameManager>();
+                    // Mark root as DontDestroyOnLoad();
+                    DontDestroyOnLoad(s_Instance.transform.root.gameObject);                    
                 }
-                
-                    
-                
-                if (s_Instance == null)
-                {
-                    //in editor, we can start any scene to test, so we are not sure the game manager will have been
-                    //created by the first scene starting the game. So we load it manually. This check is useless in
-                    //player build as the 1st scene will have created the GameManager so it will always exists.
-                   Instantiate(Resources.Load<GameManager>("GameManager"));
-                }
-#endif
              return s_Instance;
             }
         }
@@ -63,9 +53,6 @@ namespace Cyrcadian
         
         // Will return the ratio of time for the current day between 0 (00:00) and 1 (23:59).
         public float CurrentDayRatio => m_CurrentTimeOfTheDay / DayDurationInSeconds;
-
-        //[Header("Market")] 
-        //public Item[] MarketEntries;
         
         [Header("Time settings")]
         [Min(1.0f)] 
@@ -87,8 +74,10 @@ namespace Cyrcadian
 
         private void Awake()
         { 
-            s_Instance = this;
-            DontDestroyOnLoad(gameObject);
+            if(s_Instance != null && s_Instance != this)
+            {   Destroy(gameObject);   }
+            else
+                s_Instance = this;
             
             m_IsTicking = true;
             
@@ -114,13 +103,14 @@ namespace Cyrcadian
             
             //UIHandler.SceneLoaded();
         }
-
-#if UNITY_EDITOR
-        private void OnDestroy()
+    
+        // For when the game is over/done, destroy this singleton 
+        // So the next time we try accessing, we will have a fresh one
+        public void DestroyGameManager()
         {
-            s_IsQuitting = true;
+            Destroy(gameObject);
+            s_Instance = null;    // Because destroy doesn't happen until end of frame
         }
-#endif
 
         private void Update()
         {

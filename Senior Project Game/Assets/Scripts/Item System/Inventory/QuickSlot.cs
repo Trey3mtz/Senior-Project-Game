@@ -54,7 +54,6 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         // Simply returns the Invetory index this slot is at. Inventory_UI script will handle the logic of using items.
         public int UseItemInSlot()
         {
-            Debug.Log("You tried to use item in Hotbar Slot #" + (slotIndex-11));
             return slotIndex;
         }
 
