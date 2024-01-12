@@ -15,6 +15,7 @@ public class Hurt_entity : MonoBehaviour
     {
         if(!hitbox)
             hitbox = GetComponent<Collider2D>();
+        if(!hp)
         hp = GetComponentInChildren<HealthBar>();
     }
 
@@ -37,6 +38,7 @@ public class Hurt_entity : MonoBehaviour
                     else
                         Instantiate(impactPrefab,collider.ClosestPoint(transform.position),Quaternion.Euler(0.0f, -180f, 0.0f));
 
+                    Debug.Log("Turning off Hit box");
                     hitbox.enabled = false;
                     StartCoroutine(Iframes());
                     break;

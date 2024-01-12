@@ -5,30 +5,31 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] int MaxHP = 10;
-    [SerializeField] int _hp;
-    
+    [SerializeField] private int MaxHP = 10;
+    [SerializeField] private int _hp;
+    [SerializeField] private float iFrames = 0.5f;
 
-    [Header("This section is for SpriteRender healthbars, you see them on npcs")]
+    [Header("This section is for following healthbars only")]
     [SerializeField] SpriteRenderer border;
     [SerializeField] SpriteRenderer spriteFill;
 
     private Transform _fillTransform;
     Coroutine hideHP;
 
-    [Header("This section is for Player only, or if a HealthBar needs to appear on the Game UI Canvas")]
+    [Header("This section is for Canvas UI healthbars only")]
     [SerializeField] Slider slider;
     [SerializeField] Gradient gradient;
     [SerializeField] Image imageFill;
     
     
     private bool isPlayer = false;
-    private bool justGotHit;
+    private bool justGotHit = false;
+    private bool isInvincible = false;
 
     void Awake()
     {
         if(this.gameObject.CompareTag("Player"))
-            isPlayer = true;     
+            isPlayer = true;  
     }
 
     void Start()
@@ -48,14 +49,23 @@ public class HealthBar : MonoBehaviour
     }
 
     // Pass in positive values to heal, and negative values to damage health
+    // If its negative, activate iFrames feature
     public void ChangeHealth(int amountChanged)
-    {
+    {   
+        if(amountChanged < 0)
+        {
+            if(isInvincible)
+                return;
+            else  
+                StartCoroutine(InvincibilityFrames());   
+        }
+
+
         if(amountChanged < 0)
             justGotHit = true;
         
         // We don't want to overkill/overheal past our health, so we clamp it between 0 and our Max healthpool
         _hp = Mathf.Clamp(_hp + amountChanged, 0, MaxHP);
-
 
         if(isPlayer)
             VisualizePlayerHealth();
@@ -79,6 +89,13 @@ public class HealthBar : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    IEnumerator InvincibilityFrames()
+    {
+        isInvincible = true;        
+        yield return new WaitForSeconds(iFrames);
+        isInvincible = false;
     }
 
     IEnumerator HideTimer()

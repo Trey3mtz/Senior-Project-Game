@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Media;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -8,56 +9,34 @@ public class VolumeScript : MonoBehaviour
 {   
     [SerializeField] private Volume hurt_volume;
     [SerializeField] private Volume night_volume;
-    [SerializeField] Vignette vignette;
 
     [SerializeField] Animator animator;
     [SerializeField] private AnimatorController animController;
     [SerializeField] private SpriteRenderer placeholderSprite;
 
-    
-    public float totalHurtTime = 0.4f;
     public float DayNightTransition = 5f;
 
 
-    private bool justGotHit = false;
-
-    private void Awake()
-    {
-        hurt_volume.profile.TryGet(out vignette);
-    }
-
     public void DayBreak()
-    {   StartCoroutine(NightTimeLeaves());  }
+    {   StartCoroutine(NightTimeLeaves());      }
 
     public void NightFall()
-    {   StartCoroutine(NightTimeArrives()); }
-        
-    
+    {   StartCoroutine(NightTimeArrives());     }
+ 
     public void TakeDamage()
-    {  
-        animController.CrossFade("Volume Hurt");
-
-        //justGotHit = true;
-        //hurt_volume.weight = 1;
+    {   animController.CrossFade("Volume Hurt");}
         
-        //StartCoroutine(LowerVolumeWeightAfterHit());
-    }
-
-    IEnumerator LowerVolumeWeightAfterHit()
+    // This coroutine is for lowering specific volumes slowly to zero over a period of time
+    IEnumerator LowerVolumeWeightAfterHit(Volume volumeBeingLowered, float transitionTime)
     {   
-        justGotHit = false;
         yield return new WaitForSeconds(0.15f);
         float percentageComplete = 0;
-        while(hurt_volume.weight > 0)
+        while(volumeBeingLowered.weight > 0)
         {
-            if(justGotHit)
-                yield break;
-
-            hurt_volume.weight = Mathf.Lerp(hurt_volume.weight, 0, percentageComplete);
-            percentageComplete += Time.deltaTime / (totalHurtTime);
+            volumeBeingLowered.weight = Mathf.Lerp(volumeBeingLowered.weight, 0, percentageComplete);
+            percentageComplete += Time.deltaTime / (transitionTime);
             yield return null;
-        }
-        
+        } 
     }
     
         //Under construction
