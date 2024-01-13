@@ -29,12 +29,14 @@ public class World_Item : MonoBehaviour
         private TextMeshPro textMeshPro;
         private int amountDroped;
         private Collider2D hitbox;
+        private Tooltip_Trigger tooltip;
         
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
         hitbox = GetComponent<Collider2D>();
+        tooltip = GetComponent<Tooltip_Trigger>();
         amountDroped = 1;
     }
 
@@ -42,6 +44,9 @@ public class World_Item : MonoBehaviour
     {
         this.item = item;
         spriteRenderer.sprite = item.ItemSprite;
+        tooltip.header = item.Tooltip_header;
+        tooltip.content = item.Tooltip_content;
+
         if(amountDroped > 1)
             textMeshPro.SetText(amountDroped.ToString());
         else
