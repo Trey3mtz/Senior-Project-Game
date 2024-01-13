@@ -11,6 +11,22 @@ namespace Cyrcadian.PlayerSystems
 {
 public class PlayerController : MonoBehaviour
 {
+        /// <summary>
+        ///
+        ///     This script is ONLY for taking in inputs from Controllers/Keyboard. If you want to create a new control or
+        ///     ability that uses some button press, you must first go to the PlayerInput asset under "/Asset/Input Controls".
+        ///     If you want to learn more about Unity's Input System watch "https://youtu.be/m5WsmlEOFiA?si=eBXWSUFplcAVH1U_".
+        ///     
+        ///     Setting up a new input in this script follows this format:
+        ///                 - Create a private local InputAction, all lowercase for uniformity.      
+        ///                 - In Awake() set that variable to what ever you named it in the PlayerInput asset
+        ///                 - Follow the OnEnble / OnDisable format. The += means to "Subscribe" using Unity's Event System
+        ///                 - What follows the += symbol the name of the new method you'll make to house the logic
+        ///                 - Make the method private with the return type void. Names of methods must start with "On" for uniformity
+        ///                 - Put (InputAction.CallbackContext context) as the only parameter of this method. FINISHED. 
+        /// 
+        /// </summary>  
+        
     [SerializeReference] public GameStateManager gameStateManager;
     [SerializeField] Inventory_UI _inventoryUI;
     [SerializeField] Camera _Camera;
@@ -22,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerData playerData;
 
+    // Each InputAction must have its own local variable placed here
     private InputAction pause;
     private InputAction inventoryOpen;
     private InputAction look;
@@ -53,8 +70,7 @@ public class PlayerController : MonoBehaviour
         keyboardNum     = playerControls.FindAction("KeyboardNumber");
     }
 
-
-
+    // Have all inputs subscribe to a method, so that it is called every time the InputAction is performed
     void OnEnable()
     {
         move.performed += OnMove;
@@ -70,6 +86,7 @@ public class PlayerController : MonoBehaviour
         playerControls.Enable();
     }
 
+    // Unsubscribe once you want to disable controls
     void OnDisable()
     {
         move.performed -= OnMove;
@@ -85,8 +102,7 @@ public class PlayerController : MonoBehaviour
         playerControls.Disable();
     }
 
-    /**************************************************************************************************
-        
+    /**************************************************************************************************  
             Movement:
 
                 -Reads the values given and put them into a variable for movement
@@ -102,7 +118,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-
             Grab:
 
                 -If grab was just pressed and something is in range, you isGrabbing
@@ -119,7 +134,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        
             Look:
 
                 -Reads the values given and put them into a variable for camera control
@@ -131,9 +145,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        Future Note:    Usable items will be a class or scriptable object?
-            Use Item in your currently Selected Hotbar Slot:
-
             Use Item Selected:
 
                 -Calls the inventoryUI script to use the item we have currently selected in Hotbar
@@ -147,7 +158,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        
             Pause Game:
 
                 -If pause is pressed and isn't yet paused, pause game
@@ -168,7 +178,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        BIG DESIGN QUESTION:   Should we NOT pause the game while looking at inventoryOpen to create more tension?
+        DESIGN QUESTION:   Should we NOT pause the game while looking at inventoryOpen to create more tension?
             inventoryOpen:
 
                 -Opens Inventory UI if it isn't open
@@ -189,7 +199,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        
             Scroll through Hotbar:
 
                 -Uses the mouse wheel to scroll through the hotbar
@@ -203,7 +212,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /**************************************************************************************************
-        
             Select a specific Hotbar Slot:
 
                 -Keyboard numbers select a specific Hotbar Slot
@@ -217,7 +225,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-// This is founds out if mouse is over UI. If yes, do not try to use the item selected
+// This finds out if mouse is over UI. If yes, do not try to use the hotbar slot selected
 bool pointerOverUI = false;
 void Update()
 {

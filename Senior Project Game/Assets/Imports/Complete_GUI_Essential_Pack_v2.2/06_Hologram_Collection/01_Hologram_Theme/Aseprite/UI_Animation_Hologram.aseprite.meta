@@ -1,0 +1,2376 @@
+fileFormatVersion: 2
+guid: 8c08e4edf3e6fd74fa8d06aa33610916
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: UI_Animation_Hologram_Frame_0
+    originalName: 
+    pivot: {x: 0.49999997, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 247
+      width: 32
+      height: 32
+    spriteID: 2d5459cf23a9a9d40991b18e8c027941
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 247}
+  - name: UI_Animation_Hologram_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 84
+      y: 247
+      width: 30
+      height: 30
+    spriteID: 7f358f78c71bf3a479549c8ebc33c509
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 84, y: 247}
+  - name: UI_Animation_Hologram_Frame_2
+    originalName: 
+    pivot: {x: 0.50000006, y: -0.071428575}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 236
+      y: 247
+      width: 28
+      height: 28
+    spriteID: 887103c35c90b0d4bab2ecdcc6b742e9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 236, y: 247}
+  - name: UI_Animation_Hologram_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 122
+      y: 247
+      width: 30
+      height: 30
+    spriteID: 950a326d5429c8947899ee3ab7cda086
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 122, y: 247}
+  - name: UI_Animation_Hologram_Frame_4
+    originalName: 
+    pivot: {x: 0.49999997, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 247
+      width: 32
+      height: 32
+    spriteID: 8acc6300e5650264a8012c72519ab6bb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 247}
+  - name: UI_Animation_Hologram_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 160
+      y: 247
+      width: 30
+      height: 30
+    spriteID: c9c3690b44e89bf42b423bd2702a1c1f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 160, y: 247}
+  - name: UI_Animation_Hologram_Frame_6
+    originalName: 
+    pivot: {x: 0.50000006, y: -0.071428575}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 272
+      y: 247
+      width: 28
+      height: 28
+    spriteID: 42cee8ff3f791ea4e898b36f7732dc2f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 272, y: 247}
+  - name: UI_Animation_Hologram_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.033333335}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 198
+      y: 247
+      width: 30
+      height: 30
+    spriteID: eaf616f8d736e7143a0710e647fe66e1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 198, y: 247}
+  - name: UI_Animation_Hologram_Frame_8
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 308
+      y: 247
+      width: 32
+      height: 19
+    spriteID: 6284eb6e499828f4c8ae2ad690534596
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 308, y: 247}
+  - name: UI_Animation_Hologram_Frame_9
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 348
+      y: 247
+      width: 32
+      height: 19
+    spriteID: fd4ab4d089b61e14da59ca25551f87bc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 348, y: 247}
+  - name: UI_Animation_Hologram_Frame_10
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 388
+      y: 247
+      width: 32
+      height: 19
+    spriteID: 867e4808cbbbd0d44a8be454604ff28c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 388, y: 247}
+  - name: UI_Animation_Hologram_Frame_11
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 428
+      y: 247
+      width: 32
+      height: 19
+    spriteID: cfba31a3fd5509c4bab1e79983ab35f1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 428, y: 247}
+  - name: UI_Animation_Hologram_Frame_12
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 468
+      y: 247
+      width: 32
+      height: 19
+    spriteID: 4fa988a6e6892444985a3db8c1a75aa8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 468, y: 247}
+  - name: UI_Animation_Hologram_Frame_13
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 292
+      y: 220
+      width: 32
+      height: 19
+    spriteID: e2d95679ce8c24b498127a1fb36b2e43
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 292, y: 220}
+  - name: UI_Animation_Hologram_Frame_14
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 332
+      y: 220
+      width: 32
+      height: 19
+    spriteID: db3caed5c2239944893d686e765065f2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 332, y: 220}
+  - name: UI_Animation_Hologram_Frame_15
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 372
+      y: 220
+      width: 32
+      height: 19
+    spriteID: dcd3a0495ca20224a989576cc2d1e54a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 372, y: 220}
+  - name: UI_Animation_Hologram_Frame_16
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 412
+      y: 220
+      width: 32
+      height: 19
+    spriteID: f36b032ba2456a74d970eeda879b0713
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 412, y: 220}
+  - name: UI_Animation_Hologram_Frame_17
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 452
+      y: 220
+      width: 32
+      height: 19
+    spriteID: 1961e669d2958df4898872383c1472ce
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 452, y: 220}
+  - name: UI_Animation_Hologram_Frame_18
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 287
+      width: 32
+      height: 19
+    spriteID: 97c2dbf74ff801a4bbab13595b70f15f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 287}
+  - name: UI_Animation_Hologram_Frame_19
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 287
+      width: 32
+      height: 19
+    spriteID: abcd1303fd57ea944a7e47dbf297721a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 287}
+  - name: UI_Animation_Hologram_Frame_20
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 4
+      width: 64
+      height: 19
+    spriteID: 777e10f43fb502040b56c5981903b78c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 4}
+  - name: UI_Animation_Hologram_Frame_21
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 31
+      width: 64
+      height: 19
+    spriteID: 1c5f7ac54be6e2d449a1dc2c61cfe2ac
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 31}
+  - name: UI_Animation_Hologram_Frame_22
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 58
+      width: 64
+      height: 19
+    spriteID: 422a6800fbec056439895917b49a5c8b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 58}
+  - name: UI_Animation_Hologram_Frame_23
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 85
+      width: 64
+      height: 19
+    spriteID: 19d770899a8a68347902d72eff09af1f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 85}
+  - name: UI_Animation_Hologram_Frame_24
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 112
+      width: 64
+      height: 19
+    spriteID: 47afb52abaf6e6a448276e28b1d0d02c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 112}
+  - name: UI_Animation_Hologram_Frame_25
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 420
+      y: 139
+      width: 64
+      height: 19
+    spriteID: 7652bf18fb05755488e99e3259dae0df
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 420, y: 139}
+  - name: UI_Animation_Hologram_Frame_26
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 166
+      width: 64
+      height: 19
+    spriteID: c5199eb22ed4ca4439f00a3be0cdbfde
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 166}
+  - name: UI_Animation_Hologram_Frame_27
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 76
+      y: 166
+      width: 64
+      height: 19
+    spriteID: 766169f6851f48f4a93ac540d0835c4b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 76, y: 166}
+  - name: UI_Animation_Hologram_Frame_28
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 148
+      y: 166
+      width: 64
+      height: 19
+    spriteID: 3e7bfa711a5e9e446a38425335d7ecd8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 148, y: 166}
+  - name: UI_Animation_Hologram_Frame_29
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 220
+      y: 166
+      width: 64
+      height: 19
+    spriteID: 20f57efeea94dfe4081e4d4096d09dae
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 220, y: 166}
+  - name: UI_Animation_Hologram_Frame_30
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 292
+      y: 166
+      width: 64
+      height: 19
+    spriteID: 8024d7528dd098243aeb7fba8897a11b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 292, y: 166}
+  - name: UI_Animation_Hologram_Frame_31
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 364
+      y: 166
+      width: 64
+      height: 19
+    spriteID: eb27016c094f5c741ba78a4074035a22
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 364, y: 166}
+  - name: UI_Animation_Hologram_Frame_32
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 96
+      height: 19
+    spriteID: 53f4705c9d5ca3342a0e48385a7326b2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: UI_Animation_Hologram_Frame_33
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 4
+      width: 96
+      height: 19
+    spriteID: aea3c0731dcf5d5429919563435568b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 4}
+  - name: UI_Animation_Hologram_Frame_34
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 4
+      width: 96
+      height: 19
+    spriteID: 4d47c11385a0c26489f4a6b1b69a01db
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 4}
+  - name: UI_Animation_Hologram_Frame_35
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 4
+      width: 96
+      height: 19
+    spriteID: 9d356a77d375e824698f69b59854574e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 4}
+  - name: UI_Animation_Hologram_Frame_36
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 31
+      width: 96
+      height: 19
+    spriteID: b4187ab4cbb6879438271e6fd98c636f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 31}
+  - name: UI_Animation_Hologram_Frame_37
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 31
+      width: 96
+      height: 19
+    spriteID: 6717a90f3ea18234aa1219d0a1df88e1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 31}
+  - name: UI_Animation_Hologram_Frame_38
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 31
+      width: 96
+      height: 19
+    spriteID: 4987456a56ccf4e428058dce2c2dd7e8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 31}
+  - name: UI_Animation_Hologram_Frame_39
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 31
+      width: 96
+      height: 19
+    spriteID: e16c8cafb704cdd4cb1b053c3f91c118
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 31}
+  - name: UI_Animation_Hologram_Frame_40
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 58
+      width: 96
+      height: 19
+    spriteID: a7728ddb3922d7a41b7d465168674543
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 58}
+  - name: UI_Animation_Hologram_Frame_41
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 58
+      width: 96
+      height: 19
+    spriteID: 52da73139970a8644a445bbdb47c4d3d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 58}
+  - name: UI_Animation_Hologram_Frame_42
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 58
+      width: 96
+      height: 19
+    spriteID: 8e32cbc9d5d78f941bdfaaadbd47a47b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 58}
+  - name: UI_Animation_Hologram_Frame_43
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 58
+      width: 96
+      height: 19
+    spriteID: 94ab2231884c799448af89559eb8fabb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 58}
+  - name: UI_Animation_Hologram_Frame_44
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 84
+      y: 287
+      width: 32
+      height: 19
+    spriteID: 23678eb71b41bb443b4b89aa0104f629
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 84, y: 287}
+  - name: UI_Animation_Hologram_Frame_45
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 124
+      y: 287
+      width: 32
+      height: 19
+    spriteID: d2f3bb5729ed6f540b14550e5a1959c6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 124, y: 287}
+  - name: UI_Animation_Hologram_Frame_46
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 287
+      width: 32
+      height: 19
+    spriteID: d27c13dacbb350e4cb665bcd473fbdd2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 164, y: 287}
+  - name: UI_Animation_Hologram_Frame_47
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 204
+      y: 287
+      width: 32
+      height: 19
+    spriteID: f43ddc6d1a9898e4ea749e621401b9de
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 204, y: 287}
+  - name: UI_Animation_Hologram_Frame_48
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 244
+      y: 287
+      width: 32
+      height: 19
+    spriteID: 6b2b88ff85f1caa47be3267420da3ff7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 244, y: 287}
+  - name: UI_Animation_Hologram_Frame_49
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 284
+      y: 287
+      width: 32
+      height: 19
+    spriteID: d4a33ad09281f1045b0e22ca4dca2b56
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 284, y: 287}
+  - name: UI_Animation_Hologram_Frame_50
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 324
+      y: 287
+      width: 32
+      height: 19
+    spriteID: 1fb87960d43e7d4459a0b142cc928a46
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 324, y: 287}
+  - name: UI_Animation_Hologram_Frame_51
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 364
+      y: 287
+      width: 32
+      height: 19
+    spriteID: cd772fb23c1f4004092fab69045b8c23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 364, y: 287}
+  - name: UI_Animation_Hologram_Frame_52
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 404
+      y: 287
+      width: 32
+      height: 19
+    spriteID: bea065ac71e924f4f929d8663e1f491e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 404, y: 287}
+  - name: UI_Animation_Hologram_Frame_53
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 444
+      y: 287
+      width: 32
+      height: 19
+    spriteID: c8aac7a8adae3904fa863c3b62a57b80
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 444, y: 287}
+  - name: UI_Animation_Hologram_Frame_54
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 314
+      width: 32
+      height: 19
+    spriteID: 0eee5401df3bf3547ad4da508ca9af14
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 314}
+  - name: UI_Animation_Hologram_Frame_55
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 314
+      width: 32
+      height: 19
+    spriteID: e84178688f141e146a1cad1b47b8d321
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 314}
+  - name: UI_Animation_Hologram_Frame_56
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 436
+      y: 166
+      width: 64
+      height: 19
+    spriteID: 98034658444b42e47a7819210ef3f3c5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 436, y: 166}
+  - name: UI_Animation_Hologram_Frame_57
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 193
+      width: 64
+      height: 19
+    spriteID: 3302ff7fab59cae459a9140c1fd988e8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 193}
+  - name: UI_Animation_Hologram_Frame_58
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 76
+      y: 193
+      width: 64
+      height: 19
+    spriteID: fa4d70428c8d2c349866f3469adcf944
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 76, y: 193}
+  - name: UI_Animation_Hologram_Frame_59
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 148
+      y: 193
+      width: 64
+      height: 19
+    spriteID: 55886647fe1a11c40acd79674e560c2d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 148, y: 193}
+  - name: UI_Animation_Hologram_Frame_60
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 220
+      y: 193
+      width: 64
+      height: 19
+    spriteID: ea102b225fed70340bf18e99544d57d5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 220, y: 193}
+  - name: UI_Animation_Hologram_Frame_61
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 292
+      y: 193
+      width: 64
+      height: 19
+    spriteID: d363651c14dd6c348bee6f46d80b7579
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 292, y: 193}
+  - name: UI_Animation_Hologram_Frame_62
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 364
+      y: 193
+      width: 64
+      height: 19
+    spriteID: 6d82d6dd54f87a940964062a3db02802
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 364, y: 193}
+  - name: UI_Animation_Hologram_Frame_63
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 436
+      y: 193
+      width: 64
+      height: 19
+    spriteID: f5a72bb3b05947f47bd33895a6b4093e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 436, y: 193}
+  - name: UI_Animation_Hologram_Frame_64
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 220
+      width: 64
+      height: 19
+    spriteID: 0e4e11fd32b7a5b47a8984512fd317b0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 220}
+  - name: UI_Animation_Hologram_Frame_65
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 76
+      y: 220
+      width: 64
+      height: 19
+    spriteID: a534068b53887b345b9242db5782a090
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 76, y: 220}
+  - name: UI_Animation_Hologram_Frame_66
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 148
+      y: 220
+      width: 64
+      height: 19
+    spriteID: 9cfe1afea81e0d94c895d82f013e9fab
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 148, y: 220}
+  - name: UI_Animation_Hologram_Frame_67
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 220
+      y: 220
+      width: 64
+      height: 19
+    spriteID: 4a569f2c4b861cf42aab19b317cf2b8d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 220, y: 220}
+  - name: UI_Animation_Hologram_Frame_68
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 85
+      width: 96
+      height: 19
+    spriteID: 76c5c226f042fe84e9cd07a3482fccc6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 85}
+  - name: UI_Animation_Hologram_Frame_69
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 85
+      width: 96
+      height: 19
+    spriteID: f6d330f6efdf31b408882419c5e36bd7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 85}
+  - name: UI_Animation_Hologram_Frame_70
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 85
+      width: 96
+      height: 19
+    spriteID: a980f537173fb9341a4b45e4c06e9b23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 85}
+  - name: UI_Animation_Hologram_Frame_71
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 85
+      width: 96
+      height: 19
+    spriteID: 1f06fe11ce84dd943a64052d69238ba4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 85}
+  - name: UI_Animation_Hologram_Frame_72
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 112
+      width: 96
+      height: 19
+    spriteID: 44f3598f2c4df74419acf699ae75fb8a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 112}
+  - name: UI_Animation_Hologram_Frame_73
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 112
+      width: 96
+      height: 19
+    spriteID: b904e181392121f4c80a72b421c8a6c2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 112}
+  - name: UI_Animation_Hologram_Frame_74
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 112
+      width: 96
+      height: 19
+    spriteID: b80fe85d017f5764280837ad3652ceb8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 112}
+  - name: UI_Animation_Hologram_Frame_75
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 112
+      width: 96
+      height: 19
+    spriteID: b3cc6c9726b44b84986015d6ad063a06
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 112}
+  - name: UI_Animation_Hologram_Frame_76
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 139
+      width: 96
+      height: 19
+    spriteID: 706a751217594a64c861e696d9da38f4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 139}
+  - name: UI_Animation_Hologram_Frame_77
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 108
+      y: 139
+      width: 96
+      height: 19
+    spriteID: e6d593998797c6e47834b8d3cece43f2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 108, y: 139}
+  - name: UI_Animation_Hologram_Frame_78
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 212
+      y: 139
+      width: 96
+      height: 19
+    spriteID: e1cfc88422f3c2f48abd91fd0ae7f94b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 212, y: 139}
+  - name: UI_Animation_Hologram_Frame_79
+    originalName: 
+    pivot: {x: 0.5, y: -0.31578946}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 316
+      y: 139
+      width: 96
+      height: 19
+    spriteID: 8db4ed57acdeece4cabdb73d3bd1dff2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 316, y: 139}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 1961877355
+    name: UI_Animation_Hologram
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: UI_Animation_Hologram_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      spriteId: 2d5459cf23a9a9d40991b18e8c027941
+    - name: UI_Animation_Hologram_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 33
+        y: 1
+        width: 30
+        height: 30
+      spriteId: 7f358f78c71bf3a479549c8ebc33c509
+    - name: UI_Animation_Hologram_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 34
+        y: 2
+        width: 28
+        height: 28
+      spriteId: 887103c35c90b0d4bab2ecdcc6b742e9
+    - name: UI_Animation_Hologram_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 33
+        y: 1
+        width: 30
+        height: 30
+      spriteId: 950a326d5429c8947899ee3ab7cda086
+    - name: UI_Animation_Hologram_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      spriteId: 8acc6300e5650264a8012c72519ab6bb
+    - name: UI_Animation_Hologram_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 33
+        y: 1
+        width: 30
+        height: 30
+      spriteId: c9c3690b44e89bf42b423bd2702a1c1f
+    - name: UI_Animation_Hologram_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 34
+        y: 2
+        width: 28
+        height: 28
+      spriteId: 42cee8ff3f791ea4e898b36f7732dc2f
+    - name: UI_Animation_Hologram_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 33
+        y: 1
+        width: 30
+        height: 30
+      spriteId: eaf616f8d736e7143a0710e647fe66e1
+    - name: UI_Animation_Hologram_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 6284eb6e499828f4c8ae2ad690534596
+    - name: UI_Animation_Hologram_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: fd4ab4d089b61e14da59ca25551f87bc
+    - name: UI_Animation_Hologram_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 867e4808cbbbd0d44a8be454604ff28c
+    - name: UI_Animation_Hologram_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: cfba31a3fd5509c4bab1e79983ab35f1
+    - name: UI_Animation_Hologram_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 4fa988a6e6892444985a3db8c1a75aa8
+    - name: UI_Animation_Hologram_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: e2d95679ce8c24b498127a1fb36b2e43
+    - name: UI_Animation_Hologram_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: db3caed5c2239944893d686e765065f2
+    - name: UI_Animation_Hologram_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: dcd3a0495ca20224a989576cc2d1e54a
+    - name: UI_Animation_Hologram_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: f36b032ba2456a74d970eeda879b0713
+    - name: UI_Animation_Hologram_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 1961e669d2958df4898872383c1472ce
+    - name: UI_Animation_Hologram_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 97c2dbf74ff801a4bbab13595b70f15f
+    - name: UI_Animation_Hologram_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: abcd1303fd57ea944a7e47dbf297721a
+    - name: UI_Animation_Hologram_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 777e10f43fb502040b56c5981903b78c
+    - name: UI_Animation_Hologram_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 1c5f7ac54be6e2d449a1dc2c61cfe2ac
+    - name: UI_Animation_Hologram_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 422a6800fbec056439895917b49a5c8b
+    - name: UI_Animation_Hologram_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 19d770899a8a68347902d72eff09af1f
+    - name: UI_Animation_Hologram_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 47afb52abaf6e6a448276e28b1d0d02c
+    - name: UI_Animation_Hologram_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 7652bf18fb05755488e99e3259dae0df
+    - name: UI_Animation_Hologram_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: c5199eb22ed4ca4439f00a3be0cdbfde
+    - name: UI_Animation_Hologram_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 766169f6851f48f4a93ac540d0835c4b
+    - name: UI_Animation_Hologram_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 3e7bfa711a5e9e446a38425335d7ecd8
+    - name: UI_Animation_Hologram_Frame_29
+      frameIndex: 29
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 20f57efeea94dfe4081e4d4096d09dae
+    - name: UI_Animation_Hologram_Frame_30
+      frameIndex: 30
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 8024d7528dd098243aeb7fba8897a11b
+    - name: UI_Animation_Hologram_Frame_31
+      frameIndex: 31
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: eb27016c094f5c741ba78a4074035a22
+    - name: UI_Animation_Hologram_Frame_32
+      frameIndex: 32
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 53f4705c9d5ca3342a0e48385a7326b2
+    - name: UI_Animation_Hologram_Frame_33
+      frameIndex: 33
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: aea3c0731dcf5d5429919563435568b4
+    - name: UI_Animation_Hologram_Frame_34
+      frameIndex: 34
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 4d47c11385a0c26489f4a6b1b69a01db
+    - name: UI_Animation_Hologram_Frame_35
+      frameIndex: 35
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 9d356a77d375e824698f69b59854574e
+    - name: UI_Animation_Hologram_Frame_36
+      frameIndex: 36
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: b4187ab4cbb6879438271e6fd98c636f
+    - name: UI_Animation_Hologram_Frame_37
+      frameIndex: 37
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 6717a90f3ea18234aa1219d0a1df88e1
+    - name: UI_Animation_Hologram_Frame_38
+      frameIndex: 38
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 4987456a56ccf4e428058dce2c2dd7e8
+    - name: UI_Animation_Hologram_Frame_39
+      frameIndex: 39
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: e16c8cafb704cdd4cb1b053c3f91c118
+    - name: UI_Animation_Hologram_Frame_40
+      frameIndex: 40
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: a7728ddb3922d7a41b7d465168674543
+    - name: UI_Animation_Hologram_Frame_41
+      frameIndex: 41
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 52da73139970a8644a445bbdb47c4d3d
+    - name: UI_Animation_Hologram_Frame_42
+      frameIndex: 42
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 8e32cbc9d5d78f941bdfaaadbd47a47b
+    - name: UI_Animation_Hologram_Frame_43
+      frameIndex: 43
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 94ab2231884c799448af89559eb8fabb
+    - name: UI_Animation_Hologram_Frame_44
+      frameIndex: 44
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 23678eb71b41bb443b4b89aa0104f629
+    - name: UI_Animation_Hologram_Frame_45
+      frameIndex: 45
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: d2f3bb5729ed6f540b14550e5a1959c6
+    - name: UI_Animation_Hologram_Frame_46
+      frameIndex: 46
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: d27c13dacbb350e4cb665bcd473fbdd2
+    - name: UI_Animation_Hologram_Frame_47
+      frameIndex: 47
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: f43ddc6d1a9898e4ea749e621401b9de
+    - name: UI_Animation_Hologram_Frame_48
+      frameIndex: 48
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 6b2b88ff85f1caa47be3267420da3ff7
+    - name: UI_Animation_Hologram_Frame_49
+      frameIndex: 49
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: d4a33ad09281f1045b0e22ca4dca2b56
+    - name: UI_Animation_Hologram_Frame_50
+      frameIndex: 50
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 1fb87960d43e7d4459a0b142cc928a46
+    - name: UI_Animation_Hologram_Frame_51
+      frameIndex: 51
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: cd772fb23c1f4004092fab69045b8c23
+    - name: UI_Animation_Hologram_Frame_52
+      frameIndex: 52
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: bea065ac71e924f4f929d8663e1f491e
+    - name: UI_Animation_Hologram_Frame_53
+      frameIndex: 53
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: c8aac7a8adae3904fa863c3b62a57b80
+    - name: UI_Animation_Hologram_Frame_54
+      frameIndex: 54
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: 0eee5401df3bf3547ad4da508ca9af14
+    - name: UI_Animation_Hologram_Frame_55
+      frameIndex: 55
+      cellRect:
+        x: 32
+        y: 6
+        width: 32
+        height: 19
+      spriteId: e84178688f141e146a1cad1b47b8d321
+    - name: UI_Animation_Hologram_Frame_56
+      frameIndex: 56
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 98034658444b42e47a7819210ef3f3c5
+    - name: UI_Animation_Hologram_Frame_57
+      frameIndex: 57
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 3302ff7fab59cae459a9140c1fd988e8
+    - name: UI_Animation_Hologram_Frame_58
+      frameIndex: 58
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: fa4d70428c8d2c349866f3469adcf944
+    - name: UI_Animation_Hologram_Frame_59
+      frameIndex: 59
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 55886647fe1a11c40acd79674e560c2d
+    - name: UI_Animation_Hologram_Frame_60
+      frameIndex: 60
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: ea102b225fed70340bf18e99544d57d5
+    - name: UI_Animation_Hologram_Frame_61
+      frameIndex: 61
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: d363651c14dd6c348bee6f46d80b7579
+    - name: UI_Animation_Hologram_Frame_62
+      frameIndex: 62
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 6d82d6dd54f87a940964062a3db02802
+    - name: UI_Animation_Hologram_Frame_63
+      frameIndex: 63
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: f5a72bb3b05947f47bd33895a6b4093e
+    - name: UI_Animation_Hologram_Frame_64
+      frameIndex: 64
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 0e4e11fd32b7a5b47a8984512fd317b0
+    - name: UI_Animation_Hologram_Frame_65
+      frameIndex: 65
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: a534068b53887b345b9242db5782a090
+    - name: UI_Animation_Hologram_Frame_66
+      frameIndex: 66
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 9cfe1afea81e0d94c895d82f013e9fab
+    - name: UI_Animation_Hologram_Frame_67
+      frameIndex: 67
+      cellRect:
+        x: 16
+        y: 6
+        width: 64
+        height: 19
+      spriteId: 4a569f2c4b861cf42aab19b317cf2b8d
+    - name: UI_Animation_Hologram_Frame_68
+      frameIndex: 68
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 76c5c226f042fe84e9cd07a3482fccc6
+    - name: UI_Animation_Hologram_Frame_69
+      frameIndex: 69
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: f6d330f6efdf31b408882419c5e36bd7
+    - name: UI_Animation_Hologram_Frame_70
+      frameIndex: 70
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: a980f537173fb9341a4b45e4c06e9b23
+    - name: UI_Animation_Hologram_Frame_71
+      frameIndex: 71
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 1f06fe11ce84dd943a64052d69238ba4
+    - name: UI_Animation_Hologram_Frame_72
+      frameIndex: 72
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 44f3598f2c4df74419acf699ae75fb8a
+    - name: UI_Animation_Hologram_Frame_73
+      frameIndex: 73
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: b904e181392121f4c80a72b421c8a6c2
+    - name: UI_Animation_Hologram_Frame_74
+      frameIndex: 74
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: b80fe85d017f5764280837ad3652ceb8
+    - name: UI_Animation_Hologram_Frame_75
+      frameIndex: 75
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: b3cc6c9726b44b84986015d6ad063a06
+    - name: UI_Animation_Hologram_Frame_76
+      frameIndex: 76
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 706a751217594a64c861e696d9da38f4
+    - name: UI_Animation_Hologram_Frame_77
+      frameIndex: 77
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: e6d593998797c6e47834b8d3cece43f2
+    - name: UI_Animation_Hologram_Frame_78
+      frameIndex: 78
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: e1cfc88422f3c2f48abd91fd0ae7f94b
+    - name: UI_Animation_Hologram_Frame_79
+      frameIndex: 79
+      cellRect:
+        x: 0
+        y: 6
+        width: 96
+        height: 19
+      spriteId: 8db4ed57acdeece4cabdb73d3bd1dff2
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 96, y: 32}

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
@@ -29,6 +26,13 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
     public int MaxStackSize = 32;
     public bool Consumable = true;
 
+    // NOTE: This is just string for a tooltip. You must place Tooltip_Trigger on
+    //       whatever you want to have a tooltip, and grab the item's Tooltip strings
+    //       and set that Tooltip_Tigger's strings to these string.
+    [Tooltip("This is a tooltip to display item's name, and description if needed")]  
+    public string Tooltip_header;
+    [Multiline()]
+    public string Tooltip_content;
 
     [Tooltip("Prefab that will be instantiated in the player hand when this is equipped")]
     public GameObject VisualPrefab;
@@ -77,9 +81,7 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
 
         // Set source config
         source.clip = UseSound[0];
-
         source.Play();
-
         Destroy(source.gameObject, source.clip.length/source.pitch);
 
         return source;

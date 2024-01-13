@@ -17,6 +17,8 @@ MonoBehaviour:
   ItemSprite: {fileID: 21300000, guid: e084afea35924304eb2cd7ab8ada2ecd, type: 3}
   MaxStackSize: 32
   Consumable: 1
+  Tooltip_header: Meat (edible)
+  Tooltip_content: Fills hunger bar by some
   VisualPrefab: {fileID: 9165432250727607574, guid: 5296a998fe6f36b40bd1792ea763038e, type: 3}
   PlayerAnimatorTriggerUse: GenericToolSwing
   WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
@@ -25,3 +27,4 @@ MonoBehaviour:
   volume: {x: 0.5, y: 0.5}
   pitch: {x: 1, y: 1}
   itemType: 2
+  foodValue: 5

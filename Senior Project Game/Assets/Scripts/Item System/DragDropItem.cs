@@ -14,10 +14,11 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
     public class DragDropItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {    
         [SerializeField] private Inventory_UI parentUI;
+        [SerializeField] private Tooltip_Trigger tooltip;
         [HideInInspector] public Transform parentAfterDrag;
         [HideInInspector] public Item item;
-         public int thisIndex;
-         public int amountStacked;
+        public int thisIndex;
+        public int amountStacked;
 
         [SerializeField] private float dampeningSpeed = .05f;
         private RectTransform draggingObjectRectTransform;
@@ -40,9 +41,12 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             draggingObjectRectTransform = transform as RectTransform;
 
             item = newItem;
-            image.sprite = newItem.ItemSprite;
-            thisIndex = newIndex;
             amountStacked = amount;
+            image.sprite = newItem.ItemSprite;
+            tooltip.header = newItem.Tooltip_header;
+            tooltip.content = newItem.Tooltip_content;
+
+            thisIndex = newIndex;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
