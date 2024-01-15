@@ -23,6 +23,9 @@ public class Player_animation_logic : MonoBehaviour
     [SerializeField] AudioSource deathSFX;
     private AudioSource currentsound;
 
+    [Header("The GameObject which will be the tool used")]
+    [SerializeField] public GameObject tool;
+
     [Header("Animation Timings (seconds)")]
     [SerializeField] private float hurtTime;
     private bool isAnimationLocked = false;
@@ -116,6 +119,22 @@ public class Player_animation_logic : MonoBehaviour
         StartCoroutine(playSound(hurtSFX));
         StartCoroutine(playSound(deathSFX));
         Death.Invoke();
+    }
+
+    public void GenericToolSwing()
+    {
+        isAnimationLocked = true;
+        animatorController.CrossFade("Generic Tool Swing");
+        StartCoroutine(animationLockOut(.3f));
+        StartCoroutine(controlsLockOut(.3f));
+    }
+
+    public void Nom()
+    {
+        isAnimationLocked = true;
+        animatorController.CrossFade("Player Eat");
+        StartCoroutine(animationLockOut(.25f));
+        StartCoroutine(controlsLockOut(.25f));
     }
 
 

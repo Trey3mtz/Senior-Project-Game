@@ -30,15 +30,7 @@ public class World_Item : MonoBehaviour
         private int amountDroped;
         private Collider2D hitbox;
         private Tooltip_Trigger tooltip;
-        
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
-        hitbox = GetComponent<Collider2D>();
-        tooltip = GetComponent<Tooltip_Trigger>();
-        amountDroped = 1;
-    }
+        private Animation animationClip;
 
     public void SetItem(Item item)
     {
@@ -47,6 +39,11 @@ public class World_Item : MonoBehaviour
         tooltip.header = item.Tooltip_header;
         tooltip.content = item.Tooltip_content;
 
+        if(item.ItemSpawnAnimation)
+        {   item.ItemSpawnAnimation.legacy = true;
+            animationClip.clip = item.ItemSpawnAnimation;  }
+            
+
         if(amountDroped > 1)
             textMeshPro.SetText(amountDroped.ToString());
         else
@@ -54,20 +51,26 @@ public class World_Item : MonoBehaviour
         StartCoroutine(WaitToPickUp());
     }
 
-    public Item GetItem()
+    private void Awake()
     {
-        return item;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
+        hitbox = GetComponent<Collider2D>();
+        tooltip = GetComponent<Tooltip_Trigger>();
+        amountDroped = 1;
+        animationClip = GetComponent<Animation>();
+        animationClip.Play();
     }
 
+    public Item GetItem()
+    {   return item;    }
+       
     public int GetAmount()
-    {
-        return amountDroped;
-    }
+    {   return amountDroped;    }
 
     public void DestroySelf()
-    {
-        Destroy(gameObject);
-    }
+    {    Destroy(gameObject);    }
+    
 
     public IEnumerator WaitToPickUp()
     {
