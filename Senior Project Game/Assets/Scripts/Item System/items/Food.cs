@@ -27,7 +27,7 @@ namespace Cyrcadian.Items
             var particles = Instantiate(foodParticles);
             particles.transform.position = gameObject.transform.position + new Vector3(0,1);
 
-            PlaySound();
+            PlaySound(1.5f);
             return true;
         }
     }
