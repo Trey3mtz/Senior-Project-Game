@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using Unity.VisualScripting;
+using TMPro;
+using UnityEditor.Build.Pipeline;
+using UnityEditor.Timeline;
 
 namespace Cyrcadian.PlayerSystems
 {
@@ -17,11 +21,16 @@ public class Player_animation_logic : MonoBehaviour
 
     //  audio for sfx
     [Header("Audio")]
-    [SerializeField] AudioSource walkSFX;
-    [SerializeField] AudioSource pushpullSFX;
-    [SerializeField] AudioSource hurtSFX;
-    [SerializeField] AudioSource deathSFX;
-    private AudioSource currentsound;
+    [SerializeField] AudioClip walkSFX;
+    [SerializeField] AudioClip draggingSFX;
+    [SerializeField] AudioClip hurtSFX;
+    [SerializeField] AudioClip deathSFX;
+    private string currentSoundFX;
+    private bool canPlayFootstepSFX = true;
+    private bool canPlayDragSFX = true;
+ 
+    [Header("The GameObject which will be the tool used")]
+    [SerializeField] public GameObject tool;
 
     [Header("Animation Timings (seconds)")]
     [SerializeField] private float hurtTime;
@@ -73,9 +82,9 @@ public class Player_animation_logic : MonoBehaviour
                     }
                     // Play sfx of the pull, pull, or walk animation    
                     if(playerController.isGrabbing)
-                        StartCoroutine(playSound(pushpullSFX));
+                        StartCoroutine(dragSoundFX(draggingSFX));
                     else    
-                        StartCoroutine(playSound(walkSFX));
+                        StartCoroutine(footstepSoundFX(walkSFX));
                 }
                 else if(playerController.isGrabbing)
                     animatorController.CrossFade("Player Hold-Idle");
@@ -102,7 +111,7 @@ public class Player_animation_logic : MonoBehaviour
     {   
         isAnimationLocked = true;
         animatorController.CrossFade("Player Hurt");
-        StartCoroutine(playSound(hurtSFX));
+        AudioManager.Instance.PlaySoundFX(hurtSFX);
         StartCoroutine(animationLockOut(hurtTime));
         StartCoroutine(controlsLockOut(hurtTime));
         Hurt.Invoke();
@@ -113,23 +122,55 @@ public class Player_animation_logic : MonoBehaviour
         isAnimationLocked = true;
         controls.Player.Disable();
         animatorController.CrossFade("Player Death");
-        StartCoroutine(playSound(hurtSFX));
-        StartCoroutine(playSound(deathSFX));
+        AudioManager.Instance.PlaySoundFX(hurtSFX);
+        AudioManager.Instance.PlaySoundFX(deathSFX);
         Death.Invoke();
     }
 
+    public void GenericToolSwing()
+    {
+        isAnimationLocked = true;
+        animatorController.CrossFade("Generic Tool Swing");
+        StartCoroutine(animationLockOut(.3f));
+        StartCoroutine(controlsLockOut(.3f));
+    }
 
-    // Controlls what soundFX is playing
-    private IEnumerator playSound(AudioSource sfx)
-    {       
-        if(!sfx.isPlaying){
-            sfx.Play();
-            currentsound = sfx;
+    public void Nom()
+    {
+        isAnimationLocked = true;
+        animatorController.CrossFade("Player Eat");
+        StartCoroutine(animationLockOut(.25f));
+        StartCoroutine(controlsLockOut(.25f));
+    }
+
+    // For audioclips that will get called in the Update() method
+    private IEnumerator footstepSoundFX(AudioClip clip)
+    {
+        if(canPlayFootstepSFX)
+        {   
+            AudioManager.Instance.PlaySoundFX(clip, 0.5f);
+            canPlayFootstepSFX = false;
         }
+        else
+        {   yield break;    }
 
-        yield return new WaitForSeconds(.2f);
-        currentsound = sfx;
-    }   
+        yield return new WaitForSeconds(clip.length * 0.75f);
+        canPlayFootstepSFX = true;
+    }
+
+    private IEnumerator dragSoundFX(AudioClip clip)
+    {
+        if(canPlayDragSFX)
+        {   
+            AudioManager.Instance.PlaySoundFX(clip);
+            canPlayDragSFX = false;
+        }
+        else
+        {   yield break;    }
+
+        yield return new WaitForSeconds(clip.length);
+        canPlayDragSFX = true;
+    }
 
     private IEnumerator animationLockOut(float time)
     {

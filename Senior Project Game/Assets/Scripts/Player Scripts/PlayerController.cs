@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
     */
     private void OnItem(InputAction.CallbackContext context)
     {
-        if(!pointerOverUI)
+        if(!pointerOverUI && !isGrabbing)
             _inventoryUI.UseSelectedItem(gameObject.transform.position, gameObject);         
     }
 
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
     private void OnInventory(InputAction.CallbackContext context)
     {
         if(!gameStateManager.isInventory && !gameStateManager.isPaused)
-        {
+        {  
             gameStateManager.OpenInventory();
             gameStateManager.isInventory = true;
         }   
@@ -195,6 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             gameStateManager.CloseInventory();
             gameStateManager.isInventory = false;
+            Tooltip_System.Hide();
         }
     }
 

@@ -192,9 +192,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 15
-    m_Right: 15
-    m_Top: 8
+    m_Left: 16
+    m_Right: 16
+    m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 2
   m_Spacing: 5
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca97c25494f6584b883f28b96fb9784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipFlipEnabled: 1
   headerField: {fileID: 9079176868277548471}
   contentField: {fileID: 5969572748708538673}
   layoutElement: {fileID: 6548906575819515799}

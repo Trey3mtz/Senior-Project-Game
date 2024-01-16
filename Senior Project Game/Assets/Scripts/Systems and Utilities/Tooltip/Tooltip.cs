@@ -35,9 +35,9 @@ public class Tooltip : MonoBehaviour
         else
         {
             headerField.gameObject.SetActive(true);
-            headerField.text = header;
         }
-
+        
+        headerField.text = header;
         contentField.text = content;
 
         headerLength = headerField.text.Length;

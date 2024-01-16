@@ -16,6 +16,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         [SerializeField] public Inventory_UI parentUI;
         [SerializeField] private AudioSource slotdropSFX;
         [SerializeField] private AudioSource selectSFX;
+        [SerializeField] AudioClip slotdropFX;
+        [SerializeField] AudioClip selectFX;
 
         [SerializeField] Image slotImage;
         [SerializeField] Color selectedColor, notSelectedColor;
@@ -41,7 +43,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             gameObject.GetComponent<RectTransform>().pivot = originalPivot + new Vector2(0,-.25f);
 
             if(doneInitializing)
-                selectSFX.Play();
+                //selectSFX.Play();
+                AudioManager.Instance.PlaySoundFX(selectFX);
         }
 
         public void Deselect()
@@ -75,7 +78,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 parentUI.DropItemIntoSlot(draggedItem, slotIndex);
             }
 
-            slotdropSFX.Play();
+            //slotdropSFX.Play();
+            AudioManager.Instance.PlaySoundFX(slotdropFX);
         }
 
         IEnumerator WaitForInitialization()

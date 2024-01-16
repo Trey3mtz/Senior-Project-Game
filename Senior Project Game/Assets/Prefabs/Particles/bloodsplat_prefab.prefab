@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1916184497
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 755052642, guid: e3700580bec1a094e95a17e2d066af8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -248,7 +248,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1916184497
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 755052642, guid: e3700580bec1a094e95a17e2d066af8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -422,7 +422,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1916184497
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 755052642, guid: e3700580bec1a094e95a17e2d066af8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -596,7 +596,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1916184497
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 755052642, guid: e3700580bec1a094e95a17e2d066af8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 3218535746449148432}
   - component: {fileID: 6014239424204960399}
   - component: {fileID: 1476148649133978337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bloodsplat_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0823c29a5971e5a4691d76242fce2ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundFX: {fileID: 0}
+  lifespan: 1
 --- !u!82 &1476148649133978337
 AudioSource:
   m_ObjectHideFlags: 0

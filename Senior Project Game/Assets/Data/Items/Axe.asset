@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0f2b17d88496745a2f554ef80dba0f, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  UniqueID: tool_axe
+  DisplayName: Axe
+  ItemSprite: {fileID: 21300000, guid: 3ffb8e58d7f1c824b89a0b29b0b1fce0, type: 3}
+  MaxStackSize: 1
+  Consumable: 0
+  Tooltip_header: Axe
+  Tooltip_content: Useful for cutting trees
+  VisualPrefab: {fileID: 0}
+  PlayerAnimatorTriggerUse: Generic Tool Swing
+  WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
+  ItemSpawnAnimation: {fileID: -8417610307806309993, guid: b62eb6b1f7890714385bc41d0c9a7949, type: 3}
+  UseSound:
+  - {fileID: 8300000, guid: 7168e15fecd5cb44f86441af0a244125, type: 3}
+  volume: {x: 0.2, y: 0.2}
+  pitch: {x: 0.5, y: 0.5}
+  item_Tag: Generic Tool

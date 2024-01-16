@@ -13,6 +13,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         [SerializeField] private Inventory_UI parentUI;
 
         [SerializeField] private AudioSource slotdropSFX;
+        [SerializeField] private AudioClip slotDropFX;
 
         private void Awake()
         {
@@ -38,7 +39,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 parentUI.DropItemIntoSlot(draggedItem, slotIndex);
             }
 
-            slotdropSFX.Play();
+            //slotdropSFX.Play();
+            AudioManager.Instance.PlaySoundFX(slotDropFX);
         }
     }
 }

@@ -28,7 +28,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
 
         [SerializeField] private AudioSource pickupSFX;
         [SerializeField] private AudioSource removeSFX;
-
+        [SerializeField] private AudioClip pickupFX;
+        [SerializeField] private AudioClip removeFX;
 
         public void InitializeItem(Item newItem, int newIndex, int amount)
         {
@@ -55,8 +56,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
             image.raycastTarget = false;
-            pickupSFX.Play();
-
+            //pickupSFX.Play();
+            AudioManager.Instance.PlaySoundFX(pickupFX);
             parentUI.RemovedItemIndex(thisIndex);
         }
 
@@ -82,7 +83,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 Transform playerPosition = GameObject.Find("Player").transform;
                 World_Item.SpawnWorldItem(playerPosition.position, item, amountStacked);
                 
-                removeSFX.Play();
+                //removeSFX.Play();
+                AudioManager.Instance.PlaySoundFX(removeFX);
 
                Destroy(gameObject, removeSFX.clip.length);
            }

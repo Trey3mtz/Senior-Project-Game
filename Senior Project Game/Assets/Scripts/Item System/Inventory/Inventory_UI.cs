@@ -21,6 +21,7 @@ public class Inventory_UI : MonoBehaviour
     // This is a prefab to be instantiated
     [SerializeField] public Transform inventoryItem;
     [SerializeField] private AudioSource returnSFX;
+    [SerializeField] private AudioClip returnFX;
 
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] QuickSlot[] quickSlots;
@@ -173,7 +174,8 @@ public class Inventory_UI : MonoBehaviour
 
     public void ItemReturnedToSlot(DragDropItem droppedItem, int slotIndex)
     {
-        returnSFX.Play();
+        AudioManager.Instance.PlaySoundFX(returnFX);
+        //returnSFX.Play();
         DropItemIntoSlot(droppedItem, slotIndex);
     }
 
