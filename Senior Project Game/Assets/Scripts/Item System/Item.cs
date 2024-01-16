@@ -69,6 +69,20 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
         foreach(AudioClip clip in UseSound)
         {   AudioManager.Instance.PlaySoundFX(clip);   }
     }
+
+        // Just a method to play audioclips when you Use an item
+    public void PlaySound(float volume)
+    {
+        if(UseSound.Length == 0)
+        {
+            Debug.LogWarning($"Missing sound cliops for item {DisplayName}");
+            return;
+        }
+
+        // Sends all audioclips to master audio
+        foreach(AudioClip clip in UseSound)
+        {   AudioManager.Instance.PlaySoundFX(clip, volume);   }
+    }
 }
 
 }

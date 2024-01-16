@@ -12,6 +12,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         [SerializeField]
         private Inventory inventory;
         [SerializeField] AudioSource itemSFX; 
+        [SerializeField] AudioClip itemFX;
         [SerializeField] PointEffector2D itemPull;
 
         // Player Controller sets the inventory and calls this to set it,
@@ -29,7 +30,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             World_Item item = collider.GetComponent<World_Item>();
             if(item != null)
             {
-                itemSFX.Play();
+                //itemSFX.Play();
+                AudioManager.Instance.PlaySoundFX(itemFX);
                 if(inventory.AddItem(item.GetItem(), item.GetAmount()))
                     {item.DestroySelf();} 
                 else
