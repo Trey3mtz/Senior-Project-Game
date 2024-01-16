@@ -57,29 +57,17 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
     {   return MaxStackSize > 1;    }
        
     // Just a method to play audioclips when you Use an item
-    public AudioSource PlaySound(AudioSource audioSourceParam = null)
+    public void PlaySound()
     {
         if(UseSound.Length == 0)
         {
             Debug.LogWarning($"Missing sound cliops for item {DisplayName}");
-            return null;
+            return;
         }
 
-        var source = audioSourceParam;
-        if(source == null)
-        {
-            var obj = new GameObject("Sound", typeof(AudioSource));
-            source = obj.GetComponent<AudioSource>();
-            source.pitch = 1;
-            source.volume = .5f;
-        }
-
-        // Set source config
-        source.clip = UseSound[0];
-        source.Play();
-        Destroy(source.gameObject, source.clip.length/source.pitch);
-
-        return source;
+        // Sends all audioclips to master audio
+        foreach(AudioClip clip in UseSound)
+        {   AudioManager.Instance.PlaySoundFX(clip);   }
     }
 }
 

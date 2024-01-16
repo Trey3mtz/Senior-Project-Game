@@ -75,7 +75,7 @@ public class World_Item : MonoBehaviour
     public IEnumerator WaitToPickUp()
     {
         hitbox.enabled = false;
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         hitbox.enabled = true;
     }
 }

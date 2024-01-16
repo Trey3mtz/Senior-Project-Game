@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ImpactScript : MonoBehaviour
 {
-     [SerializeField] AudioSource soundFX;
- 
+    [SerializeField] float lifespan = 1f;
     // Start is called before the first frame update
     void Start()
     {
-        soundFX = GetComponent<AudioSource>();
-        soundFX.Play();
-
-        Destroy(this.gameObject, 4f);
+        Destroy(this.gameObject, lifespan);
     }
 
 }

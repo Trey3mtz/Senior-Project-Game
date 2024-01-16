@@ -1,4 +1,6 @@
+using System.Collections;
 using Cyrcadian.PlayerSystems;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Cyrcadian.Items
@@ -30,14 +32,19 @@ namespace Cyrcadian.Items
             var hitbox = obj.GetComponent<CircleCollider2D>();
             hitbox.isTrigger = true;
             hitbox.offset = new Vector2(0.5f,0.75f);
+            
 
             gameObject.GetComponentInChildren<Player_animation_logic>().tool.GetComponent<SpriteRenderer>().sprite = ItemSprite;
             gameObject.GetComponentInChildren<Player_animation_logic>().GenericToolSwing();
+
+
 
             Destroy(obj,0.25f);
             PlaySound();
 
             return true;
         }            
+
+
     }  
 }
