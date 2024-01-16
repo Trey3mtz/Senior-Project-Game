@@ -159,7 +159,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void SwapSlottedItem(DragDropItem itemswapped, int slotIndex)
     {
-        inventory.SwapIndex(itemswapped.thisIndex, slotIndex);
+        inventory.SwapIndex(itemswapped.thisIndex, slotIndex, itemswapped);
     }
 
     public void RemovedItemIndex(int i)
