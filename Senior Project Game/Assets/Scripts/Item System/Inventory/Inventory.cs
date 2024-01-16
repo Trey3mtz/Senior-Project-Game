@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Cyrcadian.PlayerSystems.InventorySystem;
 using Unity.Entities;
+using UnityEditor;
 using UnityEngine;
 
 namespace Cyrcadian
@@ -119,7 +121,8 @@ namespace Cyrcadian
                         {
                             // Aboslutely full, no room left for the leftover amount
 
-                            // Instantiate a world item and its amount to drop out of inventory
+                            // Instantiate a world item and its amount to drop out of inventory 
+                            //  not necesary rn as you can't pick up items when no room
                         }
                     }
                 }
@@ -129,14 +132,15 @@ namespace Cyrcadian
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void SwapIndex(int oldIndex, int newIndex)
-        {   Debug.Log("Swapping indexes " + oldIndex + " and " + newIndex);
-            InventoryEntry tempEntry = _Inventory[newIndex];
-
-            _Inventory[newIndex] = _Inventory[oldIndex];
-            _Inventory[oldIndex] = tempEntry;
-
-            Debug.Log(_Inventory[newIndex].item +" is whats in the newindex, and the oldindex holds "+ _Inventory[oldIndex].item );
+        // oldIndex is empty as it was dragged out of the slot.
+        // oldIndex will get filled with the newIndex we want to place an item in
+        // We place our DragDropItem into the newIndex
+        public void SwapIndex(int oldIndex, int newIndex, DragDropItem droppedItem)
+        {       
+            _Inventory[oldIndex] = _Inventory[newIndex];
+            _Inventory[newIndex] = new InventoryEntry()
+            {   item = droppedItem.item, 
+                stackSize = droppedItem.amountStacked};
 
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
