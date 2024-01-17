@@ -73,12 +73,21 @@ public class GameStateManager : MonoBehaviour
         //Debug.Log("Game Over!");
     }
 
+    // 0 will always be the very start of a game session, aka, title/main menu 
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = originalTimescale;
+        SceneManager.LoadSceneAsync(0);
+    }    
+
+    // Simply for utility. Will reset whatever scene you are in.
     public void RestartScene()
     {
         Time.timeScale = originalTimescale;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
+    // Stops the application or leaves play mode
     public void QuitGame()
     {   
         #if UNITY_EDITOR
