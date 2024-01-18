@@ -22,8 +22,8 @@ namespace Cyrcadian
         [SerializeField] Gradient gradient;
         [SerializeField] Image fill;
 
-        [Header("")]
-        [SerializeField] UnityEvent[] events;
+        [Header("Starving Events")]
+        [SerializeField] UnityEvent Starved;
 
         private bool isPlayer = false;
 
@@ -65,8 +65,6 @@ namespace Cyrcadian
         {
             _hunger = value;
 
-            //slider.maxValue = StomachSize;
-
             if(isPlayer)
                 VisualizeHunger();
         }
@@ -80,6 +78,7 @@ namespace Cyrcadian
 
         IEnumerator starvation()
         {
+            Starved.Invoke();
             yield return new WaitForSeconds(1);
             if(_hunger > 0 )
                 StartCoroutine(hungerTickDown());
