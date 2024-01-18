@@ -37,11 +37,6 @@ namespace Cyrcadian
             _musicSource.PlayOneShot(clip);
         }
 
-        public void PlayRepeatSFX(AudioClip clip)
-        {
-            _fxSource.Play();
-        }
-
         public void ChangeMasterVolume(float value)
         {
             AudioListener.volume = value;
