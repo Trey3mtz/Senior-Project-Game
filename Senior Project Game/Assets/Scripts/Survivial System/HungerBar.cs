@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Cyrcadian
@@ -20,6 +21,9 @@ namespace Cyrcadian
         [SerializeField] Slider slider;
         [SerializeField] Gradient gradient;
         [SerializeField] Image fill;
+
+        [Header("")]
+        [SerializeField] UnityEvent[] events;
 
         private bool isPlayer = false;
 
@@ -74,15 +78,26 @@ namespace Cyrcadian
             fill.color = gradient.Evaluate(slider.normalizedValue);
         }
 
+        IEnumerator starvation()
+        {
+            yield return new WaitForSeconds(1);
+            if(_hunger > 0 )
+                StartCoroutine(hungerTickDown());
+            else
+                StartCoroutine(starvation());
+        }
+
         IEnumerator hungerTickDown()
         {
             yield return new WaitForSeconds(hungerTickRate);
             ChangeHunger(-1);
-
-            if(!recentlyFed)
+            
+            if(!recentlyFed && _hunger > 0)
                 StartCoroutine(hungerTickDown());
-            else
+            else if(recentlyFed)
                 StartCoroutine(recentlyFedTimer());
+            else if(_hunger <= 0)
+                StartCoroutine(starvation());
         }
 
         IEnumerator recentlyFedTimer()
