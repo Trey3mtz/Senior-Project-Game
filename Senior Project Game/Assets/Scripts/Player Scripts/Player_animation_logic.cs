@@ -38,6 +38,7 @@ public class Player_animation_logic : MonoBehaviour
 
     public UnityEvent Hurt;
     public UnityEvent Death;
+    public UnityEvent PostDeath;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +125,8 @@ public class Player_animation_logic : MonoBehaviour
         animatorController.CrossFade("Player Death");
         AudioManager.Instance.PlaySoundFX(hurtSFX);
         AudioManager.Instance.PlaySoundFX(deathSFX);
+        StartCoroutine(postDeathEvents());
+        Hurt.Invoke();
         Death.Invoke();
     }
 
@@ -184,5 +187,12 @@ public class Player_animation_logic : MonoBehaviour
         yield return new WaitForSeconds(time);
         controls.Player.Enable();
     }    
+
+    private IEnumerator postDeathEvents()
+    {
+        // Waits for death animation to finish, then calls event(s)
+        yield return new WaitForSeconds(5);
+        PostDeath.Invoke();
+    }
 }
 }
