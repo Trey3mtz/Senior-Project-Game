@@ -1,9 +1,9 @@
 using System.Collections;
 using Cyrcadian;
 using Cyrcadian.PlayerSystems;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class GameStateManager : MonoBehaviour
 {
@@ -15,6 +15,15 @@ public class GameStateManager : MonoBehaviour
 
     public bool isPaused;
     public bool isInventory;
+
+    // Used for having a switch case in 1 coroutine.
+    private enum buttonPress
+    {
+        Load,
+        Title,
+        Quit
+    };
+    private buttonPress myButton;
 
     private float originalTimescale = 1;
 
@@ -61,7 +70,9 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadGame()
     {
-        SaveSystem.Load();
+        Time.timeScale = 1;
+        myButton = buttonPress.Load;   
+        StartCoroutine(buttonWait(myButton));
     }
     
     // GameOver will need refactoring once that system is being worked on
@@ -76,8 +87,8 @@ public class GameStateManager : MonoBehaviour
     // 0 will always be the very start of a game session, aka, title/main menu 
     public void ReturnToMainMenu()
     {
-        Time.timeScale = originalTimescale;
-        SceneManager.LoadSceneAsync(0);
+        myButton = buttonPress.Title;   
+        StartCoroutine(buttonWait(myButton));
     }    
 
     // Simply for utility. Will reset whatever scene you are in.
@@ -90,10 +101,33 @@ public class GameStateManager : MonoBehaviour
     // Stops the application or leaves play mode
     public void QuitGame()
     {   
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif      
+        myButton = buttonPress.Quit;   
+        StartCoroutine(buttonWait(myButton));
+    }
+
+    // Here so jumping into a new scene doesn't feel like whiplash
+    private IEnumerator buttonWait(buttonPress button)
+    {
+        yield return new WaitForSeconds(.25f);
+
+        switch(button)
+        {
+            case buttonPress.Load:
+                    SaveSystem.Load();
+                break;
+            case buttonPress.Title:
+                    Time.timeScale = originalTimescale;
+                    SceneManager.LoadSceneAsync(0);
+                break;
+            case buttonPress.Quit:
+                    #if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+                    #else
+                        Application.Quit();
+                    #endif      
+                break;
+            default:
+                break;
+        }
     }
 }
