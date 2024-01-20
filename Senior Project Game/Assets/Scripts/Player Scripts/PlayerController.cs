@@ -73,32 +73,32 @@ public class PlayerController : MonoBehaviour
     // Have all inputs subscribe to a method, so that it is called every time the InputAction is performed
     void OnEnable()
     {
-        move.performed += OnMove;
-        move.canceled += OnMoveSTOP;
-        grab.performed += OnGrab;
-        grab.canceled += OnGrabSTOP;
-        look.performed += OnLook;
-        pause.performed += OnPause;
-        useItem.performed += OnItem;
-        inventoryOpen.performed += OnInventory;
-        mouseScroll.performed += OnScroll;
-        keyboardNum.performed += OnKeyboardNumber;
+        move.performed              += OnMove;
+        move.canceled               += OnMoveSTOP;
+        grab.performed              += OnGrab;
+        grab.canceled               += OnGrabSTOP;
+        look.performed              += OnLook;
+        pause.performed             += OnPause;
+        useItem.performed           += OnItem;
+        inventoryOpen.performed     += OnInventory;
+        mouseScroll.performed       += OnScroll;
+        keyboardNum.performed       += OnKeyboardNumber;
         playerControls.Enable();
     }
 
     // Unsubscribe once you want to disable controls
     void OnDisable()
     {
-        move.performed -= OnMove;
-        move.canceled -= OnMoveSTOP;
-        grab.performed -= OnGrab;
-        grab.canceled -= OnGrabSTOP;
-        look.performed -= OnLook;
-        pause.performed -= OnPause;
-        useItem.performed -= OnItem;
-        inventoryOpen.performed -= OnInventory;
-        mouseScroll.performed -= OnScroll;
-        keyboardNum.performed -= OnKeyboardNumber;
+        move.performed              -= OnMove;
+        move.canceled               -= OnMoveSTOP;
+        grab.performed              -= OnGrab;
+        grab.canceled               -= OnGrabSTOP;
+        look.performed              -= OnLook;
+        pause.performed             -= OnPause;
+        useItem.performed           -= OnItem;
+        inventoryOpen.performed     -= OnInventory;
+        mouseScroll.performed       -= OnScroll;
+        keyboardNum.performed       -= OnKeyboardNumber;
         playerControls.Disable();
     }
 

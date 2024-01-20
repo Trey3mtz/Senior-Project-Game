@@ -1,10 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Cyrcadian.PlayerSystems.InventorySystem;
-using Unity.Entities;
-using UnityEditor;
-using UnityEngine;
 
 namespace Cyrcadian
 {
@@ -15,7 +10,6 @@ namespace Cyrcadian
         public const int initialInventorySize = 17;
 
 
-        [Serializable]
         public class InventoryEntry
         {
             public Item item;
@@ -107,7 +101,7 @@ namespace Cyrcadian
             if(_Inventory[entryIndex].item == null)
                 _Inventory[entryIndex] = newEntry;
             else
-            { Debug.Log("add " +newItem.UniqueID+" to index " + entryIndex);
+            { 
                 if(_Inventory[entryIndex].item.UniqueID == newItem.UniqueID && newItem.IsStackable())
                 {  
                     if(_Inventory[entryIndex].stackSize + amountAdd <= newItem.MaxStackSize)
@@ -132,15 +126,25 @@ namespace Cyrcadian
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        // oldIndex is empty as it was dragged out of the slot.
+        // If oldIndex is not empty try to Add it somewhere else
         // oldIndex will get filled with the newIndex we want to place an item in
         // We place our DragDropItem into the newIndex
-        public void SwapIndex(int oldIndex, int newIndex, DragDropItem droppedItem)
-        {       
+        public void SwapIndex(int oldIndex, int newIndex, Item newitem, int amount)
+        {  
+            // Case where oldindex still has an item in it
+            InventoryEntry edgecase = null;
+            if(_Inventory[oldIndex].item) 
+                 edgecase = _Inventory[oldIndex];
+
+
             _Inventory[oldIndex] = _Inventory[newIndex];
             _Inventory[newIndex] = new InventoryEntry()
-            {   item = droppedItem.item, 
-                stackSize = droppedItem.amountStacked};
+            {   item = newitem, 
+                stackSize = amount  };
+
+            // Re-add the entry that would be overwriten
+            if(edgecase != null)
+                AddItem(edgecase.item, edgecase.stackSize);
 
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -156,6 +160,19 @@ namespace Cyrcadian
         {
             _Inventory[entryIndex] = new InventoryEntry();
             
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void DecrementItemAt(int entryIndex)
+        {   // If there is no item to decrement return
+            if(_Inventory[entryIndex].item == null)
+                return;
+
+            if(_Inventory[entryIndex].stackSize == 1)
+                _Inventory[entryIndex] = new InventoryEntry();
+            else
+                _Inventory[entryIndex].stackSize--;
+
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
 
