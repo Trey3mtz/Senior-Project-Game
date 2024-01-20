@@ -105,6 +105,7 @@ public class Inventory_UI : MonoBehaviour
                     // This initializes the item in your inventory as a UI Drag and Droppable item element.
                     inventoryItemRectTransform.GetComponent<DragDropItem>().InitializeItem(freshInventory[i].item, i, freshInventory[i].stackSize);
 
+                    // This sets the text amount for the newly made UI Drag and Droppable item element.
                     TextMeshProUGUI uiText = inventoryItemRectTransform.Find("Item Amount").GetComponent<TextMeshProUGUI>();
                     if(freshInventory[i].stackSize > 1)
                         uiText.SetText("x" + freshInventory[i].stackSize.ToString());
@@ -159,7 +160,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void SwapSlottedItem(DragDropItem itemswapped, int slotIndex)
     {
-        inventory.SwapIndex(itemswapped.thisIndex, slotIndex, itemswapped);
+        inventory.SwapIndex(itemswapped.thisIndex, slotIndex, itemswapped.item, itemswapped.amountStacked);
     }
 
     public void RemovedItemIndex(int i)
@@ -170,6 +171,11 @@ public class Inventory_UI : MonoBehaviour
     public void AddItemIndex(int i, Item item, int amount)
     {
         inventory.AddItemAt(i, item, amount);
+    }
+
+    public void DecrementItemIndex(int index)
+    {
+        inventory.DecrementItemAt(index);
     }
 
     public void ItemReturnedToSlot(DragDropItem droppedItem, int slotIndex)

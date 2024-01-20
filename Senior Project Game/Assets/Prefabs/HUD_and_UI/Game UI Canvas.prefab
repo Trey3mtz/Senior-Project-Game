@@ -8045,6 +8045,10 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -6794485687612092441, guid: 543c00ac006a08c45b4d53ddcb299c3e, type: 3}
+      propertyPath: slotDropFX
+      value: 
+      objectReference: {fileID: 8300000, guid: b7cd703bfb101f4489fce92b8bbf68e1, type: 3}
+    - target: {fileID: -6794485687612092441, guid: 543c00ac006a08c45b4d53ddcb299c3e, type: 3}
       propertyPath: slotdropFX
       value: 
       objectReference: {fileID: 8300000, guid: b7cd703bfb101f4489fce92b8bbf68e1, type: 3}
@@ -10251,6 +10255,10 @@ PrefabInstance:
       propertyPath: removeSFX
       value: 
       objectReference: {fileID: 1572046061273285148}
+    - target: {fileID: 5228426260539436487, guid: dbcb4f6aa68dd0d4eb37b5a9e004611e, type: 3}
+      propertyPath: dampeningSpeed
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5813880161778470058, guid: dbcb4f6aa68dd0d4eb37b5a9e004611e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

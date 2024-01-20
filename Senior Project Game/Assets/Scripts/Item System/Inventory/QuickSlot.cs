@@ -16,7 +16,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         [SerializeField] public Inventory_UI parentUI;
         [SerializeField] private AudioSource slotdropSFX;
         [SerializeField] private AudioSource selectSFX;
-        [SerializeField] AudioClip slotdropFX;
+        [SerializeField] AudioClip slotDropFX;
         [SerializeField] AudioClip selectFX;
 
         [SerializeField] Image slotImage;
@@ -79,7 +79,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             }
 
             //slotdropSFX.Play();
-            AudioManager.Instance.PlaySoundFX(slotdropFX);
+            AudioManager.Instance.PlaySoundFX(slotDropFX);
         }
 
         IEnumerator WaitForInitialization()
@@ -87,5 +87,25 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             yield return new WaitForEndOfFrame();
             doneInitializing = true;
         }
+            // need to change index and parent after drag
+        public void DropInSlot(DragDropItem movedItem)
+        {
+            if(transform.childCount == 0)
+            {
+                movedItem.parentAfterDrag = transform;
+                movedItem.thisIndex = slotIndex;
+            }
+            parentUI.DropItemIntoSlot(movedItem, slotIndex);
+            PlaySound();
+        }
+
+        public void DecrementSlot()
+        {
+            PlaySound();
+            parentUI.DecrementItemIndex(slotIndex);
+        }
+
+        private void PlaySound()
+        {   AudioManager.Instance.PlaySoundFX(slotDropFX);    }
     }
 }

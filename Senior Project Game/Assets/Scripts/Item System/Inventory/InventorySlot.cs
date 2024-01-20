@@ -1,17 +1,14 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
 {
     [Serializable]
-    public class InventorySlot : MonoBehaviour ,IDropHandler
+    public class InventorySlot : MonoBehaviour
     {
         
         public int slotIndex;
         [SerializeField] private Inventory_UI parentUI;
-
         [SerializeField] private AudioSource slotdropSFX;
         [SerializeField] private AudioClip slotDropFX;
 
@@ -20,27 +17,25 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             parentUI = GetComponentInParent<Inventory_UI>();
         }
 
-        public void OnDrop(PointerEventData eventData)
-        {           
-            
-                GameObject dropped = eventData.pointerDrag;
-                // Get rid of the original object, we only need its data. Otherwise clones would be left.
-                Destroy(eventData.pointerDrag);
-                DragDropItem draggedItem = dropped.GetComponent<DragDropItem>();
-            
+        // Try to drop item into slot
+        public void DropInSlot(DragDropItem movedItem)
+        {   
             if(transform.childCount == 0)
-            {   
-                draggedItem.parentAfterDrag = transform;
-                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
-                draggedItem.thisIndex = slotIndex;
-            }
-            else
             {
-                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
+                movedItem.parentAfterDrag = transform;
+                movedItem.thisIndex = slotIndex;
             }
-
-            //slotdropSFX.Play();
-            AudioManager.Instance.PlaySoundFX(slotDropFX);
+            parentUI.DropItemIntoSlot(movedItem, slotIndex);
+            PlaySound();
         }
+
+        public void DecrementSlot()
+        {
+            PlaySound();
+            parentUI.DecrementItemIndex(slotIndex);
+        }
+
+        private void PlaySound()
+        {   AudioManager.Instance.PlaySoundFX(slotDropFX);    }
     }
 }
