@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    private static GameStateManager _gameStateManager;
+
+    void Awake()
+    {_gameStateManager = this;}
 
     [SerializeField] GameObject HUD_UI;
     [SerializeField] GameObject Inventory_UI;
@@ -19,6 +23,9 @@ public class GameStateManager : MonoBehaviour
 
     public bool isPaused;
     public bool isInventory;
+
+    public static bool IsPaused()
+    {   return _gameStateManager.isPaused;    }
 
     // Used for having a switch case in 1 coroutine.
     private enum buttonPress
