@@ -20,6 +20,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         // Try to drop item into slot
         public void DropInSlot(DragDropItem movedItem)
         {   
+            Tooltip_System.ToggleVisibilityOn();
             if(transform.childCount == 0)
             {
                 movedItem.parentAfterDrag = transform;

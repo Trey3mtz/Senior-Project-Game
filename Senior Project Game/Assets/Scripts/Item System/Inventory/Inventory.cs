@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace Cyrcadian
 {
     [Serializable]
@@ -185,7 +186,30 @@ namespace Cyrcadian
 
             onInventoryChanged?.Invoke(this, EventArgs.Empty); 
         }
+        
+        public void Sort()
+        {
+            // Temp inventory to use as reference
+            InventoryEntry[] _SortingInventory = new InventoryEntry[initialInventorySize];
+            _Inventory.CopyTo(_SortingInventory);
+            
+            // Clear the all inventory, subtracted by the amount of quick slots
+            for(int i = 0; i < _Inventory.Capacity - 5; i++)
+            {    _Inventory[i] = new InventoryEntry();  }
 
+            
+            int j = 0;
+            foreach(InventoryEntry entry in _SortingInventory)
+            {   // 12 through 16 are quick slots
+                if(j == 12)
+                    break;
+                // Check if entry item is null before adding
+                if(entry.item)
+                    AddItem(entry.item, entry.stackSize);
+                j++;
+            }
+
+        }
         
         // Save the content of the inventory in the given list.
         public void Save(ref List<InventorySaveData> data)

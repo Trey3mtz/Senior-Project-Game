@@ -1,24 +1,36 @@
 using System.Collections;
 using Cyrcadian;
 using Cyrcadian.PlayerSystems;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
 public class GameStateManager : MonoBehaviour
 {
+    private static GameStateManager _gameStateManager;
+
+    void Awake()
+    {_gameStateManager = this;}
 
     [SerializeField] GameObject HUD_UI;
     [SerializeField] GameObject Inventory_UI;
     [SerializeField] GameObject PausedGame_UI;
     [SerializeField] GameObject GameOver_UI;
 
+    [Header("UI SoundFX")]
+    [SerializeField] AudioClip inventorySFX;
+
     public bool isPaused;
     public bool isInventory;
+
+    public static bool IsPaused()
+    {   return _gameStateManager.isPaused;    }
 
     // Used for having a switch case in 1 coroutine.
     private enum buttonPress
     {
+        Inventory,
         Load,
         Title,
         Quit
@@ -37,10 +49,8 @@ public class GameStateManager : MonoBehaviour
     {
         PausedGame_UI.SetActive(true);
         HUD_UI.SetActive(false);
-        Inventory_UI.SetActive(false);
         Time.timeScale = 0;
         isPaused = true;
-        isInventory = false;
     }
 
     public void UnpauseGame()
@@ -52,15 +62,22 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void OpenInventory()
-    {
-        Inventory_UI.SetActive(true);
+    {   
         isInventory = true;
+        Inventory_UI.SetActive(true);
+        AudioManager.Instance.PlaySoundFX(inventorySFX);
+        Inventory_UI.GetComponent<CanvasGroup>().DOFade(1, .2f).SetUpdate(true);  
+        Inventory_UI.transform.DOBlendableScaleBy(new Vector3(1,1,1), .2f);
     }
 
     public void CloseInventory()
     {
-        Inventory_UI.SetActive(false);
         isInventory = false;
+        myButton = buttonPress.Inventory;
+        StartCoroutine(buttonWait(myButton));
+        AudioManager.Instance.PlayReversedSoundFX(inventorySFX);
+        Inventory_UI.GetComponent<CanvasGroup>().DOFade(0, .2f).SetUpdate(true);  
+        Inventory_UI.transform.DOBlendableScaleBy(new Vector3(-1,-1,-1), .2f);
     }
 
     public void SaveGame()
@@ -108,10 +125,13 @@ public class GameStateManager : MonoBehaviour
     // Here so jumping into a new scene doesn't feel like whiplash
     private IEnumerator buttonWait(buttonPress button)
     {
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSecondsRealtime(.25f);
 
         switch(button)
         {
+            case buttonPress.Inventory:
+                    Inventory_UI.SetActive(false);
+                break;
             case buttonPress.Load:
                     SaveSystem.Load();
                 break;
@@ -130,4 +150,19 @@ public class GameStateManager : MonoBehaviour
                 break;
         }
     }
+
+        private void OnEnable()
+        {
+            SceneManager.sceneUnloaded += SceneManagerOnSceneUnloaded;
+        }
+
+        private static void SceneManagerOnSceneUnloaded(Scene scene)
+        {
+            DG.Tweening.DOTween.KillAll();
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneUnloaded -= SceneManagerOnSceneUnloaded;
+        }
 }

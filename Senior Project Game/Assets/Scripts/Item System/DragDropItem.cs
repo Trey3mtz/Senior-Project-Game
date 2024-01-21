@@ -59,6 +59,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         // Left click is the entire stack. Right clicks will pick up only 1.
         public void OnPointerDown(PointerEventData eventData)
         {
+            Tooltip_System.ToggleVisibilityOff();
             if (eventData.button == PointerEventData.InputButton.Left && !currentlyHoldingItem)             // LEFT CLICK DOWN  ------------------------- (empty)
             {   
                 eventData.pointerClick = transform.gameObject;
@@ -221,23 +222,6 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             RefreshStackAmount();
         }
 
-        // Will keep following mouse until you click somewhere else again
-        private IEnumerator FollowMousePosition(PointerEventData eventData)
-        {     
-            if(RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingObjectRectTransform, Mouse.current.position.ReadValue(), eventData.pressEventCamera, out var globalMousePosition))
-            {
-                draggingObjectRectTransform.position = Vector3.SmoothDamp(draggingObjectRectTransform.position, globalMousePosition, ref veloctiy, dampeningSpeed);
-            }
-            yield return new WaitForEndOfFrame();
-            if(currentlyHoldingItem)
-                StartCoroutine(FollowMousePosition(eventData));
-        }
-
-        private IEnumerator PressGracePeriod()
-        {     
-            yield return new WaitForSeconds(.15f);
-            justPressedDown = false;
-        }
 
         // Waits for grace period to pass, as to not immediately drop an item as soon as you click it
         public void OnPointerUp(PointerEventData eventData)
@@ -312,7 +296,23 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             }
         }
 
+        // Will keep following mouse until you click somewhere else again
+        private IEnumerator FollowMousePosition(PointerEventData eventData)
+        {    
+            if(RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingObjectRectTransform, Mouse.current.position.ReadValue(), eventData.pressEventCamera, out var globalMousePosition))
+            {
+                draggingObjectRectTransform.position = Vector3.SmoothDamp(draggingObjectRectTransform.position, globalMousePosition, ref veloctiy, dampeningSpeed);
+            }
+            yield return new WaitForEndOfFrame();
+            if(currentlyHoldingItem)
+                StartCoroutine(FollowMousePosition(eventData));
+        }
 
+        private IEnumerator PressGracePeriod()
+        {     
+            yield return new WaitForSeconds(.15f);
+            justPressedDown = false;
+        }
 
         private void RefreshStackAmount()
         {

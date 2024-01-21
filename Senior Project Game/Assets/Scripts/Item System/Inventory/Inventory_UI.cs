@@ -158,6 +158,11 @@ public class Inventory_UI : MonoBehaviour
         }
     }
 
+    public void Sort()
+    {
+        inventory.Sort();
+    }
+
     public void SwapSlottedItem(DragDropItem itemswapped, int slotIndex)
     {
         inventory.SwapIndex(itemswapped.thisIndex, slotIndex, itemswapped.item, itemswapped.amountStacked);

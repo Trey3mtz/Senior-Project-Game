@@ -191,11 +191,10 @@ public class PlayerController : MonoBehaviour
             gameStateManager.OpenInventory();
             gameStateManager.isInventory = true;
         }   
-        else if(gameStateManager.isInventory)
+        else if(gameStateManager.isInventory && !gameStateManager.isPaused)
         {
             gameStateManager.CloseInventory();
             gameStateManager.isInventory = false;
-            Tooltip_System.Hide();
         }
     }
 
