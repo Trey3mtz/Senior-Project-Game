@@ -1281,8 +1281,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6506964321498418190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 17.5, y: 9.1676}
   m_SizeDelta: {x: 41, y: 13.573}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3475,7 +3475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 567.4229, y: 913.1155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3984291827531055975
@@ -6704,7 +6704,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4614069341724029160}
   - component: {fileID: 1390676997240803794}
-  - component: {fileID: 4204805004865434352}
+  - component: {fileID: 2492380229608301260}
+  - component: {fileID: 1508739112167576454}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -6744,7 +6745,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!223 &4204805004865434352
+--- !u!223 &2492380229608301260
 Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6761,12 +6762,29 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 1
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 9001
+  m_SortingOrder: 9999
   m_TargetDisplay: 0
+--- !u!114 &1508739112167576454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437203122574781910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &7671763454013253578
 GameObject:
   m_ObjectHideFlags: 0
@@ -7860,7 +7878,7 @@ RectTransform:
   m_Father: {fileID: 7152028711684333645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 3.4051971, y: -2.9772}
   m_SizeDelta: {x: 3.7665, y: 0.4047}
   m_Pivot: {x: 0.5, y: 0.5}

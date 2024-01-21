@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using UnityEngine.EventSystems;
 
 public class Tooltip : MonoBehaviour
 {
@@ -52,9 +52,11 @@ public class Tooltip : MonoBehaviour
 
     private void Update()
     {   
-        if(!Tooltip_System.IsShown())
-            return;
-        
+        if(!Tooltip_System.Instance.IsShown())
+           return;
+        if(!EventSystem.current.IsPointerOverGameObject())
+            Tooltip_System.Instance.Hide();
+
         endPosition = Input.mousePosition;
            
         float pivotX = endPosition.x / Screen.width;
