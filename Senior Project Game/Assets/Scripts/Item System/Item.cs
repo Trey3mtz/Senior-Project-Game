@@ -6,9 +6,15 @@ namespace Cyrcadian
 
 public abstract class Item : ScriptableObject, IDatabaseEntry
 {
-    // These are items in the game, mostly relevant to the player and their inventory system.
-
-    // Items are usable objects that the player can hold. This is different from Resources.
+    // These enum are for the purpose of sorting items
+    // The enums at the Top will be first, in the top left of the inventory.
+    // The enums at the Bottom of this list will go to the bottom of the inventory
+    public enum ItemType{
+        Weapon,
+        Tool,
+        Food,
+        other
+    }
 
 
     public string Key => UniqueID;
@@ -18,6 +24,7 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
 
     [Tooltip("Display name that will be visible in-game, allowed to have [spaces] in the name")]        
     public string DisplayName;
+    public ItemType Type;
     public Sprite ItemSprite;
     public int MaxStackSize = 32;
     public bool Consumable = true;

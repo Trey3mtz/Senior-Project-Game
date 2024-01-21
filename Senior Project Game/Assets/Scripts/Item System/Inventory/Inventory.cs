@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 
 
 namespace Cyrcadian
@@ -187,16 +190,17 @@ namespace Cyrcadian
             onInventoryChanged?.Invoke(this, EventArgs.Empty); 
         }
         
+        // 5 is a hard number, as we will never increase our Quickslots
         public void Sort()
-        {
+        {   
             // Temp inventory to use as reference
-            InventoryEntry[] _SortingInventory = new InventoryEntry[initialInventorySize];
+            InventoryEntry[] _SortingInventory = new InventoryEntry[_Inventory.Capacity];
             _Inventory.CopyTo(_SortingInventory);
             
             // Clear the all inventory, subtracted by the amount of quick slots
             for(int i = 0; i < _Inventory.Capacity - 5; i++)
             {    _Inventory[i] = new InventoryEntry();  }
-
+        
             
             int j = 0;
             foreach(InventoryEntry entry in _SortingInventory)
@@ -209,6 +213,27 @@ namespace Cyrcadian
                 j++;
             }
 
+            _Inventory.Sort(0, _Inventory.Capacity-5, Comparer<InventoryEntry>.Create((a,b) => SortByEnum(a,b)));
+
+
+            int SortByEnum(InventoryEntry entry_A, InventoryEntry entry_B)
+            {
+                UnityEngine.Debug.Log(entry_A.item + "<-A , B-> " + entry_B.item);
+                if(!entry_A.item && entry_B.item)  
+                    return 1;
+                else if(entry_A.item && !entry_B.item)
+                    return -1;                
+                else if(!entry_A.item && !entry_B.item)
+                    return 0;
+                else if(entry_A.item.Type < entry_B.item.Type)
+                    return -1;                
+                else if(entry_A.item.Type > entry_B.item.Type)
+                    return 1;
+                
+                return 0;
+            }
+
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
         
         // Save the content of the inventory in the given list.

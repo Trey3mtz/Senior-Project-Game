@@ -47,7 +47,7 @@ public class Tooltip_System : MonoBehaviour
             _currentTooltipSystem = this;
         canvasGroup = GetComponent<CanvasGroup>();  
         tooltip = GetComponentInChildren<Tooltip>();}
-        
+
 
     public void Show(string content, string header = "")
     {   
@@ -62,7 +62,7 @@ public class Tooltip_System : MonoBehaviour
 
     public void Hide()
     {   
-        _currentTooltipSystem.canvasGroup.DOFade(0, _currentTooltipSystem.fadeTime * 0.8f).SetUpdate(true);  
+        _currentTooltipSystem.canvasGroup.DOFade(0, _currentTooltipSystem.fadeTime * 0.75f).SetUpdate(true);  
         _currentTooltipSystem.StartCoroutine(_currentTooltipSystem.Wait());
     }    
 
