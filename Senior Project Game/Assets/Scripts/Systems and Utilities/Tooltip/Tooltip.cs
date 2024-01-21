@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-[ExecuteInEditMode]
+
 public class Tooltip : MonoBehaviour
 {
     public bool tooltipFlipEnabled = true;
@@ -21,8 +21,7 @@ public class Tooltip : MonoBehaviour
     private int contentLength;
     
     private void Awake()
-    {
-       
+    {  
         rectTransform = GetComponent<RectTransform>();
     }
 
@@ -49,22 +48,17 @@ public class Tooltip : MonoBehaviour
     }
 
     Sequence moveSequence;
-    Vector2 position;
+    Vector2 endPosition;
+
     private void Update()
     {   
-        // This allows tooltips to work while in the Editor, probably
-        if(!Application.isPlaying)
-        {
-            headerLength = headerField.text.Length;
-            contentLength = contentField.text.Length;
-
-            layoutElement.enabled = Mathf.Max(headerField.preferredWidth, contentField.preferredWidth) >= layoutElement.preferredWidth;           
-        }
-
-        position = Input.mousePosition;
+        if(!Tooltip_System.IsShown())
+            return;
         
-        float pivotX = position.x / Screen.width;
-        float pivotY = position.y / Screen.height;
+        endPosition = Input.mousePosition;
+           
+        float pivotX = endPosition.x / Screen.width;
+        float pivotY = endPosition.y / Screen.height;
         float finalPivotX;
         float finalPivotY;
 
@@ -93,13 +87,11 @@ public class Tooltip : MonoBehaviour
             }
         }
             
-
         // If mouse on lower half of screen move tooltip above cursor and vice versa
         if (pivotY < 0.5) 
             finalPivotY = 0;
         else
             finalPivotY = 1;
-
         
         Vector2 finalPivot = new Vector2 (finalPivotX, finalPivotY);
 
@@ -115,6 +107,7 @@ public class Tooltip : MonoBehaviour
                 .Play();
         }
 
-        transform.position = position;
+
+        transform.DOMove(endPosition, 0.15f);
     }
 }

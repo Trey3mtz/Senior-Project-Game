@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using Unity.Entities.UniversalDelegates;
+
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
 {
     [Serializable]
-    public class QuickSlot : MonoBehaviour, IDropHandler 
+    public class QuickSlot : MonoBehaviour 
     {
         public int slotIndex;
         // This slot is not a child of the Inventory UI, but the HUD UI. This will be set in the UI prefab
@@ -60,27 +58,6 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             return slotIndex;
         }
 
-        public void OnDrop(PointerEventData eventData)
-        {
-                GameObject dropped = eventData.pointerDrag;
-                // Get rid of the original object, we only need its data. Otherwise clones would be left.
-                Destroy(eventData.pointerDrag);
-                DragDropItem draggedItem = dropped.GetComponent<DragDropItem>();
-            
-            if(transform.childCount == 0)
-            {   
-                draggedItem.parentAfterDrag = transform;
-                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
-                draggedItem.thisIndex = slotIndex;
-            }
-            else
-            {
-                parentUI.DropItemIntoSlot(draggedItem, slotIndex);
-            }
-
-            //slotdropSFX.Play();
-            AudioManager.Instance.PlaySoundFX(slotDropFX);
-        }
 
         IEnumerator WaitForInitialization()
         {
@@ -90,6 +67,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             // need to change index and parent after drag
         public void DropInSlot(DragDropItem movedItem)
         {
+            Tooltip_System.ToggleVisibilityOn();
             if(transform.childCount == 0)
             {
                 movedItem.parentAfterDrag = transform;
