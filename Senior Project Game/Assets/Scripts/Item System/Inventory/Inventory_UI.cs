@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting.ReorderableList;
-using UnityEngine.AI;
-using System;
-using Unity.VisualScripting;
-using Unity.Collections;
+
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
 {
@@ -139,6 +135,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void DropItemIntoSlot(DragDropItem droppedItem, int slotIndex)
     {   
+        Tooltip_System.Instance.ToggleVisibilityOn();
         List<Inventory.InventoryEntry> currentInventory = inventory.GetInventory();
 
         // If the slot is preoccupied check if they are the same stackable item, else just replace that index spot
@@ -169,7 +166,7 @@ public class Inventory_UI : MonoBehaviour
     }
 
     public void RemovedItemIndex(int i)
-    {
+    {   
         inventory.RemoveItemAt(i);
     }
 
@@ -185,6 +182,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void ItemReturnedToSlot(DragDropItem droppedItem, int slotIndex)
     {
+        Tooltip_System.Instance.ToggleVisibilityOn();
         AudioManager.Instance.PlaySoundFX(returnFX);
         //returnSFX.Play();
         DropItemIntoSlot(droppedItem, slotIndex);

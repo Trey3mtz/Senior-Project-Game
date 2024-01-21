@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 using Cyrcadian.PlayerSystems.InventorySystem;
 using Unity.VisualScripting;
 
@@ -152,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 -We don't know what the item is yet nor what it may do here, so we give it general information    
     */
     private void OnItem(InputAction.CallbackContext context)
-    {
+    {   
         if(!pointerOverUI && !isGrabbing)
             _inventoryUI.UseSelectedItem(gameObject.transform.position, gameObject);         
     }

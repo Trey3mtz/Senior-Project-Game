@@ -67,7 +67,6 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             // need to change index and parent after drag
         public void DropInSlot(DragDropItem movedItem)
         {
-            Tooltip_System.ToggleVisibilityOn();
             if(transform.childCount == 0)
             {
                 movedItem.parentAfterDrag = transform;

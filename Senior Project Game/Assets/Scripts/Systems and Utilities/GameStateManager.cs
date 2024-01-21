@@ -46,7 +46,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void PauseGame()
-    {
+    {   
         PausedGame_UI.SetActive(true);
         HUD_UI.SetActive(false);
         Time.timeScale = 0;
@@ -140,6 +140,7 @@ public class GameStateManager : MonoBehaviour
                     SceneManager.LoadSceneAsync(0);
                 break;
             case buttonPress.Quit:
+                    DG.Tweening.DOTween.KillAll();
                     #if UNITY_EDITOR
                         UnityEditor.EditorApplication.isPlaying = false;
                     #else

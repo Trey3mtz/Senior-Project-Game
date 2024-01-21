@@ -59,7 +59,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         // Left click is the entire stack. Right clicks will pick up only 1.
         public void OnPointerDown(PointerEventData eventData)
         {
-            Tooltip_System.ToggleVisibilityOff();
+            Tooltip_System.Instance.ToggleVisibilityOff();
             if (eventData.button == PointerEventData.InputButton.Left && !currentlyHoldingItem)             // LEFT CLICK DOWN  ------------------------- (empty)
             {   
                 eventData.pointerClick = transform.gameObject;
@@ -257,11 +257,11 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                         currentlyHoldingItem = false;
                 }
                 else if(!isItemOverUI)
-                {       
+                {          
                         Transform playerPosition = GameObject.Find("Player").transform;
                         World_Item.SpawnWorldItem(playerPosition.position, item, amountStacked);
                         AudioManager.Instance.PlaySoundFX(removeFX);
-
+                        Tooltip_System.Instance.ToggleVisibilityOn();
                     Destroy(gameObject);
                 }
                 else if(isOverSomeSlot)
