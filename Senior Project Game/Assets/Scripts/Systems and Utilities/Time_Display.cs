@@ -33,9 +33,14 @@ namespace Cyrcadian.WorldTime
             world_time.WorldTimeChanged -= OnWorldTimeChanged;
         }
 
-        private void OnWorldTimeChanged(object sender, TimeSpan newTime)
+        private void OnWorldTimeChangedDigital(object sender, TimeSpan newTime)
         {
             text.SetText(newTime.ToString(@"hh\:mm"));
+        }
+
+        private void OnWorldTimeChanged(object sender, TimeSpan newTime)
+        {
+            text.SetText("Day " + newTime.Days.ToString());
         }
     
     }
