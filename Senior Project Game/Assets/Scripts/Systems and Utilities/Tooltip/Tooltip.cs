@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System.Runtime.CompilerServices;
 
 public class Tooltip : MonoBehaviour
 {
@@ -25,16 +26,17 @@ public class Tooltip : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
 
-    public void SetText(string content, string header = "")
+    public void SetText(string content = "", string header = "")
     {
         if(string.IsNullOrEmpty(header))
-        {
             headerField.gameObject.SetActive(false);
-        }
         else
-        {
             headerField.gameObject.SetActive(true);
-        }
+
+        if(string.IsNullOrEmpty(content))
+            contentField.gameObject.SetActive(false);
+        else
+            contentField.gameObject.SetActive(true);
         
         headerField.text = header;
         contentField.text = content;
@@ -55,8 +57,10 @@ public class Tooltip : MonoBehaviour
         if(!Tooltip_System.Instance.IsShown())
            return;
         if(!EventSystem.current.IsPointerOverGameObject())
+         {
             Tooltip_System.Instance.Hide();
-
+            Debug.Log("Tool tip hiding");
+         }   
         endPosition = Input.mousePosition;
            
         float pivotX = endPosition.x / Screen.width;
@@ -72,7 +76,7 @@ public class Tooltip : MonoBehaviour
              if(tooltipFlipEnabled)
              {
                 gameObject.GetComponent<Image>().sprite = leftLeaningSprite;
-                gameObject.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
+                gameObject.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.MiddleLeft;
                 headerField.alignment = TextAlignmentOptions.Left;
                 contentField.alignment = TextAlignmentOptions.Left;                
              }
@@ -83,7 +87,7 @@ public class Tooltip : MonoBehaviour
             if(tooltipFlipEnabled)
             {
                 gameObject.GetComponent<Image>().sprite = rightLeaningSprite;
-                gameObject.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperRight;
+                gameObject.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.MiddleRight;
                 headerField.alignment = TextAlignmentOptions.Right;
                 contentField.alignment = TextAlignmentOptions.Right;                
             }

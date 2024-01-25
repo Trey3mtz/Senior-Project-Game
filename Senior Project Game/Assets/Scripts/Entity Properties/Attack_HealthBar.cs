@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cyrcadian;
 using UnityEngine;
 
 public class Attack_HealthBar : MonoBehaviour
 {
-    [SerializeField] AudioSource SFX;
+    [SerializeField] public AudioClip SFX;
     public int damage = 1;
-        
-    // Initialize the sound of the attack.
-    void Start()
-    {
-        SFX = GetComponent<AudioSource>();
-    }
 
     // Upon attack landing on an entity, check for it's healthbar. 
     // Lower it by damage amount, and play attack landing soundFX.
@@ -28,7 +23,7 @@ public class Attack_HealthBar : MonoBehaviour
                 collider.GetComponentInChildren<HealthBar>().ChangeHealth(-damage);
 
                 if(SFX != null)
-                    SFX.Play();
+                    AudioManager.Instance.PlaySoundFX(SFX);
             }
                 break;
 

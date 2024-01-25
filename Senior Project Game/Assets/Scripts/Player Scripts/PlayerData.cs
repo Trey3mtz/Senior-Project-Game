@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyrcadian.PlayerSystems.InventorySystem;
+using UnityEditor.Search;
 
 
 namespace Cyrcadian
@@ -22,6 +23,8 @@ namespace Cyrcadian
         public List<InventorySaveData> Inventory;
 
         public int Health, Hunger, Oxygen;
+
+        public PlayerSavedSettings SavedSettings;
     }
 
 
@@ -34,6 +37,7 @@ namespace Cyrcadian
             [SerializeField] private HealthBar _healthBar;
             [SerializeField] private HungerBar _hungerBar;
             [SerializeField] private HungerBar _oxygenBar;
+            [SerializeField] private SaveSettings saveSettings;
 
             private Collect_World_Item collect_item;
 
@@ -72,6 +76,8 @@ namespace Cyrcadian
                 data.Health = _healthBar.CurrentHP();
                 data.Hunger = _hungerBar.CurrentHunger();
                 data.Oxygen = _oxygenBar.CurrentHunger();
+                
+                saveSettings.Save(ref data.SavedSettings);
             }
 
             public void Load(PlayerSaveData data)
@@ -82,6 +88,8 @@ namespace Cyrcadian
                 _healthBar.SetHealth(data.Health);
                 _hungerBar.SetHunger(data.Hunger);
                 _oxygenBar.SetHunger(data.Oxygen);
+
+                saveSettings.Load(data.SavedSettings);
             }
 
             public Inventory GetSavedInventory()

@@ -15,6 +15,10 @@ public class AnimatorController : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        if(!spriteRenderer)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if(!spriteObject)
+            spriteObject = gameObject;
 
         originalFlipX = spriteRenderer.flipX;
         originalScaleX = Mathf.Sign(spriteObject.transform.localScale.x);

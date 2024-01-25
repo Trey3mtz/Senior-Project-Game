@@ -8,7 +8,7 @@ namespace Cyrcadian
     public class Testing_Inventory_Script : MonoBehaviour
     {
         [Tooltip("Scriptable object item goes here")]
-        public Item item;
+        [SerializeReference] Item item;
 
         [Tooltip("If needed, will make this script be flexible for testing in the future")]
         //public List<Vector3> positions;

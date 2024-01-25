@@ -45,6 +45,11 @@ public class GameStateManager : MonoBehaviour
         isPaused = false;
     }
 
+    public void PlaySoundFX(AudioClip clip)
+    {
+        AudioManager.Instance.PlaySoundFX(clip);
+    }
+
     public void PauseGame()
     {   
         PausedGame_UI.SetActive(true);

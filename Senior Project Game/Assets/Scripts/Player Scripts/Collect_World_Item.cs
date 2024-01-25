@@ -29,7 +29,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             
             World_Item item = collider.GetComponent<World_Item>();
             if(item != null)
-            {
+            {  
                 //itemSFX.Play();
                 AudioManager.Instance.PlaySoundFX(itemFX);
                 if(inventory.AddItem(item.GetItem(), item.GetAmount()))

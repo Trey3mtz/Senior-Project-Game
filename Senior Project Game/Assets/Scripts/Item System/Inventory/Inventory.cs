@@ -218,7 +218,6 @@ namespace Cyrcadian
 
             int SortByEnum(InventoryEntry entry_A, InventoryEntry entry_B)
             {
-                UnityEngine.Debug.Log(entry_A.item + "<-A , B-> " + entry_B.item);
                 if(!entry_A.item && entry_B.item)  
                     return 1;
                 else if(entry_A.item && !entry_B.item)
