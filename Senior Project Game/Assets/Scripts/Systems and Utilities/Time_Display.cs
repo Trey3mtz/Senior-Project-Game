@@ -25,6 +25,7 @@ namespace Cyrcadian.WorldTime
         private void Awake()
         {
             text = GetComponent<TMP_Text>();
+            world_time = FindAnyObjectByType<Time_World>();
             world_time.WorldTimeChanged += OnWorldTimeChanged;
         }
 

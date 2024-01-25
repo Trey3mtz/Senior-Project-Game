@@ -10,8 +10,9 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
     // The enums at the Top will be first, in the top left of the inventory.
     // The enums at the Bottom of this list will go to the bottom of the inventory
     public enum ItemType{
-        Weapon,
         Tool,
+        Weapon,
+        Medicine,
         Food,
         other
     }
@@ -44,7 +45,6 @@ public abstract class Item : ScriptableObject, IDatabaseEntry
 
     [Tooltip("This is the prefab that you will see when it is dropped into the world, out of inventory")]
     public GameObject WorldItemPrefab;
-    public AnimationClip ItemSpawnAnimation;
     
     [Tooltip("Sound triggered when using the item")]
     public AudioClip[] UseSound;

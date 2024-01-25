@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
+using DG.Tweening;
 
 namespace Cyrcadian
 {
@@ -29,21 +28,14 @@ public class World_Item : MonoBehaviour
         private TextMeshPro textMeshPro;
         private int amountDroped;
         private Collider2D hitbox;
-        private Tooltip_Trigger tooltip;
-        private Animation animationClip;
+        //private Animator animator;
+        private Rigidbody2D rb;
 
     public void SetItem(Item item)
-    {
+    {   
         this.item = item;
         spriteRenderer.sprite = item.ItemSprite;
-        tooltip.header = item.Tooltip_header;
-        tooltip.content = item.Tooltip_content;
-
-        if(item.ItemSpawnAnimation)
-        {   item.ItemSpawnAnimation.legacy = true;
-            animationClip.clip = item.ItemSpawnAnimation;  }
             
-
         if(amountDroped > 1)
             textMeshPro.SetText(amountDroped.ToString());
         else
@@ -53,13 +45,18 @@ public class World_Item : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        textMeshPro = GetComponentInChildren<TextMeshPro>();
         hitbox = GetComponent<Collider2D>();
-        tooltip = GetComponent<Tooltip_Trigger>();
+        rb = GetComponent<Rigidbody2D>();
         amountDroped = 1;
-        animationClip = GetComponent<Animation>();
-        animationClip.Play();
+
+        transform.position += new Vector3(Random.value * 0.5f, Random.value* 0.15f);
+    }
+
+    private void Start()
+    {
+        
     }
 
     public Item GetItem()
@@ -77,6 +74,19 @@ public class World_Item : MonoBehaviour
         hitbox.enabled = false;
         yield return new WaitForSeconds(1f);
         hitbox.enabled = true;
+    }
+
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        if(collider.gameObject.layer == 15)
+        {   Debug.Log("Over anther world item");
+            Vector3 direction = (gameObject.transform.position - collider.gameObject.transform.position).normalized;
+
+            direction += new Vector3(Random.value, Random.value)*.5f;
+
+            rb.velocity = (direction);
+        }
     }
 }
 }

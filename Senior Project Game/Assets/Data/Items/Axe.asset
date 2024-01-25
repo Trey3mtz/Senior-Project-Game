@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UniqueID: tool_axe
   DisplayName: Axe
+  Type: 1
   ItemSprite: {fileID: 21300000, guid: 3ffb8e58d7f1c824b89a0b29b0b1fce0, type: 3}
   MaxStackSize: 1
   Consumable: 0
@@ -22,9 +23,10 @@ MonoBehaviour:
   VisualPrefab: {fileID: 0}
   PlayerAnimatorTriggerUse: Generic Tool Swing
   WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
-  ItemSpawnAnimation: {fileID: -8417610307806309993, guid: b62eb6b1f7890714385bc41d0c9a7949, type: 3}
   UseSound:
   - {fileID: 8300000, guid: 7168e15fecd5cb44f86441af0a244125, type: 3}
   volume: {x: 0.2, y: 0.2}
   pitch: {x: 0.5, y: 0.5}
-  item_Tag: Generic Tool
+  item_Tag: Axe
+  damageDealt: 1
+  hitSFX: {fileID: 8300000, guid: c6130e1ea8491e248afff6a4c7400e4c, type: 3}
