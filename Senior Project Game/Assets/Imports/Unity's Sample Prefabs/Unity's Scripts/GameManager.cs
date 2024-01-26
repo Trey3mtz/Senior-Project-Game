@@ -63,7 +63,7 @@ namespace Cyrcadian
         public ItemDatabase ItemDatabase;
         //public CropDatabase CropDatabase;
 
-        public Storage Storage;
+        
 
         private bool m_IsTicking;
         
@@ -84,7 +84,7 @@ namespace Cyrcadian
             ItemDatabase.Init();
             //CropDatabase.Init();
             
-            Storage = new Storage();
+            
             
             m_CurrentTimeOfTheDay = StartingTime;
 

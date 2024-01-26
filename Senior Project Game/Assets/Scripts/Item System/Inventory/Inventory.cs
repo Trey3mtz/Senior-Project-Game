@@ -172,13 +172,28 @@ namespace Cyrcadian
             if(_Inventory[entryIndex].item == null)
                 return;
 
-            if(_Inventory[entryIndex].stackSize == 1)
+            if(_Inventory[entryIndex].stackSize <= 1)
                 _Inventory[entryIndex] = new InventoryEntry();
             else
                 _Inventory[entryIndex].stackSize--;
 
             onInventoryChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public void DecrementItemByAmount(int entryIndex, int amount)
+        {
+            if(_Inventory[entryIndex].item == null)
+                return;
+         
+            // If the amount subtracting would make this stack zero or less, empty the entry
+            // Else, just subtract the amount from the stack
+            if(_Inventory[entryIndex].stackSize - amount <= 0)
+                _Inventory[entryIndex] = new InventoryEntry();
+            else
+                _Inventory[entryIndex].stackSize -= amount;
+
+            onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        }        
 
         public void ConsumeItem(int entryIndex)
         {

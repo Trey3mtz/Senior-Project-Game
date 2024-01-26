@@ -59,8 +59,9 @@ public class Tooltip : MonoBehaviour
         if(!EventSystem.current.IsPointerOverGameObject())
          {
             Tooltip_System.Instance.Hide();
-            Debug.Log("Tool tip hiding");
+            return;
          }   
+
         endPosition = Input.mousePosition;
            
         float pivotX = endPosition.x / Screen.width;

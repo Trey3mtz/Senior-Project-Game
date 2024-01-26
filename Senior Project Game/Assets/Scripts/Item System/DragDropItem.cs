@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
-using System.Threading;
-using Unity.Transforms;
 
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
