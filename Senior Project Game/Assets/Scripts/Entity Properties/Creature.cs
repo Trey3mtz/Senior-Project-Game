@@ -34,6 +34,7 @@ namespace Cyrcadian.Creatures
 
         [Tooltip("The physics of a creature")]
         public Rigidbody2D rb;
+        public Collider2D collider2D;
 
         [Tooltip("Survival components of a creature")]
         public HungerBar Hunger;
