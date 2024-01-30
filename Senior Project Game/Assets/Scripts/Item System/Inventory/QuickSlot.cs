@@ -64,7 +64,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             yield return new WaitForEndOfFrame();
             doneInitializing = true;
         }
-            // need to change index and parent after drag
+
+         // need to change index and parent after drag
         public void DropInSlot(DragDropItem movedItem)
         {
             if(transform.childCount == 0)

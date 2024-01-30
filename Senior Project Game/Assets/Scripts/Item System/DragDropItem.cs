@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using System;
 
 
 namespace Cyrcadian.PlayerSystems.InventorySystem
@@ -54,11 +56,18 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             thisIndex = newIndex;
         }
 
-        // Left click is the entire stack. Right clicks will pick up only 1.
+        /// <summary>
+        ///                     Click logic - When pressed down:
+        ///                     
+        ///                             Left click is the entire stack. Right clicks will pick up only 1.
+        /// </summary>
+        /// <param name="eventData"></param>
+
+
         public void OnPointerDown(PointerEventData eventData)
         {
             Tooltip_System.Instance.ToggleVisibilityOff();
-            if (eventData.button == PointerEventData.InputButton.Left && !currentlyHoldingItem)             // LEFT CLICK DOWN  ------------------------- (empty)
+            if (eventData.button == PointerEventData.InputButton.Left && !currentlyHoldingItem)             // LEFT CLICK DOWN  ------------------------- (NOT holding item)
             {   
                 eventData.pointerClick = transform.gameObject;
                 parentAfterDrag = transform.parent;
@@ -66,14 +75,21 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 transform.SetAsLastSibling();
                 parentUI.RemovedItemIndex(thisIndex);   
 
-                justPressedDown = true;
-                currentlyHoldingItem = true;
+                if(Input.GetKey(KeyCode.LeftShift) && !parentAfterDrag.GetComponent<QuickSlot>())
+                        EquipToQuickSlot();    
+                else if(Input.GetKey(KeyCode.LeftShift) && !parentAfterDrag.GetComponent<InventorySlot>())
+                        EquipToInventorySlot();
+                else
+                {
+                    justPressedDown = true;
+                    currentlyHoldingItem = true;
 
-                StartCoroutine(FollowMousePosition(eventData));   
-                StartCoroutine(PressGracePeriod());  
-                AudioManager.Instance.PlaySoundFX(pickupFX);
+                    StartCoroutine(FollowMousePosition(eventData));   
+                    StartCoroutine(PressGracePeriod());  
+                }                
+                AudioManager.Instance.PlaySoundFX(pickupFX);                    
             }
-            else if (eventData.button == PointerEventData.InputButton.Right && !currentlyHoldingItem)       // RIGHT CLICK DOWN ------------------------- (empty)
+            else if (eventData.button == PointerEventData.InputButton.Right && !currentlyHoldingItem)       // RIGHT CLICK DOWN ------------------------- (NOT holding item)
             {   // If the stack is already at 1, it should just work like the Left Click Down
                if(amountStacked == 1)
                { 
@@ -220,8 +236,15 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             RefreshStackAmount();
         }
 
+        /// <summary>
+        ///                     Click logic - When lifted up:
+        ///                     
+        ///                             Waits for grace period to pass, as to not immediately drop an item if you did a fast click.
+        ///                             If you lifted the left mouse click, and are holding an item
+        ///                             
+        /// </summary>
+        /// <param name="eventData"></param>
 
-        // Waits for grace period to pass, as to not immediately drop an item as soon as you click it
         public void OnPointerUp(PointerEventData eventData)
         {   
             if(justPressedDown)
@@ -245,8 +268,8 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                         { isOverSomeSlot = true;    slotObj = result.gameObject; }
                 }
           
-                // If clicked, and the only UI gameobjects hover are the UI canvas and the item, "Drop" the item into the world
-                // Also checks if NOT hovered over an inventory slotObj
+                // If clicked, and the only UI gameobjects your pointer is over are the UI canvas and the item, "Drop" the item into the world
+                // Also checks if NOT hovered over an inventory slot 
                 if(isItemOverUI && !isOverSomeSlot)
                 {       
                         transform.SetParent(parentAfterDrag);
@@ -294,7 +317,75 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
             }
         }
 
-        // Will keep following mouse until you click somewhere else again
+        /// <summary>
+        ///                  Equip to quick slot short cut:
+        ///                         
+        ///                             If I found an empty quick slot, place it there.
+        ///                             If I have searched all quick slots, and have not found any empty slots, swap places with the item in the first quick slot.                        
+        /// </summary>
+        private void EquipToQuickSlot()
+        {
+            bool foundEmptySlot = false;
+            bool searchedAllSlots = false;
+            int counter = 0;
+            DragDropItem newDragDropItem = this;
+   
+            foreach(QuickSlot slot in parentUI.quickSlots)
+            {
+                if(slot.transform.childCount == 0)
+                {
+                    newDragDropItem.thisIndex = slot.slotIndex;
+                    newDragDropItem.transform.SetParent(slot.transform);
+  
+                    slot.DropInSlot(newDragDropItem);
+                        break;
+                }
+                counter++;
+
+                if(counter >= parentUI.quickSlots.Length)
+                    searchedAllSlots = true;
+
+                if(!foundEmptySlot && searchedAllSlots)
+                    parentUI.quickSlots[0].DropInSlot(newDragDropItem); 
+            }
+            Destroy(this.gameObject);
+        }
+
+        /// <summary>
+        ///                  Equip to inventory slot short cut:
+        ///                  
+        ///                             If I found an empty inventory slot, place it there.
+        ///                             If I have searched all inventory slots, and have not found any empty slots, swap places with the item in the first inventory slot.      
+        /// </summary>
+        private void EquipToInventorySlot()
+        {
+            bool foundEmptySlot = false;
+            bool searchedAllSlots = false;
+            int counter = 0;
+            DragDropItem newDragDropItem = this;
+  
+            foreach(InventorySlot slot in parentUI.inventorySlots)
+            {
+                if(slot.transform.childCount == 0)
+                {
+                    newDragDropItem.thisIndex = slot.slotIndex;
+                    newDragDropItem.transform.SetParent(slot.transform);
+       
+                    slot.DropInSlot(newDragDropItem);
+                        break;
+                }
+                counter++;
+
+                if(counter >= parentUI.quickSlots.Length)
+                    searchedAllSlots = true;
+
+                if(!foundEmptySlot && searchedAllSlots)
+                    parentUI.quickSlots[0].DropInSlot(newDragDropItem);  
+            }
+            Destroy(this.gameObject);
+        }
+
+        // Coroutine for the item grabbed to follow the mouse, until you are no holding the item
         private IEnumerator FollowMousePosition(PointerEventData eventData)
         {    
             if(RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingObjectRectTransform, Mouse.current.position.ReadValue(), eventData.pressEventCamera, out var globalMousePosition))
@@ -306,12 +397,14 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                 StartCoroutine(FollowMousePosition(eventData));
         }
 
+        // To ensure a fast click doesn't drop the item rather than pick it up
         private IEnumerator PressGracePeriod()
         {     
             yield return new WaitForSeconds(.15f);
             justPressedDown = false;
         }
 
+        // Updates the item stack counter
         private void RefreshStackAmount()
         {
             if(amountStacked > 1)
