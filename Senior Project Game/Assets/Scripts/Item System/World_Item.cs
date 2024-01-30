@@ -22,6 +22,14 @@ public class World_Item : MonoBehaviour
         spawnedItem.GetComponent<World_Item>().amountDroped = amount;
         spawnedItem.GetComponent<World_Item>().SetItem(item);
     }
+
+    public static void SpawnWorldItem(Vector3 position, Item item, Vector3 forceDirection)
+    {
+        GameObject spawnedItem = Instantiate(item.WorldItemPrefab, position, Quaternion.identity);
+
+        spawnedItem.GetComponent<World_Item>().SetItem(item);
+        spawnedItem.GetComponent<Rigidbody2D>().AddForce(forceDirection); 
+    }
         
         private Item item;
         private SpriteRenderer spriteRenderer;
@@ -54,11 +62,6 @@ public class World_Item : MonoBehaviour
         transform.position += new Vector3(Random.value * 0.5f, Random.value* 0.15f);
     }
 
-    private void Start()
-    {
-        
-    }
-
     public Item GetItem()
     {   return item;    }
        
@@ -80,7 +83,7 @@ public class World_Item : MonoBehaviour
     void OnTriggerStay2D(Collider2D collider)
     {
         if(collider.gameObject.layer == 15)
-        {   Debug.Log("Over anther world item");
+        {   
             Vector3 direction = (gameObject.transform.position - collider.gameObject.transform.position).normalized;
 
             direction += new Vector3(Random.value, Random.value)*.5f;

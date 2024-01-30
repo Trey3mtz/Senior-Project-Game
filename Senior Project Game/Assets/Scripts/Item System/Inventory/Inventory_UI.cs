@@ -19,8 +19,8 @@ public class Inventory_UI : MonoBehaviour
     [SerializeField] private AudioSource returnSFX;
     [SerializeField] private AudioClip returnFX;
 
-    [SerializeField] InventorySlot[] inventorySlots;
-    [SerializeField] QuickSlot[] quickSlots;
+    [HideInInspector][SerializeField] public InventorySlot[] inventorySlots;
+    [HideInInspector][SerializeField] public QuickSlot[] quickSlots;
     int selectedSlot = 0;
 
     private void Start()

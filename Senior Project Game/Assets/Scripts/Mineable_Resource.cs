@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cyrcadian.Items;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,17 +15,16 @@ namespace Cyrcadian
 
         //                                                This should be applicable to any static thing that drops resources.
 
-        [SerializeField] Item item;
-        [SerializeField] Transform spawnpoint;
+        [Tooltip("The GameObject tag of the correct tool to interact. Capitalization and Spacing matter!")]
         [SerializeField] string correctTool;
-
+        [HideInInspector] [SerializeField] Spawnable_Loot spawnLoot;
         [SerializeField] AudioClip minedSFX;
         private Animator animator;
 
         void Awake()
         {
-            spawnpoint = gameObject.transform;
-            animator = GetComponent<Animator>();
+            spawnLoot = GetComponentInChildren<Spawnable_Loot>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         void OnTriggerEnter2D(Collider2D collider)
@@ -32,7 +32,7 @@ namespace Cyrcadian
             var randomVariable = Random.insideUnitCircle / 3;
             if(collider.gameObject.tag == correctTool)
             {
-                World_Item.SpawnWorldItem(spawnpoint.position + new Vector3(0,.75f)+  randomVariable.ConvertTo<Vector3>(), item);
+                spawnLoot.SpawnLoot();
                 AudioManager.Instance.PlaySoundFX(minedSFX);
                 animator.CrossFade("Hit", 0);
             }
