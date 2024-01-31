@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Cyrcadian
+namespace Cyrcadian.Creatures
 {
     public class HungerBar : MonoBehaviour
     {
-        [SerializeField] int StomachSize = 10;
+        [SerializeField] public int StomachSize = 10;
         [SerializeField] int _hunger;
         [SerializeField] bool recentlyFed = false;
 
@@ -55,10 +55,12 @@ namespace Cyrcadian
                 VisualizeHunger();
         }
 
+        public int GetStomachSize()
+        {   return StomachSize; }
+
         public int CurrentHunger()
-        {
-            return _hunger;
-        }
+        {   return _hunger;     }
+        
 
         // For the Player's HUD
         public void SetHunger(int value)

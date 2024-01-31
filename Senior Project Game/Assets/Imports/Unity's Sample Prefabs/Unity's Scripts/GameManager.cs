@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 using Cyrcadian.PlayerSystems;
 using Cyrcadian.WorldTime;
 using TMPro;
+using Cyrcadian.Creatures;
 
 namespace Cyrcadian
 {
@@ -48,6 +49,7 @@ namespace Cyrcadian
         public WeatherSystem WeatherSystem { get; set; }
         public CinemachineVirtualCamera MainCamera { get; set; }
         public Tilemap WalkSurfaceTilemap { get; set; }
+        public Ecosystem_Handler ecosystem { get; set; }
         
         public SceneData LoadedSceneData { get; set; }
         

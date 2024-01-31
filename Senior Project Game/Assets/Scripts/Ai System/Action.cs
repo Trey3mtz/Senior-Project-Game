@@ -26,7 +26,7 @@ namespace Cyrcadian.UtilityAI
             score = 0;
          }
 
-        public abstract void Execute(EntityController thisEntity);
+        public abstract void Execute(CreatureController thisCreature);
 
     }
 }

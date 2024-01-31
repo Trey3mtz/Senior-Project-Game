@@ -1,10 +1,11 @@
 using Cyrcadian.PlayerSystems;
+using Cyrcadian.Creatures;
 using UnityEngine;
 
 
 namespace Cyrcadian.Items
 {
-    [CreateAssetMenu(fileName = "Food", menuName = "2D Survial/Items/Food")]
+    [CreateAssetMenu(fileName = "Food", menuName = "2D Survival/Items/Food")]
     public class Food : Item
     {
         [SerializeField] int foodValue = 5; 

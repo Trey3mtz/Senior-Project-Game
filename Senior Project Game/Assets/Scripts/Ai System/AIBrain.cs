@@ -10,21 +10,21 @@ namespace Cyrcadian.UtilityAI
         public Action bestAction { get; set;}
         public bool isFinishedDeciding { get; set;}
 
-        private EntityController thisEntity;
+        private CreatureController thisCreature;
 
         
         // Start is called before the first frame update
         void Start()
         {
-            thisEntity = GetComponent<EntityController>();
+            thisCreature = GetComponent<CreatureController>();
         }
 
-        // Choose a best action for thisEntity from it's list of available actions
+        // Choose a best action for thisCreature from it's list of available actions
         void Update()
         {
             if(bestAction is null)
             {
-                ChooseBestAction(thisEntity.actionsAvailable);
+                ChooseBestAction(thisCreature.actionsAvailable);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Cyrcadian.UtilityAI
             float score = 1f;
             for(int i = 0; i < action.considerations.Length; i++)
             {
-                float considerationScore = action.considerations[i].ScoreConsideration();
+                float considerationScore = action.considerations[i].ScoreConsideration(thisCreature);
                 score *= considerationScore;
 
                 // If a consideration is zero, it has no point in computing further.

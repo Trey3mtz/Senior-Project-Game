@@ -24,7 +24,7 @@ namespace Cyrcadian.UtilityAI
             score = 0;
         }
 
-        public abstract float ScoreConsideration();
+        public abstract float ScoreConsideration(CreatureController entityController);
         
     }
 }
