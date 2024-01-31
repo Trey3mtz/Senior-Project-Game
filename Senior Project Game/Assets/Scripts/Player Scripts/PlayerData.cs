@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyrcadian.PlayerSystems.InventorySystem;
-using UnityEditor.Search;
+using Cyrcadian.Creatures;
 
 
-namespace Cyrcadian
+namespace Cyrcadian.PlayerSystems
 {
     /*********************************************************************************
         [Attach this to Player]

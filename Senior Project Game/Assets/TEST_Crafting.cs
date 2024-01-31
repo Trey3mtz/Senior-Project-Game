@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cyrcadian.PlayerSystems.InventorySystem;
+using Cyrcadian.PlayerSystems;
 using UnityEngine;
 
 namespace Cyrcadian.Items

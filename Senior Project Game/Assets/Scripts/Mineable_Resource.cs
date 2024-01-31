@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Cyrcadian
 {
+    [RequireComponent(typeof(Spawnable_Loot))]
     public class Mineable_Resource : MonoBehaviour
     {
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Cyrcadian.Items
 {
-    [CreateAssetMenu(fileName = "Crafting Recipe", menuName = "2D Survial/Crafting Recipe")]
+    [CreateAssetMenu(fileName = "Crafting Recipe", menuName = "2D Survival/Crafting Recipe")]
     public class CraftingRecipe : ScriptableObject
     {
 

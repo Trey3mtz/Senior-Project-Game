@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cyrcadian.Creatures;
 using UnityEngine;
 
 
 namespace Cyrcadian.UtilityAI
 {
-    public class EntityController : MonoBehaviour
+    public class CreatureController : MonoBehaviour
     {
 
         public MoveController mover{ get; set;}
         public AIBrain aiBrain { get; set;}
         public Action[] actionsAvailable;
+        public Creature_Stats stats;
+
+        // Keeps track of nearby Creatures, and Items so far.
+        private Awareness awareness;
 
         // Start is called before the first frame update
         void Start()
         {
             mover = GetComponent<MoveController>();
             aiBrain = GetComponent<AIBrain>();
+            awareness = GetComponentInChildren<Awareness>();
         }
 
 
@@ -31,7 +37,7 @@ namespace Cyrcadian.UtilityAI
         }
         }
 
-                // Upon completing an Action, choose the next best action from all available actions
+            // Upon completing an Action, choose the next best action from all available actions
             public void UponCompletedAction()
             {
                 aiBrain.ChooseBestAction(actionsAvailable);
@@ -59,7 +65,6 @@ namespace Cyrcadian.UtilityAI
                 yield return new WaitForSeconds(1f);
                 counter--;
             }
-
 
             UponCompletedAction();
         }

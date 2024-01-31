@@ -7,9 +7,10 @@ namespace Cyrcadian.UtilityAI.Actions
     [CreateAssetMenu(fileName = "Eat", menuName = "UtilityAI/Actions/Eat")]
     public class Eat : Action
     {
-        public override void Execute(EntityController thisEntity)
+        public int foodValue;
+        public override void Execute(CreatureController thisCreature)
         {
-           // thisEntity.stats.hunger -= 1;// Place logic to sleep here
+           thisCreature.stats.currentHunger += foodValue; // Place logic to sleep here
         }
     }
 }

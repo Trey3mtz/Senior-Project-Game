@@ -8,7 +8,7 @@ namespace Cyrcadian.UtilityAI.Considerations
     public class Energy_Consideration : Consideration
     {
 
-         public override float ScoreConsideration()
+         public override float ScoreConsideration(CreatureController thisCreature)
          {
             return 0.6f;
          }

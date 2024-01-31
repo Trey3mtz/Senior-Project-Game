@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Cyrcadian.Items
 {
-    [CreateAssetMenu(fileName = "Generic Item", menuName = "2D Survial/Items/Generic Item")]
+    [CreateAssetMenu(fileName = "Generic Item", menuName = "2D Survival/Items/Generic Item")]
     public class Generic_Item : Item
     {
         // This item class is for items that do not need sounds, or methods.

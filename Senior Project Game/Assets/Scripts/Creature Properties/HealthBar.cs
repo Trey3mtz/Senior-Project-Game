@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private int MaxHP = 10;
+    [SerializeField] public int MaxHP = 10;
     [SerializeField] private int _hp;
     [SerializeField] private float iFrames = 0.5f;
 
@@ -79,6 +79,9 @@ public class HealthBar : MonoBehaviour
 
     public void SetHealth(int value)
     {   _hp = value;    }
+
+    public int GetMaxHP()
+    {   return MaxHP;   }
 
     public int CurrentHP()
     {   return _hp;     }

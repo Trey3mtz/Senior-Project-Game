@@ -7,7 +7,7 @@ namespace Cyrcadian.UtilityAI.Actions
     [CreateAssetMenu(fileName = "Chase", menuName = "UtilityAI/Actions/Chase")]
     public class Chase : Action
     {
-        public override void Execute(EntityController thisEntity)
+        public override void Execute(CreatureController thisCreature)
         {
             // Place logic here
         }
