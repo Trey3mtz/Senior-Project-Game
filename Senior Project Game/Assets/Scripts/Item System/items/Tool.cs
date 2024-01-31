@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Cyrcadian.Items
 {
-    [CreateAssetMenu(fileName = "Tool", menuName = "2D Survial/Items/Tool")]
+    [CreateAssetMenu(fileName = "Tool", menuName = "2D Survival/Items/Tool")]
     public class Tool : Item
     {
         private GameObject obj;
