@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cyrcadian.UtilityAI;
+using Cyrcadian.UtilityAI.Actions;
 using UnityEngine;
 
 namespace Cyrcadian.Creatures
@@ -7,20 +9,22 @@ namespace Cyrcadian.Creatures
     public class Creature_Animation : MonoBehaviour
     {
         [SerializeField] HealthBar health;
-        [SerializeField] AnimatorController animatorControl;
+        [SerializeField] AnimatorHandler animatorControl;
+        [SerializeField] MoveController mover;
+        [SerializeField] CreatureController creature;
 
         [HideInInspector][SerializeField] Rigidbody2D rb;
 
         [Header("Animation Timings (seconds)")]
-        [SerializeField] private float hurtTime;
+        [SerializeField] private float hurtTime = .25f;
         private bool isAnimationLocked = false;
 
         //  audio for sfx
         [Header("Audio")]
-        [SerializeField] AudioClip walkSFX;
-        [SerializeField] AudioClip hurtSFX;
-        [SerializeField] AudioClip deathSFX;
-        private bool canPlayFootstepSFX = true;
+        [SerializeField] public AudioClip walkSFX;
+        [SerializeField] public AudioClip hurtSFX;
+        [SerializeField] public AudioClip deathSFX;
+        //private bool canPlayFootstepSFX = true;
 
 
 
@@ -30,9 +34,11 @@ namespace Cyrcadian.Creatures
             // All creatures will have a health bar and rigidbody
             health = GetComponentInChildren<HealthBar>();
             rb = GetComponentInParent<Rigidbody2D>();
+            mover = GetComponentInParent<MoveController>();
+            creature = GetComponentInParent<CreatureController>();
 
             // Create and set a control for AnimatorController
-            animatorControl = GetComponentInChildren<AnimatorController>();
+            animatorControl = GetComponentInChildren<AnimatorHandler>();
             animatorControl.spriteObject = gameObject;
             animatorControl.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             animatorControl.animator = GetComponentInChildren<Animator>();
@@ -43,19 +49,35 @@ namespace Cyrcadian.Creatures
         {
             if(isAnimationLocked)
                 return;
-            
-                animatorControl.CrossFade("Idle");
 
+            if(health.CurrentHP() <= 0)
+                Dead();
+            else if(health.WasHit())
+                Hurt();
 
-        if(health.CurrentHP() <= 0)
-            Dead();
-        else if(health.WasHit())
-            Hurt();
+            if(isAnimationLocked)
+                return;
+
+            if(mover.agent.velocity.sqrMagnitude == 0)
+            {   
+                if(creature.alertness == CreatureController.AlertState.Asleep)
+                    animatorControl.CrossFade("Sleep");
+                else
+                    animatorControl.CrossFade("Idle");
+            }
+            else if(mover.agent.hasPath)
+            {
+                animatorControl.OrientateBody(mover.agent.velocity.x);
+                animatorControl.CrossFade("Move");
+            }
+
         }
+
 
         public void Hurt()
         {   
             isAnimationLocked = true;
+            mover.BrieflyPauseMove(hurtTime);
             animatorControl.CrossFade("Hurt");
             AudioManager.Instance.PlaySoundFX(hurtSFX);
             StartCoroutine(animationLockOut(hurtTime));

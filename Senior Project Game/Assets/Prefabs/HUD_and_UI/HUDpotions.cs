@@ -7,7 +7,7 @@ using TMPro;
 public class HUDpotions : MonoBehaviour
 {
     Animator animator;
-    public AnimatorController animatorController;
+    public AnimatorHandler animatorController;
     [SerializeField] TMP_Text HUD_text;
 
     private int lastNumber;

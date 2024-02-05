@@ -10,6 +10,8 @@ namespace Cyrcadian.UtilityAI
 
         private float _score;
 
+        //                          A score of 0 means it has the lowest priority.
+        //                          A score of 1 means it has the highest priority.
         public float score
         {
             get { return _score;}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorController : MonoBehaviour
+public class AnimatorHandler : MonoBehaviour
 {
     public Animator animator;
     public SpriteRenderer spriteRenderer;

@@ -11,7 +11,8 @@ namespace Cyrcadian.UtilityAI.Considerations
 
          public override float ScoreConsideration(CreatureController thisCreature)
          {
-            score = responseCurve.Evaluate(Mathf.Clamp01(thisCreature.stats.currentHP / 100f));
+            if(thisCreature.stats.healthPool != 0)
+                score = responseCurve.Evaluate(Mathf.Clamp01(thisCreature.stats.currentHP / thisCreature.stats.healthPool));
             return score;
          }
     }

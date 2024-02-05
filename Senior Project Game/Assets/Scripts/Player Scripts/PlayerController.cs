@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private InputAction keyboardNum;
 
     public bool isGrabbing = false;
+    private bool canUseItems = true; 
 
     Vector3 movedirection = Vector3.zero;
     public Vector2 lookdirection = Vector2.zero;
@@ -148,12 +149,20 @@ public class PlayerController : MonoBehaviour
 
                 -Calls the inventoryUI script to use the item we have currently selected in Hotbar
                 -The players position, and gameobject is passed
-                -We don't know what the item is yet nor what it may do here, so we give it general information    
+                -We don't know what the item is yet nor what it may do here, so we give it general information   
+                -Item usage has an internal timer of 0.15 seconds to prevent weird behavior 
     */
     private void OnItem(InputAction.CallbackContext context)
     {   
-        if(!pointerOverUI && !isGrabbing)
-            _inventoryUI.UseSelectedItem(gameObject.transform.position, gameObject);         
+        if(!pointerOverUI && !isGrabbing && canUseItems)
+            {   _inventoryUI.UseSelectedItem(gameObject.transform.position, gameObject);
+                StartCoroutine(ItemTimer());   }         
+    }
+    IEnumerator ItemTimer()
+    {
+        canUseItems = false;
+        yield return new WaitForSeconds(0.15f);
+        canUseItems = true;
     }
 
     /**************************************************************************************************
