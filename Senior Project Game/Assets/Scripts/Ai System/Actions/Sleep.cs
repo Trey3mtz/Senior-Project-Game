@@ -7,7 +7,8 @@ namespace Cyrcadian.UtilityAI.Actions
     {
         public override void Execute(CreatureController thisCreature)
         {
-            thisCreature.DoSleep(3);// Place logic to sleep here
+            if(thisCreature.alertness != CreatureController.AlertState.Asleep && thisCreature.alertness != CreatureController.AlertState.Alert)
+                thisCreature.DoSleep();
         }
     }
 }

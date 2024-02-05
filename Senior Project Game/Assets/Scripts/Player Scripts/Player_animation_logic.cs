@@ -9,7 +9,7 @@ namespace Cyrcadian.PlayerSystems
 public class Player_animation_logic : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
-    [SerializeField] AnimatorController animatorController;
+    [SerializeField] AnimatorHandler animatorController;
     [SerializeField] SpriteRenderer hands;
     [SerializeField] private HealthBar health;
     [SerializeField] private PlayerControls controls;
@@ -41,7 +41,7 @@ public class Player_animation_logic : MonoBehaviour
         if(playerController == null)
             playerController = gameObject.GetComponentInParent<PlayerController>();
 
-        animatorController = gameObject.GetComponent<AnimatorController>();
+        animatorController = gameObject.GetComponent<AnimatorHandler>();
         health = GetComponentInChildren<HealthBar>();
         controls = playerController.playerControls;
     }

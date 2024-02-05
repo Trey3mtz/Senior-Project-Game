@@ -18,7 +18,7 @@ namespace Cyrcadian.Items
 
         [Header("Loot Table")]
         [Tooltip("values of 0 means it won't spawn, and 1 or greater means 100% chance to spawn")]
-        [SerializeField] SpawnableLoot[] spawnableLoot;
+        [SerializeField] public SpawnableLoot[] spawnableLoot;
 
         // We will randomly generate a position, a force amount, and direction to push the loot
         // This will add to player satisfaction seeing it flop about as they earned the loot
@@ -30,8 +30,8 @@ namespace Cyrcadian.Items
         private float generatedChance;
         private int generatedAmount;
 
-        [SerializeField] float minSpawnVelocity = 50f;
-        [SerializeField] float maxSpawnVelocity = 100f;
+        [SerializeField] float minSpawnVelocity = 100f;
+        [SerializeField] float maxSpawnVelocity = 125f;
 
         public void SpawnLoot()
         {       

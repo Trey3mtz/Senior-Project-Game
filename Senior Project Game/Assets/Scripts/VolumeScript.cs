@@ -11,7 +11,7 @@ public class VolumeScript : MonoBehaviour
     [SerializeField] private Volume night_volume;
 
     [SerializeField] Animator animator;
-    [SerializeField] private AnimatorController animController;
+    [SerializeField] private AnimatorHandler animController;
     [SerializeField] private SpriteRenderer placeholderSprite;
 
     public float DayNightTransition = 5f;

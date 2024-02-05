@@ -1,3 +1,4 @@
+using Cyrcadian.Creatures;
 using UnityEngine;
 
 namespace Cyrcadian
@@ -21,8 +22,15 @@ namespace Cyrcadian
                 { 
                     collider.GetComponentInChildren<HealthBar>().ChangeHealth(-damage);
 
-                    if(SFX != null)
+                    if(SFX != null && collider.GetComponentInChildren<HealthBar>().WasHit())
                         AudioManager.Instance.PlaySoundFX(SFX);
+
+                    if(collider.transform.root.GetComponentInChildren<Awareness>())
+                    {
+                        collider.transform.root.GetComponentInChildren<Awareness>().Target = transform.root;
+                        if(!collider.transform.root.GetComponentInChildren<Awareness>().VisibleCreatures.Contains(transform.root))
+                            collider.transform.root.GetComponentInChildren<Awareness>().VisibleCreatures.Add(transform.root);
+                    }
                 }
                     break;
 

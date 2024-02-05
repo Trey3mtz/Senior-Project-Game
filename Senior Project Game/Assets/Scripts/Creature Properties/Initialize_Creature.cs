@@ -3,6 +3,7 @@ using Cyrcadian.Creatures;
 using Cyrcadian.UtilityAI;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,16 +16,17 @@ namespace Cyrcadian
 
         public static void SpawnCreature(Vector3 position, Creature creature)
         {
+            // Instantiate a blank creature prefab
             GameObject spawnedCreature = Instantiate(creature.CreaturePrefab, position, Quaternion.identity);
-
+            // Fill out that prefab with specified data
             spawnedCreature.GetComponent<Initialize_Creature>().SetCreature(creature);
         }
 
 
-        private Creature creature;
+       
         private SpriteRenderer spriteRenderer;
-        private Collider2D hitbox;
-        //private Animator animator;
+        [SerializeField] Collider2D hitbox;
+        private Animator animator;
         private Rigidbody2D rb;
 
         private HealthBar health;
@@ -32,21 +34,31 @@ namespace Cyrcadian
         private AIBrain brain;
         private CreatureController creatureController;
         private MoveController moveController;
-        public Creature_Stats MyStats;
+        private Creature_Stats initialStats;
+        private Creature_Animation animationHandler;
 
-        public void SetCreature(Creature newCreature)
+        public void SetCreature(Creature creature)
         {
-            this.creature = newCreature;
-            spriteRenderer.sprite = newCreature.Sprite;
+            creatureController.creatureSpecies = creature;
+            creatureController.actionsAvailable = creature.ListOfPossibleActions;
+            spriteRenderer.sprite = creature.Sprite;
+            animator.runtimeAnimatorController = creature.AnimatorController;
 
-            hitbox = newCreature.collider2D;
-            rb = newCreature.rb;
+            hitbox = creature.collider2D;
+            rb = creature.rb;
 
-            MyStats = newCreature.Stats;
-            health.MaxHP = MyStats.healthPool;
-            health.SetHealth(MyStats.currentHP);
-            hunger.StomachSize = MyStats.stomachSize;
-            hunger.SetHunger(MyStats.currentHunger);
+            initialStats = creature.Stats;
+            health.MaxHP = initialStats.healthPool;
+            health.SetHealth(initialStats.healthPool);
+            hunger.StomachSize = initialStats.stomachSize;
+            hunger.SetHunger(initialStats.stomachSize);
+
+
+            // Creatures will have a set list of sounds no matter what species.
+            // What sounds those are, are determined by the game asset of that creature.
+            animationHandler.walkSFX = creature.CreatureSounds[0];
+            animationHandler.hurtSFX = creature.CreatureSounds[1];
+            animationHandler.deathSFX = creature.CreatureSounds[2];
         }
 
         void Awake()
@@ -56,8 +68,13 @@ namespace Cyrcadian
             moveController = GetComponentInChildren<MoveController>();
             health = GetComponentInChildren<HealthBar>();
             hunger = GetComponentInChildren<HungerBar>();
+            animationHandler = GetComponentInChildren<Creature_Animation>();
+            animator = GetComponentInChildren<Animator>();
 
-            creatureController.stats = MyStats;
+            rb = transform.root.GetComponent<Rigidbody2D>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            creatureController.stats = initialStats;
 
             OnSpawn?.Invoke(this, new Creature() );
         }
@@ -90,13 +107,13 @@ namespace Cyrcadian
 
         public void Save(ref CreatureSavedData data)
         {
-            data.stats = MyStats;
+            data.stats = initialStats;
             data.position = transform.position;
         }
 
         public void Load(CreatureSavedData data)
         {
-            MyStats = data.stats;
+            initialStats = data.stats;
             transform.position = data.position;
 
             health.SetHealth(data.stats.currentHP);

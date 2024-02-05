@@ -9,7 +9,7 @@ namespace Cyrcadian.UtilityAI.Actions
     {
         public override void Execute(CreatureController thisCreature)
         {
-            // Place logic here
+            thisCreature.DoChase();
         }
     }
 }

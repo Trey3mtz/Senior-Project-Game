@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
+
 
 namespace Cyrcadian.WorldTime
 {
@@ -25,6 +25,14 @@ namespace Cyrcadian.WorldTime
         private Vector3 sunRise = new Vector3 (-1,0);
         private Vector3 sunSet = new Vector3 (1,0);
         private Vector3 midDay = new Vector3 (0,1);
+
+        // i.e. Night, Day, Twilgiht
+        private TimeOfDay theTimeOfDay = TimeOfDay.Night;
+        
+        private float dayHour = 5/24f;
+        private float twilightHour = 17/24f;
+        private float nightHour = 21/24f;
+
 
         [SerializeField]
         private Time_World world_time;
@@ -59,7 +67,16 @@ namespace Cyrcadian.WorldTime
             
             _light.intensity = theoreticalSunPosition.y;
             _light.color = gradient.Evaluate(percetageDaylight);
+
             
+            
+            if(percetageDaylight >= dayHour)
+                theTimeOfDay = TimeOfDay.Day;
+            if(percetageDaylight >= twilightHour)
+                theTimeOfDay = TimeOfDay.Twilight;
+            if(percetageDaylight > nightHour)
+                theTimeOfDay = TimeOfDay.Night;
+
         }
 
         public void PercentOfDay(TimeSpan timeSpan)
@@ -76,6 +93,19 @@ namespace Cyrcadian.WorldTime
         public float GetPercentageOfDay()
         {
             return percetageDaylight;
+        }
+
+
+        public int GetTimeOfDay()
+        {
+            return Convert.ToInt32(theTimeOfDay);
+        }
+
+        public enum TimeOfDay
+        {
+            Night,
+            Day,
+            Twilight
         }
     }
 }

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c80a4017bdd4c4a94719bc923544e5, type: 3}
-  m_Name: Energy_Consideration
+  m_Script: {fileID: 11500000, guid: 666c238467863d44c918e7c201502c0f, type: 3}
+  m_Name: Become Alert
   m_EditorClassIdentifier: 
-  Name: Energy
+  Name: Become Alert
+  considerations:
+  - {fileID: 11400000, guid: 9995784de4bd6d74f833b7e7089ebfc8, type: 2}
+  - {fileID: 11400000, guid: 28662ce83c9daef46b58d5f7128d5f37, type: 2}

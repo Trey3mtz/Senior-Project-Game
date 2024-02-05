@@ -16,7 +16,7 @@ public class PlayerHealthBar : MonoBehaviour
     private int _hp;
     private bool justGotHit;
 
-    public AnimatorController animatorController;
+    public AnimatorHandler animatorController;
     
     [SerializeField] GameObject PlayerHP;
     private HealthBar pHP;

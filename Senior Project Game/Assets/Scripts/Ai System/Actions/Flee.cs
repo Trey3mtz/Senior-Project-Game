@@ -9,7 +9,7 @@ namespace Cyrcadian.UtilityAI.Actions
     {
         public override void Execute(CreatureController thisCreature)
         {
-           // thisCreature.stats.hunger -= 1;// Place logic to sleep here
+           thisCreature.DoFlee();
         }
     }
 }

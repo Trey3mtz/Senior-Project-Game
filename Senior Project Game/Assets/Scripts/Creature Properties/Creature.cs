@@ -1,4 +1,6 @@
+using Cyrcadian.Items;
 using Cyrcadian.UtilityAI;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Cyrcadian.Creatures
@@ -20,7 +22,7 @@ namespace Cyrcadian.Creatures
         //                                Diurnal:      Active during Day Time
         //                            Crepuscular:      Active during Twilight
         //                             Cathemeral:      Active at All Times
-        public enum CyrcadianRythm{
+        public enum CyrcadianRhythm{
             Nocturnal,
             Diurnal,
             Crepuscular, 
@@ -34,14 +36,16 @@ namespace Cyrcadian.Creatures
         [Tooltip("Skittish is easily scared, Passive will loaf around, and Aggressive will look for fights")]
         public BehaviorType Behavior;
         [Tooltip("Active during Night, Day, Twilight, or All Times")]
-        public CyrcadianRythm SleepingSchedule;
+        public CyrcadianRhythm CircadianRhythm;
 
         [Tooltip("Stats will influence decision making")]
         public Creature_Stats Stats;
+        
+        [Space]
 
         [Header("Visual Components that a creature should have")]  
         public Sprite Sprite;
-        public Animator Animator;
+        public AnimatorController AnimatorController;
         public Creature_Animation Animation;
 
         [Tooltip("The physics of a creature")]
@@ -50,10 +54,19 @@ namespace Cyrcadian.Creatures
 
         [Header("The AI components of a creature")]
         public CreatureController CreatureController;
+        public Action[] ListOfPossibleActions;
         public MoveController MoveCreature;
 
         [Tooltip("This is a generic gameobject prefab, which will hold all of a Creature's components")]
         public GameObject CreaturePrefab;
+
+
+        [Header("Creature Sounds")]
+        [Tooltip("In Order it is: Moving, Hurt, Death")]
+        public AudioClip[] CreatureSounds;
+
+        [Header("Spawnable Loot Table")]
+        public SpawnableLoot[] LootTable;
 
     }
 }

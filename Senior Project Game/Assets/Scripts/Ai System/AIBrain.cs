@@ -22,7 +22,10 @@ namespace Cyrcadian.UtilityAI
         // Choose a best action for thisCreature from it's list of available actions
         void Update()
         {
-            if(bestAction is null)
+            if(thisCreature.isDying)
+                return;
+                
+            if( bestAction is null)
             {
                 ChooseBestAction(thisCreature.actionsAvailable);
             }
@@ -42,7 +45,7 @@ namespace Cyrcadian.UtilityAI
                     score = actionsAvailable[i].score;
                 }
             }
-
+            //Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score);
             bestAction = actionsAvailable[nextBestActionIndex];
             isFinishedDeciding = true;
         }
@@ -52,26 +55,28 @@ namespace Cyrcadian.UtilityAI
         // Average the Consideration score to get overall action score
         public float ScoreAction(Action action)
         {
-            float score = 1f;
+            float totalConsiderationScore = 1f;
+            float modificationFactor = 1 -(1f/ action.considerations.Length);
+
             for(int i = 0; i < action.considerations.Length; i++)
             {
+                // Averaging scheme of overall score (credits to Dave Mark from GDC 2010 and his book "Behavioral Mathematics for Game AI (Applied Mathematics)")
+                // Rescales the float value after the compounding floats between 0 and 1
                 float considerationScore = action.considerations[i].ScoreConsideration(thisCreature);
-                score *= considerationScore;
+                float makeUpValue = (1 - considerationScore) * modificationFactor;
+                float finalScore = considerationScore + (makeUpValue * considerationScore);
+
+                totalConsiderationScore *= finalScore;
 
                 // If a consideration is zero, it has no point in computing further.
-                if(score == 0)
+                if(totalConsiderationScore == 0)
                 {
                     action.score = 0;
                     return action.score; 
                 }
             }
-
-            // Averaging scheme of overall score (credits to Dave Mark from GDC 2010 and his book "Behavioral Mathematics for Game AI (Applied Mathematics)")
-            // Rescales the float value after the compounding floats between 0 and 1
-            float originalScore = score;
-            float modFactor = 1 - (1 / action.considerations.Length);
-            float makeupValue = (1 - originalScore) * modFactor;
-            action.score = originalScore + (makeupValue * originalScore);
+            
+            action.score = totalConsiderationScore;
             
             return action.score;
             

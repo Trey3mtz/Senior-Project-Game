@@ -58,6 +58,7 @@ public class Tooltip : MonoBehaviour
            return;
         if(!EventSystem.current.IsPointerOverGameObject())
          {
+            SetText("", "");
             Tooltip_System.Instance.Hide();
             return;
          }   

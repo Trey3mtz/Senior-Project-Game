@@ -61,8 +61,8 @@ public class HealthBar : MonoBehaviour
         }
 
 
-        if(amountChanged < 0)
-            justGotHit = true;
+        if(amountChanged < 0 && _hp != 0)
+            {justGotHit = true; StartCoroutine(recentlyAttacked());}
         
         // We don't want to overkill/overheal past our health, so we clamp it between 0 and our Max healthpool
         _hp = Mathf.Clamp(_hp + amountChanged, 0, MaxHP);
@@ -88,10 +88,16 @@ public class HealthBar : MonoBehaviour
 
     public bool WasHit(){
         if(justGotHit){
-            justGotHit = false;
+            StartCoroutine(HitThisFrame());
             return true;
         }
         return false;
+    }
+
+    IEnumerator HitThisFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        justGotHit = false;
     }
 
     IEnumerator InvincibilityFrames()
@@ -133,5 +139,15 @@ public class HealthBar : MonoBehaviour
     {   
             slider.value = _hp;
             spriteFill.color = gradient.Evaluate(slider.normalizedValue);       
+    }
+
+
+    [HideInInspector] public bool wasRecentlyAttacked;
+
+    IEnumerator recentlyAttacked()
+    {
+        wasRecentlyAttacked = true;
+        yield return new WaitForSeconds(4);
+        wasRecentlyAttacked = false;
     }
 }
