@@ -24,6 +24,9 @@ namespace Cyrcadian.UtilityAI
     
         public NavMeshAgent agent { get; private set; }
         
+        // Not used to navigate smartly, but for information and for certain actions 
+        [HideInInspector] public Rigidbody2D rb;
+        
       
         [Tooltip("This indicates what will block your vision")] 
         [SerializeField] LayerMask layerMask;
@@ -35,6 +38,7 @@ namespace Cyrcadian.UtilityAI
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
+            rb = GetComponent<Rigidbody2D>();
 
             originalSpeed = agent.speed;
             originalAcceleration = agent.acceleration;
@@ -64,7 +68,7 @@ namespace Cyrcadian.UtilityAI
             public void IncreaseAcceleration(float addedAcceleration)
             {
                 addedAcceleration = originalAcceleration * (1 + Mathf.Clamp01(addedAcceleration));
-                DOTween.To(() => agent.acceleration, x => agent.acceleration = x, addedAcceleration, 1f);
+                agent.acceleration = addedAcceleration;
             }
 
                 public void DecreaseMoveSpeed(float loweredSpeed)
@@ -86,7 +90,7 @@ namespace Cyrcadian.UtilityAI
 
                     public void ResetAcceleration()
                     {
-                        DOTween.To(() => agent.acceleration, x => agent.acceleration = x, originalAcceleration, 1f);
+                        agent.acceleration = originalAcceleration;
                     }
 
         public bool CanSeeTarget()

@@ -5,6 +5,7 @@ using Cyrcadian.Items;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using NavMeshPlus.Extensions;
 
 
 namespace Cyrcadian.UtilityAI
@@ -115,7 +116,7 @@ namespace Cyrcadian.UtilityAI
         IEnumerator IdleCoroutine(float time)
         {   Debug.Log("I am idle now");
             float counter = time;
-            while(counter > 0)
+            while(counter > 0 && alertness != AlertState.Alert)
             {
                 
                 yield return new WaitForSeconds(2f);
@@ -212,23 +213,23 @@ namespace Cyrcadian.UtilityAI
                     {
                         case Creature.CyrcadianRhythm.Nocturnal:
                             while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;   }
                             break;
                         case Creature.CyrcadianRhythm.Diurnal:
                             while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Crepuscular:
                             while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Cathemeral:
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         default:
                             break;
                     }
-
+                   
                     if(alertness == AlertState.Asleep)
                         alertness = AlertState.Awake;
 
