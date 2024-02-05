@@ -4,6 +4,7 @@ using Cyrcadian.WorldTime;
 using Cyrcadian.Items;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 
 namespace Cyrcadian.UtilityAI
@@ -29,6 +30,7 @@ namespace Cyrcadian.UtilityAI
         private ParticleSystem sleepParticle;
         private ParticleSystem poofParticle;
         private Animator poofAnimator;
+        private Transform myShadow;
 
         [HideInInspector] public HungerBar hungerBar;
         [HideInInspector] public HealthBar health;
@@ -41,6 +43,7 @@ namespace Cyrcadian.UtilityAI
         }
 
         public AlertState alertness;
+        public bool isEating;
 
         // Start is called before the first frame update
 
@@ -65,6 +68,7 @@ namespace Cyrcadian.UtilityAI
             stats = creatureSpecies.Stats;
             lootTable.spawnableLoot = creatureSpecies.LootTable;
             alertness = AlertState.Awake;
+            myShadow = transform.Find("Body").Find("Shadow");
         }
 
         // If the brain had finished choosing a best action, Execute that action.
@@ -130,27 +134,32 @@ namespace Cyrcadian.UtilityAI
 
                 IEnumerator GrazeCoroutine()
                 {
-                    float counter = 4;
-                    while(counter > 0)
+                    DoRandomRoam();
+
+                    while(mover.agent.velocity.sqrMagnitude != 0)
                     {
-                        yield return new WaitForSeconds(1f);
-                        counter--;
+                        yield return new WaitForEndOfFrame();
                     }
+
+                    // Grass eating holds a static food value of 5 for now
+                    DoEat(1f, 5);
+
+                    yield return new WaitForEndOfFrame();
+                    
                     UponCompletedAction();
                 }
 
+        
+        public void DoEat(float time, int foodValue)
+        {   StartCoroutine(EatCoroutine(time, foodValue));     }
 
-        public void DoEat(float time)
-        {   StartCoroutine(EatCoroutine(time));     }
-
-        IEnumerator EatCoroutine(float time)
+        IEnumerator EatCoroutine(float time, int foodValue)
         {
-            float counter = time;
-            while(counter > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                counter--;
-            }
+            isEating = true;
+            yield return new WaitForSeconds(time);
+            hungerBar.ChangeHunger(foodValue);
+            isEating = false;
+
             UponCompletedAction();
         }
 
@@ -170,6 +179,22 @@ namespace Cyrcadian.UtilityAI
 
                     UponCompletedAction();
                 }
+
+
+        public void DoRandomRoam()
+        {   StartCoroutine(RandomRoam());   }
+
+        IEnumerator RandomRoam()
+        {
+            mover.MoveToRandomPoint(awarenessRange.bounds.extents.x);
+            // While still traveling a path, wait before deciding
+            while(mover.agent.remainingDistance <= mover.agent.stoppingDistance)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            UponCompletedAction();
+        }
 
 
                 public void DoSleep()
@@ -287,7 +312,8 @@ namespace Cyrcadian.UtilityAI
             poofParticle.Play();
             AudioManager.Instance.PlaySoundFX(poofSFX);
             lootTable.SpawnLoot();
-            
+
+            myShadow.gameObject.SetActive(false);
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             GetComponentInChildren<Collider2D>().enabled = false;
 

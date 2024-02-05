@@ -62,12 +62,15 @@ namespace Cyrcadian.Creatures
             {   
                 if(creature.alertness == CreatureController.AlertState.Asleep)
                     animatorControl.CrossFade("Sleep");
+                else if(creature.isEating)
+                    animatorControl.CrossFade("Eating");
                 else
                     animatorControl.CrossFade("Idle");
             }
             else if(mover.agent.hasPath)
             {
-                animatorControl.OrientateBody(mover.agent.velocity.x);
+                if(Mathf.Abs(mover.agent.velocity.sqrMagnitude) >= 0.02f)
+                    animatorControl.OrientateBody(mover.agent.velocity.x);
                 animatorControl.CrossFade("Move");
             }
 
