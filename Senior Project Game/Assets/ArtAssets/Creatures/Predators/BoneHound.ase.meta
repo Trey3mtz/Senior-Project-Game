@@ -1,0 +1,1472 @@
+fileFormatVersion: 2
+guid: 38e8934423d578847b07f3242ed6eead
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 24
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638428701756163529
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: BoneHound_Frame_0
+    originalName: 
+    pivot: {x: 0.516129, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 341
+      y: 59
+      width: 62
+      height: 26
+    spriteID: b812626e252f08f4683bb6bd0dc5a094
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 341, y: 59}
+  - name: BoneHound_Frame_1
+    originalName: 
+    pivot: {x: 0.516129, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 411
+      y: 59
+      width: 62
+      height: 26
+    spriteID: e3b597cee0c723a4991e7160f3caf4b3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 411, y: 59}
+  - name: BoneHound_Frame_2
+    originalName: 
+    pivot: {x: 0.516129, y: -0.08}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 133
+      y: 98
+      width: 62
+      height: 25
+    spriteID: d21d03eb447abfc48b67b3b9cb73b5a5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 133, y: 98}
+  - name: BoneHound_Frame_3
+    originalName: 
+    pivot: {x: 0.516129, y: -0.08}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 203
+      y: 98
+      width: 62
+      height: 25
+    spriteID: 61ea512feb30965479301929bda49ec7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 203, y: 98}
+  - name: BoneHound_Frame_4
+    originalName: 
+    pivot: {x: 0.516129, y: -0.08}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 273
+      y: 98
+      width: 62
+      height: 25
+    spriteID: 055a6fe9824dcd44895ad5d72a38958e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 273, y: 98}
+  - name: BoneHound_Frame_5
+    originalName: 
+    pivot: {x: 0.516129, y: -0.08}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 343
+      y: 98
+      width: 62
+      height: 25
+    spriteID: b638fb8696808b8438a5e88f07cb439e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 343, y: 98}
+  - name: BoneHound_Frame_6
+    originalName: 
+    pivot: {x: 0.55172414, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 68
+      y: 134
+      width: 58
+      height: 26
+    spriteID: 647a76533a7d05e42b4516615703748e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 68, y: 134}
+  - name: BoneHound_Frame_7
+    originalName: 
+    pivot: {x: 0.5423729, y: -0.06451613}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 59
+      width: 59
+      height: 31
+    spriteID: af7b6cf1763474442863a8cff27e5d7d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 59}
+  - name: BoneHound_Frame_8
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.2413793}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 207
+      y: 59
+      width: 58
+      height: 29
+    spriteID: a206ca18680b7b54d92460b7e7279744
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 207, y: 59}
+  - name: BoneHound_Frame_9
+    originalName: 
+    pivot: {x: 0.5357143, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 169
+      width: 56
+      height: 26
+    spriteID: e67f1f2373fb6004b9587e1acba2ef61
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 169}
+  - name: BoneHound_Frame_10
+    originalName: 
+    pivot: {x: 0.55172414, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 134
+      y: 134
+      width: 58
+      height: 26
+    spriteID: 05118640c87bab049a73dcc620d46413
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 134, y: 134}
+  - name: BoneHound_Frame_11
+    originalName: 
+    pivot: {x: 0.5423729, y: -0.16129032}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 71
+      y: 59
+      width: 59
+      height: 31
+    spriteID: 1436307515aaef249b6e6a086987167a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 71, y: 59}
+  - name: BoneHound_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -0.2962963}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 134
+      width: 56
+      height: 27
+    spriteID: db5794660876c40448c7b261a62f93b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 134}
+  - name: BoneHound_Frame_13
+    originalName: 
+    pivot: {x: 0.5357143, y: -0.071428575}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 69
+      y: 98
+      width: 56
+      height: 28
+    spriteID: 7c6e295382a5b5548bd74284a0950fff
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 69, y: 98}
+  - name: BoneHound_Frame_14
+    originalName: 
+    pivot: {x: 0.55172414, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 200
+      y: 134
+      width: 58
+      height: 26
+    spriteID: a2d43efad1b49f74694ed6c23237ad5b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 200, y: 134}
+  - name: BoneHound_Frame_15
+    originalName: 
+    pivot: {x: 0.4901961, y: -0.08695652}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 125
+      y: 169
+      width: 51
+      height: 23
+    spriteID: 6cbf2a0a1ac6db340a3d2dcd08df5fcd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 125, y: 169}
+  - name: BoneHound_Frame_16
+    originalName: 
+    pivot: {x: 0.5102041, y: -0.083333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 68
+      y: 169
+      width: 49
+      height: 24
+    spriteID: 565587722a5c368409ab637dc0d27efd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 68, y: 169}
+  - name: BoneHound_Frame_17
+    originalName: 
+    pivot: {x: 0.4901961, y: -0.08695652}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 184
+      y: 169
+      width: 51
+      height: 23
+    spriteID: 8ddfbce30926b8c4b952346300fb1a61
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 184, y: 169}
+  - name: BoneHound_Frame_18
+    originalName: 
+    pivot: {x: 0.5081967, y: -0.071428575}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 138
+      y: 59
+      width: 61
+      height: 28
+    spriteID: a66e24286ec1001488d50be736ba91b7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 59}
+  - name: BoneHound_Frame_19
+    originalName: 
+    pivot: {x: 0.5, y: -0.074074075}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 273
+      y: 59
+      width: 60
+      height: 27
+    spriteID: b05341c3110a9a24299ffa4742630f58
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 273, y: 59}
+  - name: BoneHound_Frame_20
+    originalName: 
+    pivot: {x: 0.5, y: -0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 407
+      y: 4
+      width: 60
+      height: 34
+    spriteID: 1ebdfb91d9893974d8c9c312ac5bf885
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 407, y: 4}
+  - name: BoneHound_Frame_21
+    originalName: 
+    pivot: {x: 0.5, y: -0.051282052}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 197
+      y: 4
+      width: 60
+      height: 39
+    spriteID: 3847eb441bb47624aad437e3e6833025
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 197, y: 4}
+  - name: BoneHound_Frame_22
+    originalName: 
+    pivot: {x: 0.51724136, y: -0.04761905}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 131
+      y: 4
+      width: 58
+      height: 42
+    spriteID: c1256287b1a66604d94a689d36182f8a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 131, y: 4}
+  - name: BoneHound_Frame_23
+    originalName: 
+    pivot: {x: 0.46428573, y: -0.045454547}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 67
+      y: 4
+      width: 56
+      height: 44
+    spriteID: 11e573a5de801d54ab0b11da8f5c7987
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 67, y: 4}
+  - name: BoneHound_Frame_24
+    originalName: 
+    pivot: {x: 0.43636364, y: -0.04255319}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 55
+      height: 47
+    spriteID: ef4b138512b523f4cb0f0c2b6366fbab
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: BoneHound_Frame_25
+    originalName: 
+    pivot: {x: 0.3877551, y: -0.125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 64
+      y: 230
+      width: 49
+      height: 16
+    spriteID: 1dde9b4882599954898418a1c08a8b2f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 64, y: 230}
+  - name: BoneHound_Frame_26
+    originalName: 
+    pivot: {x: 0.42307693, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 187
+      y: 203
+      width: 52
+      height: 19
+    spriteID: 0aa423d0cb624ac42893577838f13620
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 187, y: 203}
+  - name: BoneHound_Frame_27
+    originalName: 
+    pivot: {x: 0.4074074, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 304
+      y: 169
+      width: 54
+      height: 19
+    spriteID: dd61c7e1438a72c4ab5350042bd50225
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 304, y: 169}
+  - name: BoneHound_Frame_28
+    originalName: 
+    pivot: {x: 0.41509435, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 428
+      y: 169
+      width: 53
+      height: 19
+    spriteID: 0f3ca8c19bc452c428d2422c6727bf6f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 428, y: 169}
+  - name: BoneHound_Frame_29
+    originalName: 
+    pivot: {x: 0.42307693, y: -0.11111111}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 309
+      y: 203
+      width: 52
+      height: 18
+    spriteID: 5949c1fa558333c4e82b9981a19f4e49
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 309, y: 203}
+  - name: BoneHound_Frame_30
+    originalName: 
+    pivot: {x: 0.42307693, y: -0.11111111}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 369
+      y: 203
+      width: 52
+      height: 18
+    spriteID: 1d63442cf6f99974d97afe1d86bd673d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 369, y: 203}
+  - name: BoneHound_Frame_31
+    originalName: 
+    pivot: {x: 0.4339623, y: -0.10526316}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 203
+      width: 53
+      height: 19
+    spriteID: 5b127020f5e64e84297fd93a1725fb66
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 203}
+  - name: BoneHound_Frame_32
+    originalName: 
+    pivot: {x: 0.4339623, y: -0.1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 243
+      y: 169
+      width: 53
+      height: 20
+    spriteID: 96570e4f764a351439782dae30abd4ca
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 243, y: 169}
+  - name: BoneHound_Frame_33
+    originalName: 
+    pivot: {x: 0.4339623, y: -0.10526316}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 65
+      y: 203
+      width: 53
+      height: 19
+    spriteID: d247450a5a58c6b44a7ae589b83af842
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 65, y: 203}
+  - name: BoneHound_Frame_34
+    originalName: 
+    pivot: {x: 0.41509435, y: -0.05263158}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 126
+      y: 203
+      width: 53
+      height: 19
+    spriteID: 93fd6702b0c8e0c49af88c27cd99868a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 126, y: 203}
+  - name: BoneHound_Frame_35
+    originalName: 
+    pivot: {x: 0.4074074, y: -0.05263158}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 366
+      y: 169
+      width: 54
+      height: 19
+    spriteID: 20bd69721e10c2443a3b5a81136fae4d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 366, y: 169}
+  - name: BoneHound_Frame_14
+    originalName: 
+    pivot: {x: 0.4074074, y: -0.055555556}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 247
+      y: 203
+      width: 54
+      height: 18
+    spriteID: eaaacc85eb1b3c24da517e4f0a199b09
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 247, y: 203}
+  - name: BoneHound_Frame_7
+    originalName: 
+    pivot: {x: 0.42307693, y: -0.11764706}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 429
+      y: 203
+      width: 52
+      height: 17
+    spriteID: 83c70ba5c5f9e2149937881656585bdb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 429, y: 203}
+  - name: BoneHound_Frame_41
+    originalName: 
+    pivot: {x: 0.42307693, y: -0.11764706}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 230
+      width: 52
+      height: 17
+    spriteID: b08ee5462cf6a5c459054f36071981ec
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 230}
+  - name: BoneHound_Frame_42
+    originalName: 
+    pivot: {x: 0.55172414, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 266
+      y: 134
+      width: 58
+      height: 26
+    spriteID: 738452ccc4c1d374abcb599e7a369656
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 266, y: 134}
+  - name: BoneHound_Frame_43
+    originalName: 
+    pivot: {x: 0.5614035, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 332
+      y: 134
+      width: 57
+      height: 26
+    spriteID: 29f436a1db3dff34d94193bc8f045494
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 332, y: 134}
+  - name: BoneHound_Frame_44
+    originalName: 
+    pivot: {x: 0.5614035, y: -0.07692308}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 397
+      y: 134
+      width: 57
+      height: 26
+    spriteID: de3ab22017e1bdc4db9cdf1e58c74474
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 397, y: 134}
+  - name: BoneHound_Frame_45
+    originalName: 
+    pivot: {x: 0.5614035, y: -0.074074075}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 413
+      y: 98
+      width: 57
+      height: 27
+    spriteID: e01e6c5b309ff164ba8c92ad5b7b9570
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 413, y: 98}
+  - name: BoneHound_Frame_9
+    originalName: 
+    pivot: {x: 0.50793654, y: -0.25714287}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 265
+      y: 4
+      width: 63
+      height: 35
+    spriteID: 6c2d29df75ed0ac46b6e87b568878739
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 265, y: 4}
+  - name: BoneHound_Frame_14
+    originalName: 
+    pivot: {x: 0.50793654, y: -0.25714287}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 336
+      y: 4
+      width: 63
+      height: 35
+    spriteID: 6f8d7b7cedeff9a4da0392436c616738
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 336, y: 4}
+  - name: BoneHound_Frame_7
+    originalName: 
+    pivot: {x: 0.47368422, y: -0.035714287}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 98
+      width: 57
+      height: 28
+    spriteID: 92b1d162b4de354459cfa3d56833027c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 98}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1591000962
+    name: BoneHound
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: BoneHound_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 26
+      spriteId: b812626e252f08f4683bb6bd0dc5a094
+    - name: BoneHound_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 26
+      spriteId: e3b597cee0c723a4991e7160f3caf4b3
+    - name: BoneHound_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 25
+      spriteId: d21d03eb447abfc48b67b3b9cb73b5a5
+    - name: BoneHound_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 25
+      spriteId: 61ea512feb30965479301929bda49ec7
+    - name: BoneHound_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 25
+      spriteId: 055a6fe9824dcd44895ad5d72a38958e
+    - name: BoneHound_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 0
+        y: 2
+        width: 62
+        height: 25
+      spriteId: b638fb8696808b8438a5e88f07cb439e
+    - name: BoneHound_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 0
+        y: 2
+        width: 58
+        height: 26
+      spriteId: 647a76533a7d05e42b4516615703748e
+    - name: BoneHound_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 0
+        y: 2
+        width: 59
+        height: 31
+      spriteId: af7b6cf1763474442863a8cff27e5d7d
+    - name: BoneHound_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 2
+        y: 7
+        width: 58
+        height: 29
+      spriteId: a206ca18680b7b54d92460b7e7279744
+    - name: BoneHound_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 2
+        y: 2
+        width: 56
+        height: 26
+      spriteId: e67f1f2373fb6004b9587e1acba2ef61
+    - name: BoneHound_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 0
+        y: 2
+        width: 58
+        height: 26
+      spriteId: 05118640c87bab049a73dcc620d46413
+    - name: BoneHound_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 0
+        y: 5
+        width: 59
+        height: 31
+      spriteId: 1436307515aaef249b6e6a086987167a
+    - name: BoneHound_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 4
+        y: 8
+        width: 56
+        height: 27
+      spriteId: db5794660876c40448c7b261a62f93b4
+    - name: BoneHound_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 2
+        y: 2
+        width: 56
+        height: 28
+      spriteId: 7c6e295382a5b5548bd74284a0950fff
+    - name: BoneHound_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 0
+        y: 2
+        width: 58
+        height: 26
+      spriteId: a2d43efad1b49f74694ed6c23237ad5b
+    - name: BoneHound_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 7
+        y: 2
+        width: 51
+        height: 23
+      spriteId: 6cbf2a0a1ac6db340a3d2dcd08df5fcd
+    - name: BoneHound_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 7
+        y: 2
+        width: 49
+        height: 24
+      spriteId: 565587722a5c368409ab637dc0d27efd
+    - name: BoneHound_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 7
+        y: 2
+        width: 51
+        height: 23
+      spriteId: 8ddfbce30926b8c4b952346300fb1a61
+    - name: BoneHound_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: 1
+        y: 2
+        width: 61
+        height: 28
+      spriteId: a66e24286ec1001488d50be736ba91b7
+    - name: BoneHound_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: 2
+        y: 2
+        width: 60
+        height: 27
+      spriteId: b05341c3110a9a24299ffa4742630f58
+    - name: BoneHound_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: 2
+        y: 2
+        width: 60
+        height: 34
+      spriteId: 1ebdfb91d9893974d8c9c312ac5bf885
+    - name: BoneHound_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: 2
+        y: 2
+        width: 60
+        height: 39
+      spriteId: 3847eb441bb47624aad437e3e6833025
+    - name: BoneHound_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: 2
+        y: 2
+        width: 58
+        height: 42
+      spriteId: c1256287b1a66604d94a689d36182f8a
+    - name: BoneHound_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: 6
+        y: 2
+        width: 56
+        height: 44
+      spriteId: 11e573a5de801d54ab0b11da8f5c7987
+    - name: BoneHound_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: 8
+        y: 2
+        width: 55
+        height: 47
+      spriteId: ef4b138512b523f4cb0f0c2b6366fbab
+    - name: BoneHound_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: 13
+        y: 2
+        width: 49
+        height: 16
+      spriteId: 1dde9b4882599954898418a1c08a8b2f
+    - name: BoneHound_Frame_29
+      frameIndex: 29
+      cellRect:
+        x: 10
+        y: 0
+        width: 52
+        height: 19
+      spriteId: 0aa423d0cb624ac42893577838f13620
+    - name: BoneHound_Frame_30
+      frameIndex: 30
+      cellRect:
+        x: 10
+        y: 0
+        width: 54
+        height: 19
+      spriteId: dd61c7e1438a72c4ab5350042bd50225
+    - name: BoneHound_Frame_31
+      frameIndex: 31
+      cellRect:
+        x: 10
+        y: 0
+        width: 53
+        height: 19
+      spriteId: 0f3ca8c19bc452c428d2422c6727bf6f
+    - name: BoneHound_Frame_32
+      frameIndex: 32
+      cellRect:
+        x: 10
+        y: 2
+        width: 52
+        height: 18
+      spriteId: 5949c1fa558333c4e82b9981a19f4e49
+    - name: BoneHound_Frame_33
+      frameIndex: 33
+      cellRect:
+        x: 10
+        y: 2
+        width: 52
+        height: 18
+      spriteId: 1d63442cf6f99974d97afe1d86bd673d
+    - name: BoneHound_Frame_34
+      frameIndex: 34
+      cellRect:
+        x: 9
+        y: 2
+        width: 53
+        height: 19
+      spriteId: 5b127020f5e64e84297fd93a1725fb66
+    - name: BoneHound_Frame_35
+      frameIndex: 35
+      cellRect:
+        x: 9
+        y: 2
+        width: 53
+        height: 20
+      spriteId: 96570e4f764a351439782dae30abd4ca
+    - name: BoneHound_Frame_36
+      frameIndex: 36
+      cellRect:
+        x: 9
+        y: 2
+        width: 53
+        height: 19
+      spriteId: d247450a5a58c6b44a7ae589b83af842
+    - name: BoneHound_Frame_37
+      frameIndex: 37
+      cellRect:
+        x: 10
+        y: 1
+        width: 53
+        height: 19
+      spriteId: 93fd6702b0c8e0c49af88c27cd99868a
+    - name: BoneHound_Frame_38
+      frameIndex: 38
+      cellRect:
+        x: 10
+        y: 1
+        width: 54
+        height: 19
+      spriteId: 20bd69721e10c2443a3b5a81136fae4d
+    - name: BoneHound_Frame_39
+      frameIndex: 39
+      cellRect:
+        x: 10
+        y: 1
+        width: 54
+        height: 18
+      spriteId: eaaacc85eb1b3c24da517e4f0a199b09
+    - name: BoneHound_Frame_40
+      frameIndex: 40
+      cellRect:
+        x: 10
+        y: 2
+        width: 52
+        height: 17
+      spriteId: 83c70ba5c5f9e2149937881656585bdb
+    - name: BoneHound_Frame_41
+      frameIndex: 41
+      cellRect:
+        x: 10
+        y: 2
+        width: 52
+        height: 17
+      spriteId: b08ee5462cf6a5c459054f36071981ec
+    - name: BoneHound_Frame_42
+      frameIndex: 42
+      cellRect:
+        x: 0
+        y: 2
+        width: 58
+        height: 26
+      spriteId: 738452ccc4c1d374abcb599e7a369656
+    - name: BoneHound_Frame_43
+      frameIndex: 43
+      cellRect:
+        x: 0
+        y: 2
+        width: 57
+        height: 26
+      spriteId: 29f436a1db3dff34d94193bc8f045494
+    - name: BoneHound_Frame_44
+      frameIndex: 44
+      cellRect:
+        x: 0
+        y: 2
+        width: 57
+        height: 26
+      spriteId: de3ab22017e1bdc4db9cdf1e58c74474
+    - name: BoneHound_Frame_45
+      frameIndex: 45
+      cellRect:
+        x: 0
+        y: 2
+        width: 57
+        height: 27
+      spriteId: e01e6c5b309ff164ba8c92ad5b7b9570
+    - name: BoneHound_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 0
+        y: 9
+        width: 63
+        height: 35
+      spriteId: 6c2d29df75ed0ac46b6e87b568878739
+    - name: BoneHound_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 0
+        y: 9
+        width: 63
+        height: 35
+      spriteId: 6f8d7b7cedeff9a4da0392436c616738
+    - name: BoneHound_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 5
+        y: 1
+        width: 57
+        height: 28
+      spriteId: 92b1d162b4de354459cfa3d56833027c
+    linkedCells: []
+    parentIndex: -1
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 64, y: 64}
