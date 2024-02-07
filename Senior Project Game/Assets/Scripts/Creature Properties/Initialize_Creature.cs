@@ -1,6 +1,7 @@
 using System;
 using Cyrcadian.Creatures;
 using Cyrcadian.UtilityAI;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -53,7 +54,13 @@ namespace Cyrcadian
             hunger.StomachSize = initialStats.stomachSize;
             hunger.SetHunger(initialStats.stomachSize);
 
+            // Adjust shadow to look better
+            transform.Find("Body").Find("Shadow").position += new Vector3(0,creature.ShadowHeightAdjust);
+            transform.Find("Body").Find("Shadow").localScale = new Vector3(1.5f + creature.ShadowLengthAdjust,1,1);
 
+            // Lets us test without sounds
+            if(creature.CreatureSounds.Length == 0)
+                return;
             // Creatures will have a set list of sounds no matter what species.
             // What sounds those are, are determined by the game asset of that creature.
             animationHandler.walkSFX = creature.CreatureSounds[0];
