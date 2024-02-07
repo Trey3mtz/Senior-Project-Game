@@ -69,7 +69,7 @@ namespace Cyrcadian.Creatures
             }
             else if(mover.agent.hasPath)
             {
-                if(Mathf.Abs(mover.agent.velocity.sqrMagnitude) >= 0.02f)
+                if(Mathf.Abs(mover.agent.velocity.sqrMagnitude) > 0.02f)
                     animatorControl.OrientateBody(mover.agent.velocity.x);
                 animatorControl.CrossFade("Move");
             }

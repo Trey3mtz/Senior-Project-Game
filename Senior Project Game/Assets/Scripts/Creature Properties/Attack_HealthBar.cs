@@ -27,9 +27,11 @@ namespace Cyrcadian
 
                     if(collider.transform.root.GetComponentInChildren<Awareness>())
                     {
-                        collider.transform.root.GetComponentInChildren<Awareness>().Target = transform.root;
-                        if(!collider.transform.root.GetComponentInChildren<Awareness>().VisibleCreatures.Contains(transform.root))
-                            collider.transform.root.GetComponentInChildren<Awareness>().VisibleCreatures.Add(transform.root);
+                        Awareness tempAwareness = collider.transform.root.GetComponentInChildren<Awareness>();
+                        tempAwareness.AddTargetedCreature(transform.root, true, damage);
+                      
+                        if(!tempAwareness.VisibleCreatures.Contains(transform.root))
+                            tempAwareness.VisibleCreatures.Add(transform.root);
                     }
                 }
                     break;
