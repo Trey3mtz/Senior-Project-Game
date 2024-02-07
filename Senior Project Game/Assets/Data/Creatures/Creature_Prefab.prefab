@@ -232,6 +232,7 @@ MonoBehaviour:
   hungerBar: {fileID: 0}
   health: {fileID: 0}
   alertness: 0
+  isEating: 0
   isDying: 0
 --- !u!114 &5110172513842540038
 MonoBehaviour:
@@ -245,6 +246,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffd241be8fde8b4db3aaa313adfb579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0018730164
+      value: 0
+      inSlope: 5.990005
+      outSlope: 5.990005
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0.33333334
+      outWeight: 0.15413803
+    - serializedVersion: 3
+      time: 0.9981079
+      value: 1
+      inSlope: 0.0024792573
+      outSlope: 0.0024792573
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.9548867
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rb: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 81920
@@ -270,7 +296,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -10679,6 +10705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   losingDistance: 5
+  sqrLosingDistance: 0
 --- !u!1 &8398238256665006478
 GameObject:
   m_ObjectHideFlags: 0

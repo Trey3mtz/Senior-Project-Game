@@ -16,7 +16,7 @@ namespace Cyrcadian.UtilityAI.Considerations
                 score = 0f;
             
             score = responseCurve.Evaluate(score);
-
+           
             return score;
         }
     }
