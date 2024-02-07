@@ -121,7 +121,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: BoneHound_Frame_0
     originalName: 
-    pivot: {x: 0.516129, y: -0.07692308}
+    pivot: {x: 0.5, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -141,7 +141,7 @@ ScriptedImporter:
     uvTransform: {x: 341, y: 59}
   - name: BoneHound_Frame_1
     originalName: 
-    pivot: {x: 0.516129, y: -0.07692308}
+    pivot: {x: 0.5, y: -0.07692308}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -161,14 +161,14 @@ ScriptedImporter:
     uvTransform: {x: 411, y: 59}
   - name: BoneHound_Frame_2
     originalName: 
-    pivot: {x: 0.516129, y: -0.08}
+    pivot: {x: 0.50793654, y: -0.08}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 133
+      x: 69
       y: 98
-      width: 62
+      width: 63
       height: 25
     spriteID: d21d03eb447abfc48b67b3b9cb73b5a5
     spriteBone: []
@@ -178,17 +178,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 133, y: 98}
+    uvTransform: {x: 69, y: 98}
   - name: BoneHound_Frame_3
     originalName: 
-    pivot: {x: 0.516129, y: -0.08}
+    pivot: {x: 0.50793654, y: -0.08}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 203
+      x: 140
       y: 98
-      width: 62
+      width: 63
       height: 25
     spriteID: 61ea512feb30965479301929bda49ec7
     spriteBone: []
@@ -198,17 +198,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 203, y: 98}
+    uvTransform: {x: 140, y: 98}
   - name: BoneHound_Frame_4
     originalName: 
-    pivot: {x: 0.516129, y: -0.08}
+    pivot: {x: 0.50793654, y: -0.08}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 273
+      x: 211
       y: 98
-      width: 62
+      width: 63
       height: 25
     spriteID: 055a6fe9824dcd44895ad5d72a38958e
     spriteBone: []
@@ -218,17 +218,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 273, y: 98}
+    uvTransform: {x: 211, y: 98}
   - name: BoneHound_Frame_5
     originalName: 
-    pivot: {x: 0.516129, y: -0.08}
+    pivot: {x: 0.50793654, y: -0.08}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 343
+      x: 282
       y: 98
-      width: 62
+      width: 63
       height: 25
     spriteID: b638fb8696808b8438a5e88f07cb439e
     spriteBone: []
@@ -238,7 +238,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 343, y: 98}
+    uvTransform: {x: 282, y: 98}
   - name: BoneHound_Frame_6
     originalName: 
     pivot: {x: 0.55172414, y: -0.07692308}
@@ -386,7 +386,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 69
+      x: 353
       y: 98
       width: 56
       height: 28
@@ -398,7 +398,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 69, y: 98}
+    uvTransform: {x: 353, y: 98}
   - name: BoneHound_Frame_14
     originalName: 
     pivot: {x: 0.55172414, y: -0.07692308}
@@ -966,7 +966,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 413
+      x: 417
       y: 98
       width: 57
       height: 27
@@ -978,7 +978,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 413, y: 98}
+    uvTransform: {x: 417, y: 98}
   - name: BoneHound_Frame_9
     originalName: 
     pivot: {x: 0.50793654, y: -0.25714287}
@@ -1051,7 +1051,7 @@ ScriptedImporter:
     - name: BoneHound_Frame_0
       frameIndex: 0
       cellRect:
-        x: 0
+        x: 1
         y: 2
         width: 62
         height: 26
@@ -1059,7 +1059,7 @@ ScriptedImporter:
     - name: BoneHound_Frame_1
       frameIndex: 1
       cellRect:
-        x: 0
+        x: 1
         y: 2
         width: 62
         height: 26
@@ -1069,7 +1069,7 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 2
-        width: 62
+        width: 63
         height: 25
       spriteId: d21d03eb447abfc48b67b3b9cb73b5a5
     - name: BoneHound_Frame_3
@@ -1077,7 +1077,7 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 2
-        width: 62
+        width: 63
         height: 25
       spriteId: 61ea512feb30965479301929bda49ec7
     - name: BoneHound_Frame_4
@@ -1085,7 +1085,7 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 2
-        width: 62
+        width: 63
         height: 25
       spriteId: 055a6fe9824dcd44895ad5d72a38958e
     - name: BoneHound_Frame_5
@@ -1093,7 +1093,7 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 2
-        width: 62
+        width: 63
         height: 25
       spriteId: b638fb8696808b8438a5e88f07cb439e
     - name: BoneHound_Frame_6
