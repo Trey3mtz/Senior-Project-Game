@@ -15,6 +15,7 @@ MonoBehaviour:
   CreatureName: Sheep
   Behavior: 1
   CircadianRhythm: 1
+  Diet: 0
   Stats:
     healthPool: 15
     currentHP: 15
@@ -22,19 +23,22 @@ MonoBehaviour:
     currentHunger: 35
     staminaPool: 25
     currentStamina: 25
+    proteinScore: 0
   Sprite: {fileID: 8453538079227123285, guid: 26064412a0fe16d4e87aa7fe81110f38, type: 3}
   AnimatorController: {fileID: 1434923152620046155, guid: 26064412a0fe16d4e87aa7fe81110f38, type: 3}
-  Animation: {fileID: 0}
+  MatOverride: {fileID: 0}
+  ShadowHeightAdjust: 0
+  ShadowLengthAdjust: 0
   rb: {fileID: 0}
   collider2D: {fileID: 0}
   CreatureController: {fileID: 0}
   ListOfPossibleActions:
-  - {fileID: 11400000, guid: d1626c76f3d0a5048930643317735e86, type: 2}
   - {fileID: 11400000, guid: e3b5915eec04e994baf9fcc9590eb2b2, type: 2}
+  - {fileID: 11400000, guid: d1626c76f3d0a5048930643317735e86, type: 2}
   - {fileID: 11400000, guid: c709975ad2191ef49b82ee4db6d35020, type: 2}
   - {fileID: 11400000, guid: 17e9da88c52994649a1d0854f4e565be, type: 2}
   - {fileID: 11400000, guid: b9dd4d379a09d154d87d89d12415b8d1, type: 2}
-  MoveCreature: {fileID: 0}
+  - {fileID: 11400000, guid: 0db6cfdc44a37524180e02c58bb40795, type: 2}
   CreaturePrefab: {fileID: 957270239124672070, guid: 71f0a8ebf4d40fe4dbfa0526239e3eba, type: 3}
   CreatureSounds:
   - {fileID: 8300000, guid: b843950fcfa230b47bdbc1fd4069cc9a, type: 3}
@@ -42,6 +46,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9d4809cca243eec4dab0f710be84e25c, type: 3}
   LootTable:
   - item: {fileID: 11400000, guid: de9e332a4816e35449e9e1a8ab6e4d5d, type: 2}
-    lowestAmount: 1
-    highestAmount: 3
-    chance: 1
+    lowestDropAmount: 1
+    highestDropAmount: 2
+    chance: 0.8

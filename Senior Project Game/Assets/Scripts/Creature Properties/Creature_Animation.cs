@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cyrcadian.UtilityAI;
 using Cyrcadian.UtilityAI.Actions;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Cyrcadian.Creatures
 {
@@ -44,7 +45,7 @@ namespace Cyrcadian.Creatures
             animatorControl.animator = GetComponentInChildren<Animator>();
         }
 
-        
+
         void Update()
         {
             if(isAnimationLocked)
@@ -60,7 +61,7 @@ namespace Cyrcadian.Creatures
 
             if(mover.agent.velocity.sqrMagnitude == 0)
             {   
-                if(creature.alertness == CreatureController.AlertState.Asleep)
+                if(creature.alertness == CreatureController.AlertState.Unconcious)
                     animatorControl.CrossFade("Sleep");
                 else if(creature.isEating)
                     animatorControl.CrossFade("Eating");
@@ -76,6 +77,13 @@ namespace Cyrcadian.Creatures
 
         }
 
+        public void Attack()
+        {
+            isAnimationLocked = true;
+            mover.BrieflyPauseMove(.5f);
+            animatorControl.CrossFade("Attack");
+            StartCoroutine(animationLockOut(.5f));
+        }
 
         public void Hurt()
         {   

@@ -8,7 +8,7 @@ namespace Cyrcadian.Items
     [CreateAssetMenu(fileName = "Food", menuName = "2D Survival/Items/Food")]
     public class Food : Item
     {
-        [SerializeField] int foodValue = 5; 
+        [SerializeField] public int foodValue = 5; 
         [SerializeField] GameObject foodParticles;
         
         public override bool CanUse(Vector3Int target)
@@ -30,6 +30,11 @@ namespace Cyrcadian.Items
 
             PlaySound(1.5f);
             return true;
+        }
+
+        public override float hasFoodValue()
+        {
+            return foodValue;
         }
     }
 }

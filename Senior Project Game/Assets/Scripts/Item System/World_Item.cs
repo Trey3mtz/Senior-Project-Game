@@ -70,6 +70,19 @@ public class World_Item : MonoBehaviour
 
     public void DestroySelf()
     {    Destroy(gameObject);    }
+
+    public float GetFoodValue()
+    {
+        // If not food, return a value of 0.
+        if(item.Type != Item.ItemType.Food)
+            return 0f;
+
+        float foodValue = item.hasFoodValue() * amountDroped;
+
+        
+
+        return foodValue;
+    }
     
 
     public IEnumerator WaitToPickUp()

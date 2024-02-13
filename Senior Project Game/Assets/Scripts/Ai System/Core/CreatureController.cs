@@ -7,6 +7,8 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using NavMeshPlus.Extensions;
 using UnityEditor.Callbacks;
+using UnityEditor.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 
 namespace Cyrcadian.UtilityAI
@@ -21,6 +23,7 @@ namespace Cyrcadian.UtilityAI
 
         public Creature_Stats stats;
         public Creature creatureSpecies;
+        public Creature.BehaviorType behavior;
         Spawnable_Loot lootTable;
 
         // Keeps track of nearby Creatures, and Items so far.
@@ -42,8 +45,8 @@ namespace Cyrcadian.UtilityAI
         
 
         public enum AlertState{
-            Asleep,
-            Awake,
+            Unconcious,
+            Calm,
             Alert
         }
 
@@ -72,7 +75,7 @@ namespace Cyrcadian.UtilityAI
         {
             stats = creatureSpecies.Stats;
             lootTable.spawnableLoot = creatureSpecies.LootTable;
-            alertness = AlertState.Awake;
+            alertness = AlertState.Calm;
             myShadow = transform.Find("Body").Find("Shadow");
             DayCycle  = FindAnyObjectByType<Day_Cycle>();
         }
@@ -123,6 +126,7 @@ namespace Cyrcadian.UtilityAI
             float counter = time;
             while(counter > 0 && alertness != AlertState.Alert)
             {
+                mover.BrieflyPauseMove(1.8f);
                 yield return new WaitForSeconds(2f);
                 
                 stats.currentStamina += 1;
@@ -141,7 +145,7 @@ namespace Cyrcadian.UtilityAI
                 {
                     DoRandomRoam();
 
-                    while(mover.agent.velocity.sqrMagnitude != 0)
+                    while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
                     {
                         yield return new WaitForEndOfFrame();
                     }
@@ -161,6 +165,7 @@ namespace Cyrcadian.UtilityAI
         IEnumerator EatCoroutine(float time, int foodValue)
         {
             isEating = true;
+            mover.BrieflyPauseMove(time);
             yield return new WaitForSeconds(time);
             hungerBar.ChangeHunger(foodValue);
             isEating = false;
@@ -209,22 +214,22 @@ namespace Cyrcadian.UtilityAI
                 IEnumerator SleepCoroutine()
                 {       
 
-                    alertness = AlertState.Asleep;
+                    alertness = AlertState.Unconcious;
                     sleepParticle.Play();
                     awarenessRange.enabled = false;
                     
                     switch(creatureSpecies.CircadianRhythm) 
                     {
                         case Creature.CyrcadianRhythm.Nocturnal:
-                            while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;   }
                             break;
                         case Creature.CyrcadianRhythm.Diurnal:
-                            while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Crepuscular:
-                            while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Cathemeral:
@@ -234,8 +239,8 @@ namespace Cyrcadian.UtilityAI
                             break;
                     }
                    
-                    if(alertness == AlertState.Asleep)
-                        alertness = AlertState.Awake;
+                    if(alertness == AlertState.Unconcious)
+                        alertness = AlertState.Calm;
 
                     stats.currentStamina = stats.staminaPool;
                     sleepParticle.Stop();
@@ -244,37 +249,56 @@ namespace Cyrcadian.UtilityAI
                     UponCompletedAction();
                 }
 
+        // For Omnivores (they need to decided on what to eat first)
+        public void DoHunt()
+        {    StartCoroutine(HuntCoroutine());    }
 
-        public void DoFindFood()
-        {    StartCoroutine(FindFoodCoroutine(3));    }
-
-        IEnumerator FindFoodCoroutine(float time)
+        IEnumerator HuntCoroutine()
         {
-            float counter = time;
-            while(counter > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                counter--;
+        
+            Transform huntingTarget = awareness.FindTastiestCreature(this);
+          
+            // If found, chase that target
+            if(huntingTarget)
+            {  Debug.Log("Hunting creature " + huntingTarget.name);
+                DoChase(huntingTarget);
+                while(huntingTarget.GetComponentInChildren<HealthBar>().CurrentHP()  >  0 && stats.currentStamina > 0 )
+                {
+
+                    yield return new WaitForEndOfFrame();
+                    
+                    // Check first if an attack exists for this creature
+                    if(creatureSpecies.PossibleAttacks.Count != 0)
+                    {// If I was able to attempt an attack, reduce stamina
+                        if(creatureSpecies.PossibleAttacks.Find(x => x.UniqueName.Contains("Pounce")).TryAttacking(this, huntingTarget))
+                            stats.currentStamina -= 2;
+                    }
+                }                
             }
+
+            
             UponCompletedAction();
         }
 
 
-                public void DoChase()
-                {   StartCoroutine(ChaseCoroutine());    }
+                public void DoChase(Transform transform)
+                {   StartCoroutine(ChaseCoroutine(transform));    }
 
-                IEnumerator ChaseCoroutine()
+                IEnumerator ChaseCoroutine(Transform target)
                 {
-                    mover.IncreaseMoveSpeed(.2f);
+                    mover.IncreaseMoveSpeed(.1f);
+                    mover.MoveTo(target.position);
 
-                    while(mover.agent.hasPath)
+                    // If I have stamina, and they haven't gotten out of range
+                    while( stats.currentStamina > 0 && awareness.VisibleCreatures.Contains(target))
                     {
+                        // Increase move speed as they get closer?
                         yield return new WaitForEndOfFrame();
-                        mover.MoveTo(mover.agent.nextPosition);
+                        mover.MoveTo(target.position);
                     }
 
                     mover.ResetSpeed();
-                    UponCompletedAction();
+                    UponCompletedAction();      // Questionable... maybe put "Chase" into the helper functions
                 }
 
 
@@ -289,9 +313,10 @@ namespace Cyrcadian.UtilityAI
                 mover.IncreaseAcceleration(.1f);
             }
 
+            Vector3 fleeDirection;
             while(awareness.IsThreatNearby())
             {
-                Vector3 fleeDirection = (transform.position - awareness.NearestThreat().position).normalized;
+                fleeDirection = (transform.position - awareness.FindNearestThreat().position).normalized;
                 mover.MoveTo((fleeDirection * 4) + transform.position);
 
                 yield return new WaitForSeconds(0.25f);
@@ -305,7 +330,7 @@ namespace Cyrcadian.UtilityAI
             }
 
             // By here we have successfully flee-d from danger
-            alertness = AlertState.Awake;
+            alertness = AlertState.Calm;
             mover.agent.ResetPath();
             mover.ResetSpeed();
             mover.ResetAcceleration();
@@ -313,9 +338,28 @@ namespace Cyrcadian.UtilityAI
         }
 
 
+                public void DoCalmDown()
+                {   StartCoroutine(CalmDownCoroutine());    }
+
+                IEnumerator CalmDownCoroutine()
+                {
+                    yield return new WaitForSeconds(2f);
+                    if(!awareness.IsThreatNearby())
+                        alertness = AlertState.Calm;
+                }
+
+
+
+                
         #endregion
 
-
+        #region HelperMethods
+        /*****************************************************************************************************************
+            This region contains helper methods that will only ever be called from inside this class
+            For example, dying is something handled only internally in this script.
+            Transitioning phases between actions perhaps, like awaking up, would be another example as its implied to happen with anything that can sleep.
+            Likely will use less Coroutines in this region to handle logic so it can happen sequentially.
+        */
 
         public bool isDying = false;
         IEnumerator DEATH()
@@ -338,6 +382,13 @@ namespace Cyrcadian.UtilityAI
 
             Destroy(transform.root.gameObject);
         }
+
+        public static implicit operator Transform(CreatureController v)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
 
     }
 }

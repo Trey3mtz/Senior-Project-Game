@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 
@@ -45,11 +48,47 @@ namespace Cyrcadian.UtilityAI
                     score = actionsAvailable[i].score;
                 }
             }
-            //Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " and total actions are length " + actionsAvailable.Length);
+            Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " from creature " + transform);
             bestAction = actionsAvailable[nextBestActionIndex];
             isFinishedDeciding = true;
         }
 
+        // Below is a modified version of the commented out code block of ScoreAction() to use Unity's Job System for multithreaded performance
+        // Leaving the old version behind for reference
+        private List<float> tempScoreList;
+        public float ScoreAction(Action action)
+        {
+            if(action.considerations.Length == 0)
+                return 0f;
+            
+            tempScoreList = new List<float>();
+
+            for(int i = 0; i < action.considerations.Length; i++)
+                tempScoreList.Add(action.considerations[i].ScoreConsideration(thisCreature));
+
+                NativeArray<float> Temp = new NativeArray<float>(tempScoreList.Count, Allocator.Persistent);
+                Temp.CopyFrom(tempScoreList.ToArray());
+
+            ScoreActionJob _scoreJob = new ScoreActionJob(){
+                modificationFactor = 1 - (1.0f / action.considerations.Length),
+                ConiderationScores = Temp,
+                ArrayLength = action.considerations.Length,
+                FinalActionScore = new NativeArray<float>(1, Allocator.Persistent)
+            };
+            
+
+            ScoringJobHandle = _scoreJob.Schedule();
+            ScoringJobHandle.Complete();
+            
+            action.score = _scoreJob.FinalActionScore[0];
+
+            Temp.Dispose();
+            
+            return action.score;
+        }
+
+
+        /*
         // Loops through all Considerations of an action
         // Scores each Consideration
         // Average the Consideration score to get overall action score
@@ -75,11 +114,46 @@ namespace Cyrcadian.UtilityAI
                     return action.score; 
                 }
             }
-            
+            Debug.Log("totalConsiderationScore is " + totalConsiderationScore + " for action : " + action.name);
             action.score = totalConsiderationScore;
             
             return action.score;
             
+        }
+        */
+
+        JobHandle ScoringJobHandle;
+        [BurstCompile]
+        public struct ScoreActionJob : IJob
+        {
+            [ReadOnly] public float modificationFactor;
+            [ReadOnly] public NativeArray<float> ConiderationScores;
+            [ReadOnly] public int ArrayLength;
+        
+            public NativeArray<float> FinalActionScore;
+
+            public void Execute()
+            {
+                float totalConsiderationScore = 1f;
+
+                for(int i = 0; i < ArrayLength; i++)
+                {
+
+                    float makeUpValue = (1 - ConiderationScores[i]) * modificationFactor;
+                    float finalScore = ConiderationScores[i] + (makeUpValue * ConiderationScores[i]);
+
+                    totalConsiderationScore *= finalScore;
+
+                    // If a consideration is zero, it has no point in computing further.
+                    if(totalConsiderationScore == 0)
+                    {
+                        FinalActionScore[0] = 0;
+                        break;
+                    }
+                }
+
+                FinalActionScore[0] = totalConsiderationScore;
+            }
         }
     }
 }

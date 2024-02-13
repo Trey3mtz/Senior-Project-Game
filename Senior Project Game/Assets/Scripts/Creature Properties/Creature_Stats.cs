@@ -9,14 +9,16 @@ namespace Cyrcadian.Creatures
     public struct Creature_Stats
     {
         public int healthPool;
-        public int currentHP;
+        [HideInInspector] public int currentHP;
 
         [Space]
         public int stomachSize;
-        public int currentHunger;
+        [HideInInspector] public int currentHunger;
 
         [Space]
         public int staminaPool;
-        public int currentStamina;
+        [HideInInspector] public int currentStamina;
+
+        [HideInInspector] public float proteinScore;
     }
 }

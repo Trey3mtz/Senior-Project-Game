@@ -69,18 +69,19 @@ namespace Cyrcadian.UtilityAI
                 float elapsedTime = timeDuration;
                 float startingSpeed = agent.speed;
 
+                // Smoothly change speed based on floats and ratios
                 while(elapsedTime > 0)
                 {
                     yield return new WaitForEndOfFrame();
 
                     float ratio = Mathf.Clamp01(1 - (elapsedTime / timeDuration));
                     ratio = responseCurve.Evaluate(ratio);
-                    Debug.Log(ratio + "is the ratio");
+                    
                     agent.speed = Mathf.Lerp(startingSpeed, targetSpeed, ratio);
              
                     elapsedTime -= Time.deltaTime;
                 }
-
+                // Snap remainder of the speed straight to the target.
                 agent.speed = targetSpeed;
             }
 

@@ -1,10 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using Unity.Jobs;
+using UnityEngine;
+using Cyrcadian.UtilityAI;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine.Jobs;
+using System.Linq;
 using Unity.Collections;
 using Unity.VisualScripting;
-using UnityEngine;
+using Unity.Burst;
 
 namespace Cyrcadian.Creatures
 {
@@ -32,15 +38,15 @@ namespace Cyrcadian.Creatures
                 if(CurrentlyTargetedCreatures.TryGetValue(incomingCreature, out CreatureData oldValue))
                     updatedHealthInfluenced = oldValue.healthInfluenced + healthInfluenced;   
                 
-            var newCreatureData = new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced};  
+            
 
             // If they don't exist, add them to the dictionary, if they do already, update their data.
-            if(!CurrentlyTargetedCreatures.TryAdd(incomingCreature, newCreatureData))
-                CurrentlyTargetedCreatures[incomingCreature] = newCreatureData;
+            if(!CurrentlyTargetedCreatures.TryAdd(incomingCreature, new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced}))
+                CurrentlyTargetedCreatures[incomingCreature] = new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced};
             
             // Repeat the process for KnownThreats.
-            if(isThreat && !KnownThreats.TryAdd(incomingCreature, newCreatureData))
-                KnownThreats[incomingCreature] = newCreatureData;
+            if(isThreat && !KnownThreats.TryAdd(incomingCreature, new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced}))
+                KnownThreats[incomingCreature] = new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced};
 
             //if(!KnownThreats.ContainsKey(incomingCreature))
             //Debug.Log(incomingCreature.name + " was added to known threats");
@@ -75,9 +81,9 @@ namespace Cyrcadian.Creatures
             if(!gameObject.activeInHierarchy)
                 return;
             // Keep track of all visible creatures!
-            if(collider.gameObject.layer == 10 )
+            if(collider.gameObject.layer == 10 && !VisibleCreatures.Contains(collider.transform.root))
                     VisibleCreatures.Add(collider.transform.root);
-            else if(collider.gameObject.layer == 15)
+            else if(collider.gameObject.layer == 15 && VisibleWorldItems.Contains(collider.transform))
                     VisibleWorldItems.Add(collider.transform);          
         }
 
@@ -133,32 +139,105 @@ namespace Cyrcadian.Creatures
         {
             bool foundThreat = false;
 
-            foreach(Transform transform in VisibleCreatures)
-                if(KnownThreats.ContainsKey(transform))
-                    {   foundThreat = true;    break;  }
+            foreach(Transform knownThreat in KnownThreats.Keys)
+            {
+                foundThreat = VisibleCreatures.Contains(knownThreat);
+                if(foundThreat)
+                    break;
+            }
 
             return foundThreat;
         }
 
-        public Transform NearestThreat()
+        
+        // Returns the transform of the closest threat
+        
+        public Transform FindNearestThreat()
         {
+            var threatsNearMe = VisibleCreatures.Intersect(KnownThreats.Keys);
+            Dictionary<float3, Transform> tempDictionary = new Dictionary<float3, Transform>();
+
+            foreach(Transform nearByThreat in threatsNearMe)
+                tempDictionary.TryAdd(nearByThreat.position, nearByThreat);
             
-            if(IsThreatNearby())
-            {   
-                Transform closestThreat = null;
-                foreach(Transform visibleThreat in VisibleCreatures)
-                {
-                    // If no closest threat, place the first found one in there. Then start comparing.
-                    if(KnownThreats.ContainsKey(visibleThreat))
-                        if(!closestThreat)
-                            closestThreat = visibleThreat;
-                        else if(Mathf.Abs((visibleThreat.position - transform.position).sqrMagnitude) > Mathf.Abs((closestThreat.position - transform.position).sqrMagnitude))
-                            closestThreat = visibleThreat;
-                }
-                return closestThreat;
-            }
+            NativeArray<float3> TempNativeArray = new NativeArray<float3>(tempDictionary.Count, Allocator.Persistent);
+            TempNativeArray.CopyFrom(tempDictionary.Keys.ToArray());
+
+            NativeArray<float3> result = new NativeArray<float3>(1, Allocator.Persistent);
+
+            FindNearestThreatJob _findNearestThreatJob = new FindNearestThreatJob(){
+                myPosition = transform.position,
+                visibleCreatures = TempNativeArray, 
+                closestThreatPosition = result
+            };
+
+            JobHandle findThreatJobHandle = _findNearestThreatJob.Schedule(); 
+            findThreatJobHandle.Complete();     
+
+            tempDictionary.TryGetValue(_findNearestThreatJob.closestThreatPosition[0], out Transform nearestThreat);
+
+            TempNativeArray.Dispose();
+            result.Dispose();       
+
+            if(nearestThreat)
+                return  nearestThreat;
             else
                 return null;
         }
+
+
+
+        public Transform FindTastiestCreature(CreatureController thisCreature)
+        {
+            Transform tastiestCreature = null;
+            float bestValue = 0;
+            float currentValue;
+
+            foreach(Transform otherCreature in VisibleCreatures)
+            {
+                if(!otherCreature.GetComponent<CreatureController>())
+                    continue;
+
+                var otherCreatureSpecies = otherCreature.GetComponent<CreatureController>().creatureSpecies;
+                
+                if(otherCreatureSpecies == thisCreature.creatureSpecies)
+                    continue;
+
+                currentValue = otherCreature.GetComponent<CreatureController>().stats.proteinScore;
+                if(currentValue > bestValue)
+                {
+                    bestValue = currentValue;
+                    tastiestCreature = otherCreature;
+                }
+            } 
+
+            return tastiestCreature;
+        }
+
+
+
+
+
+        // Using Unity's Job System for multi-threading calculations
+        [BurstCompile]
+        public struct FindNearestThreatJob : IJob
+        {
+            [ReadOnly] public float3 myPosition;
+            [ReadOnly] public NativeArray<float3> visibleCreatures;
+
+            public NativeArray<float3> closestThreatPosition;
+            
+            public void Execute()
+            {   
+                for(int index = 0; index < visibleCreatures.Length; index++)
+                {
+                    if(index == 0)
+                        closestThreatPosition[0] = visibleCreatures[index];
+                    else if(math.distancesq(visibleCreatures[index], myPosition) > math.distancesq(closestThreatPosition[0], myPosition))
+                        closestThreatPosition[0] = visibleCreatures[index];                       
+                }
+            }
+        }
+
     }
 }
