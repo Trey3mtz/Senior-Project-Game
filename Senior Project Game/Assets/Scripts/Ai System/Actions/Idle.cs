@@ -9,7 +9,7 @@ namespace Cyrcadian.UtilityAI.Actions
     {
         public override void Execute(CreatureController thisCreature)
         {
-            thisCreature.DoIdle(5);
+            thisCreature.DoIdle(2);
         }
     }
 }

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661e7f12e70fa1642baf1cf0aedf33cb, type: 3}
+  m_Name: BoneHound
+  m_EditorClassIdentifier: 
+  CreatureName: Bone Hound
+  Behavior: 2
+  CircadianRhythm: 0
+  Stats:
+    healthPool: 35
+    currentHP: 35
+    stomachSize: 35
+    currentHunger: 35
+    staminaPool: 35
+    currentStamina: 35
+  Sprite: {fileID: -1788492484457194654, guid: 38e8934423d578847b07f3242ed6eead, type: 3}
+  AnimatorController: {fileID: -8628718470066728925, guid: 38e8934423d578847b07f3242ed6eead, type: 3}
+  ShadowHeightAdjust: -0.1
+  ShadowLengthAdjust: 1.1
+  rb: {fileID: 0}
+  collider2D: {fileID: 0}
+  CreatureController: {fileID: 0}
+  ListOfPossibleActions:
+  - {fileID: 11400000, guid: c709975ad2191ef49b82ee4db6d35020, type: 2}
+  - {fileID: 11400000, guid: e3b5915eec04e994baf9fcc9590eb2b2, type: 2}
+  - {fileID: 11400000, guid: b9dd4d379a09d154d87d89d12415b8d1, type: 2}
+  - {fileID: 11400000, guid: 9b9adfa41de75b74fb24c3149c01cbca, type: 2}
+  - {fileID: 11400000, guid: d1626c76f3d0a5048930643317735e86, type: 2}
+  CreaturePrefab: {fileID: 957270239124672070, guid: 71f0a8ebf4d40fe4dbfa0526239e3eba, type: 3}
+  CreatureSounds: []
+  LootTable:
+  - item: {fileID: 11400000, guid: d20ddcf74e352a74a8457f3754771ef7, type: 2}
+    lowestAmount: 1
+    highestAmount: 2
+    chance: 0.5
+  - item: {fileID: 11400000, guid: de9e332a4816e35449e9e1a8ab6e4d5d, type: 2}
+    lowestAmount: 1
+    highestAmount: 2
+    chance: 0.5

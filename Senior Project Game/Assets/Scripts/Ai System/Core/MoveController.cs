@@ -1,6 +1,4 @@
 using System.Collections;
-using DG.Tweening;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +21,9 @@ namespace Cyrcadian.UtilityAI
     
     
         public NavMeshAgent agent { get; private set; }
+        public AnimationCurve responseCurve;
+        // Not used to navigate smartly, but for information and for certain actions 
+        [HideInInspector] public Rigidbody2D rb;
         
       
         [Tooltip("This indicates what will block your vision")] 
@@ -31,14 +32,16 @@ namespace Cyrcadian.UtilityAI
         private float originalSpeed, originalAcceleration;
 
 
-        // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-
+            rb = GetComponent<Rigidbody2D>();            
+        }
+        
+        void Start()
+        {
             originalSpeed = agent.speed;
-            originalAcceleration = agent.acceleration;
-            
+            originalAcceleration = agent.acceleration;   
         }
 
         // Update is called once per frame
@@ -55,38 +58,58 @@ namespace Cyrcadian.UtilityAI
 
             // Speed/Acceleration changes value by a factor of itself, from a max of double it's original values or making them zero.
             // Will only accept values 0 through 1, and clamping the rest.
-            public void IncreaseMoveSpeed(float addedSpeed)
+            public void IncreaseMoveSpeed(float targetSpeed)
             {
-                addedSpeed = originalSpeed * (1 + Mathf.Clamp01(addedSpeed));
-                DOTween.To(() => agent.speed, x => agent.speed = x, addedSpeed, 1f);
+                targetSpeed = originalSpeed * (1 + Mathf.Clamp01(targetSpeed));
+                StartCoroutine(ChangeSpeed(targetSpeed, 0.5f));
+            }
+
+            IEnumerator ChangeSpeed(float targetSpeed, float timeDuration)
+            {
+                float elapsedTime = timeDuration;
+                float startingSpeed = agent.speed;
+
+                while(elapsedTime > 0)
+                {
+                    yield return new WaitForEndOfFrame();
+
+                    float ratio = Mathf.Clamp01(1 - (elapsedTime / timeDuration));
+                    ratio = responseCurve.Evaluate(ratio);
+                    Debug.Log(ratio + "is the ratio");
+                    agent.speed = Mathf.Lerp(startingSpeed, targetSpeed, ratio);
+             
+                    elapsedTime -= Time.deltaTime;
+                }
+
+                agent.speed = targetSpeed;
             }
 
             public void IncreaseAcceleration(float addedAcceleration)
             {
                 addedAcceleration = originalAcceleration * (1 + Mathf.Clamp01(addedAcceleration));
-                DOTween.To(() => agent.acceleration, x => agent.acceleration = x, addedAcceleration, 1f);
+                agent.acceleration = addedAcceleration;
             }
 
-                public void DecreaseMoveSpeed(float loweredSpeed)
+                public void DecreaseMoveSpeed(float targetSpeed)
                 {
-                    loweredSpeed = originalSpeed * (1 -  Mathf.Clamp01(loweredSpeed));
-                    DOTween.To(() => agent.speed, x => agent.speed = x, loweredSpeed, 1f);
+                    targetSpeed = agent.speed * (1 -  Mathf.Clamp01(targetSpeed));
+                    StartCoroutine(ChangeSpeed(targetSpeed, 0.5f));
                 }
 
                 public void DecreaseAcceleration(float loweredAcceleration)
                 {
                     loweredAcceleration = originalAcceleration * (1 - Mathf.Clamp01(loweredAcceleration));
-                    DOTween.To(() => agent.acceleration, x => agent.acceleration = x, loweredAcceleration, 1f);
+                    agent.acceleration = loweredAcceleration;
                 }
                     // The last methods of changing speed/acceleration, will reset to their original values
                     public void ResetSpeed()
                     {
-                        DOTween.To(() => agent.speed, x => agent.speed = x, originalSpeed, 1f);
+                        agent.speed = originalSpeed;
                     }
 
                     public void ResetAcceleration()
                     {
-                        DOTween.To(() => agent.acceleration, x => agent.acceleration = x, originalAcceleration, 1f);
+                        agent.acceleration = originalAcceleration;
                     }
 
         public bool CanSeeTarget()
@@ -110,13 +133,12 @@ namespace Cyrcadian.UtilityAI
 
         public void MoveToRandomPoint(float range)
         {
-            Vector3 point;
+            Vector3 randomPoint;
 
             // If I successfully find a point, move to it, else try again
-            if(RandomPoint(range, out point))
-            {
-                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
-                agent.SetDestination(point);
+            if(RandomPoint(range, out randomPoint))
+            { 
+                agent.SetDestination(randomPoint);
             }
             else
                 MoveToRandomPoint(range);
@@ -138,6 +160,17 @@ namespace Cyrcadian.UtilityAI
 
             result = Vector3.zero;
             return false;
+        }
+
+        // Drained stamina affects speed between 50% and 10% of your stamina
+        public bool DrainingStamina(CreatureController thisCreature)
+        {
+            if(thisCreature.stats.currentStamina > thisCreature.stats.staminaPool * 0.5f || thisCreature.stats.currentStamina < thisCreature.stats.staminaPool * 0.1f)
+                return false;
+            
+            DecreaseMoveSpeed(thisCreature.stats.currentStamina / thisCreature.stats.staminaPool * 0.1f);
+
+            return true;
         }
 
     }

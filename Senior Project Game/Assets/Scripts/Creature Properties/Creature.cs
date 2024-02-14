@@ -1,5 +1,6 @@
 using Cyrcadian.Items;
 using Cyrcadian.UtilityAI;
+using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -46,7 +47,11 @@ namespace Cyrcadian.Creatures
         [Header("Visual Components that a creature should have")]  
         public Sprite Sprite;
         public AnimatorController AnimatorController;
-        public Creature_Animation Animation;
+
+        [Tooltip("This value will be added to the Shadows local Y position")]
+        public float ShadowHeightAdjust;
+        [Tooltip("This value will be added by the Shadows local X scale")]
+        public float ShadowLengthAdjust;
 
         [Tooltip("The physics of a creature")]
         public Rigidbody2D rb;
@@ -55,7 +60,7 @@ namespace Cyrcadian.Creatures
         [Header("The AI components of a creature")]
         public CreatureController CreatureController;
         public Action[] ListOfPossibleActions;
-        public MoveController MoveCreature;
+        
 
         [Tooltip("This is a generic gameobject prefab, which will hold all of a Creature's components")]
         public GameObject CreaturePrefab;

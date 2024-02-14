@@ -5,6 +5,8 @@ using Cyrcadian.Items;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using NavMeshPlus.Extensions;
+using UnityEditor.Callbacks;
 
 
 namespace Cyrcadian.UtilityAI
@@ -23,7 +25,10 @@ namespace Cyrcadian.UtilityAI
 
         // Keeps track of nearby Creatures, and Items so far.
         [SerializeField] Collider2D awarenessRange;
-        [HideInInspector] [SerializeField] Awareness awareness;
+        [HideInInspector] public Awareness awareness;
+
+        // Animals will know the time of day, in order to wake up
+        private Day_Cycle DayCycle;
 
         // Particles and sfx all creatures share
         [SerializeField] AudioClip poofSFX;
@@ -69,13 +74,14 @@ namespace Cyrcadian.UtilityAI
             lootTable.spawnableLoot = creatureSpecies.LootTable;
             alertness = AlertState.Awake;
             myShadow = transform.Find("Body").Find("Shadow");
+            DayCycle  = FindAnyObjectByType<Day_Cycle>();
         }
 
         // If the brain had finished choosing a best action, Execute that action.
         // Feeds "this" specific entity into the execute method.
         void Update()
         {
-            if(isDying)
+            if(isDying || GameStateManager.IsPaused())
                 return;
 
             if(aiBrain.isFinishedDeciding)
@@ -113,11 +119,10 @@ namespace Cyrcadian.UtilityAI
         {   StartCoroutine(IdleCoroutine(time));     }
 
         IEnumerator IdleCoroutine(float time)
-        {   Debug.Log("I am idle now");
+        {   
             float counter = time;
-            while(counter > 0)
+            while(counter > 0 && alertness != AlertState.Alert)
             {
-                
                 yield return new WaitForSeconds(2f);
                 
                 stats.currentStamina += 1;
@@ -186,9 +191,10 @@ namespace Cyrcadian.UtilityAI
 
         IEnumerator RandomRoam()
         {
-            mover.MoveToRandomPoint(awarenessRange.bounds.extents.x);
+            mover.MoveToRandomPoint(awarenessRange.bounds.extents.x * 0.5f);
+            
             // While still traveling a path, wait before deciding
-            while(mover.agent.remainingDistance <= mover.agent.stoppingDistance)
+            while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -202,7 +208,6 @@ namespace Cyrcadian.UtilityAI
                 
                 IEnumerator SleepCoroutine()
                 {       
-                    Day_Cycle DayCycle = FindAnyObjectByType<Day_Cycle>();
 
                     alertness = AlertState.Asleep;
                     sleepParticle.Play();
@@ -212,23 +217,23 @@ namespace Cyrcadian.UtilityAI
                     {
                         case Creature.CyrcadianRhythm.Nocturnal:
                             while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;   }
                             break;
                         case Creature.CyrcadianRhythm.Diurnal:
                             while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Crepuscular:
                             while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Asleep)
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Cathemeral:
-                            {    yield return new WaitForEndOfFrame();    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         default:
                             break;
                     }
-
+                   
                     if(alertness == AlertState.Asleep)
                         alertness = AlertState.Awake;
 
@@ -278,13 +283,25 @@ namespace Cyrcadian.UtilityAI
 
         IEnumerator FleeCoroutine()
         {
-            mover.IncreaseMoveSpeed(.1f);
-            mover.IncreaseAcceleration(.1f);
-            while(awareness.IsTargetInVision())
+            if(stats.currentStamina > stats.staminaPool * 0.5f)
             {
-                Vector3 fleeDirection = (transform.position - awareness.Target.position).normalized;
+                mover.IncreaseMoveSpeed(.1f);
+                mover.IncreaseAcceleration(.1f);
+            }
+
+            while(awareness.IsThreatNearby())
+            {
+                Vector3 fleeDirection = (transform.position - awareness.NearestThreat().position).normalized;
                 mover.MoveTo((fleeDirection * 4) + transform.position);
-                yield return new WaitForSeconds(1f);
+
+                yield return new WaitForSeconds(0.25f);
+
+                if(stats.currentStamina > 0)
+                    stats.currentStamina -= 2;
+                else
+                    stats.currentStamina = 0;
+
+                mover.DrainingStamina(this);
             }
 
             // By here we have successfully flee-d from danger

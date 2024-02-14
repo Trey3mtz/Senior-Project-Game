@@ -22,7 +22,7 @@ namespace Cyrcadian.UtilityAI
         // Choose a best action for thisCreature from it's list of available actions
         void Update()
         {
-            if(thisCreature.isDying)
+            if(thisCreature.isDying || GameStateManager.IsPaused())
                 return;
                 
             if( bestAction is null)
@@ -38,14 +38,14 @@ namespace Cyrcadian.UtilityAI
             int nextBestActionIndex = 0;
             
             for(int i = 0; i < actionsAvailable.Length; i++)
-            {
+            {   //Debug.Log("Action '" + actionsAvailable[i].name + "' with score of : " + ScoreAction(actionsAvailable[i]));
                 if(ScoreAction(actionsAvailable[i]) > score)
                 {
                     nextBestActionIndex = i;
                     score = actionsAvailable[i].score;
                 }
             }
-            //Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score);
+            //Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " and total actions are length " + actionsAvailable.Length);
             bestAction = actionsAvailable[nextBestActionIndex];
             isFinishedDeciding = true;
         }
@@ -56,10 +56,10 @@ namespace Cyrcadian.UtilityAI
         public float ScoreAction(Action action)
         {
             float totalConsiderationScore = 1f;
-            float modificationFactor = 1 -(1f/ action.considerations.Length);
+            float modificationFactor = 1 -(1.0f/ action.considerations.Length);
 
             for(int i = 0; i < action.considerations.Length; i++)
-            {
+            {                
                 // Averaging scheme of overall score (credits to Dave Mark from GDC 2010 and his book "Behavioral Mathematics for Game AI (Applied Mathematics)")
                 // Rescales the float value after the compounding floats between 0 and 1
                 float considerationScore = action.considerations[i].ScoreConsideration(thisCreature);
