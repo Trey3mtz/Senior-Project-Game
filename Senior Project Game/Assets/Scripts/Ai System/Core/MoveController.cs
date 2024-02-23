@@ -1,9 +1,12 @@
 using System.Collections;
+using TreeEditor;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Cyrcadian.UtilityAI
 {
+    [BurstCompile]
     public class MoveController : MonoBehaviour
     {
     
@@ -21,8 +24,19 @@ namespace Cyrcadian.UtilityAI
     
     
         public NavMeshAgent agent { get; private set; }
+        private NavMeshPath path;
+        // NavMeshPath's are made up of a list of pathSteps. This will represent what index its at.
+        private int pathStepIndex = 0;
+
+        // all agents can set move speed in inspector
+        [SerializeField] float MOVE_SPEED;
+
+        // method to return move speed provides a central place
+        //  to implement movement speed modifiers
+        public float GetMoveSpeed() { return MOVE_SPEED; }
         public AnimationCurve responseCurve;
-        // Not used to navigate smartly, but for information and for certain actions 
+
+        // Not used to navigate, but for information and for certain actions 
         [HideInInspector] public Rigidbody2D rb;
         
       
@@ -40,9 +54,63 @@ namespace Cyrcadian.UtilityAI
         
         void Start()
         {
+
             originalSpeed = agent.speed;
             originalAcceleration = agent.acceleration;   
+
+            path = new NavMeshPath();
         }
+
+        // may be called with a new end point or the same end point
+        // return true if moving along path, false if not (no path or path complete)
+        public bool UpdatePathMove(Vector2 end)
+        {
+
+            // if we have no path or it is a new endpoint, calculate a new path to it
+            if (path.corners.Length == 0 || (Vector2)path.corners[path.corners.Length-1] != end)
+            {
+                if (!UnityEngine.AI.NavMesh.CalculatePath((Vector2)transform.position, end, UnityEngine.AI.NavMesh.AllAreas, path)) {
+                    // no path found
+                    return false;
+                }
+                // path corner[0] is the starting point, first waypoint is corner[1]
+                pathStepIndex = 1;
+            }
+
+            return UpdatePathMove();
+        }
+
+        // when called with no end point, continue ongoing movement (or do nothing)
+        // return true if moving along path, false if not (no path or path complete)
+        public bool UpdatePathMove()
+        {
+            // no path or path is finished
+            if (pathStepIndex >= path.corners.Length)
+            {
+                return false;
+            }
+
+            // move towards next waypoint, advance to next next waypoint on arrival
+            Vector2 leg = path.corners[pathStepIndex] - transform.position;
+            if (leg.magnitude < GetMoveSpeed() * Time.deltaTime) {
+                transform.position = path.corners[pathStepIndex];
+                pathStepIndex++;
+            } else {
+                transform.position += (Vector3)leg.normalized * GetMoveSpeed() * Time.deltaTime;
+            }
+
+            // draw path in scene for debugging
+            for (int i = 0; i < path.corners.Length - 1; i++)
+                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+
+            // always succeeds if we have a path
+            return true;
+        }
+
+        // called to clear current path and stop ongoing movement
+        public void StopPathMove() { path.ClearCorners(); }
+
+ 
 
         // Update is called once per frame
         void Update()
@@ -51,10 +119,23 @@ namespace Cyrcadian.UtilityAI
                 agent.path = null;
         }
 
-        public void MoveTo(Vector2 position)
+        public bool IsMoving()
         {
-            agent.destination = position;
+            if (agent != null)
+            {
+                return !agent.isStopped;
+            }
+            return false;
         }
+
+    [HideInInspector]public bool canMove = true;
+    public void MoveTo(Vector3 destination)
+    {
+        if (agent != null && canMove)
+        {
+            agent.SetDestination(destination);
+        }
+    }
 
             // Speed/Acceleration changes value by a factor of itself, from a max of double it's original values or making them zero.
             // Will only accept values 0 through 1, and clamping the rest.
@@ -112,13 +193,13 @@ namespace Cyrcadian.UtilityAI
                     {
                         agent.acceleration = originalAcceleration;
                     }
-
+       
         public bool CanSeeTarget()
         {
             return !Physics2D.Raycast(transform.position, (agent.destination - transform.position).normalized, agent.remainingDistance, layerMask);
         }
 
-        public void BrieflyPauseMove(float value)
+        public void BrieflyPauseMovement(float value)
         {    StartCoroutine(PauseMovement(value));    }
 
         IEnumerator PauseMovement(float value)
@@ -128,24 +209,31 @@ namespace Cyrcadian.UtilityAI
             agent.isStopped = false;
         }
 
-        public void StopMoving()
+        public void ResetPath()
         {    agent.ResetPath();    }
 
-
+        [BurstCompile]
+        public bool IsAtDestination()
+        {
+            return agent.remainingDistance <= agent.stoppingDistance;
+        }
+ 
+        [BurstCompile]
         public void MoveToRandomPoint(float range)
         {
             Vector3 randomPoint;
 
             // If I successfully find a point, move to it, else try again
             if(RandomPoint(range, out randomPoint))
-            { 
+            {   Debug.DrawRay(transform.position, randomPoint-transform.position, Color.green, 0.5f);
                 agent.SetDestination(randomPoint);
             }
             else
                 MoveToRandomPoint(range);
         }
         
-        bool RandomPoint(float range, out Vector3 result)
+        [BurstCompile]
+        public bool RandomPoint(float range, out Vector3 result)
         {
             
             Vector3 center = transform.position;
@@ -156,6 +244,7 @@ namespace Cyrcadian.UtilityAI
                 //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
                 //or add a for loop like in the documentation
                 result = hit.position;
+  
                 return true;
             }
 
@@ -163,17 +252,40 @@ namespace Cyrcadian.UtilityAI
             return false;
         }
 
+        [BurstCompile]
         // Drained stamina affects speed between 50% and 10% of your stamina
         public bool DrainingStamina(CreatureController thisCreature)
         {
             if(thisCreature.stats.currentStamina > thisCreature.stats.staminaPool * 0.5f || thisCreature.stats.currentStamina < thisCreature.stats.staminaPool * 0.1f)
                 return false;
             
-            DecreaseMoveSpeed(thisCreature.stats.currentStamina / thisCreature.stats.staminaPool * 0.1f);
+            DecreaseMoveSpeed(thisCreature.stats.currentStamina / (thisCreature.stats.staminaPool * 0.1f));
 
             return true;
         }
 
+
+        //private Vector3 dashDestination;
+        [SerializeField] float dashSpeedFactor = 2;
+        private bool canDash = true;
+
+        [BurstCompile]
+        public void Dash(Vector3 dashDirection, float dashDistance, float dashCooldown)
+        {
+            if (canDash)
+            {
+                //dashDestination = transform.position + dashDirection.normalized * dashDistance;
+                agent.velocity = agent.velocity * dashSpeedFactor;
+                canDash = false;
+                StartCoroutine(StartDashCooldown(dashCooldown));
+            }
+        }
+
+        IEnumerator StartDashCooldown(float dashCooldown)
+        {
+            yield return new WaitForSeconds(dashCooldown);
+            canDash = true;
+        }
     }
 }
 

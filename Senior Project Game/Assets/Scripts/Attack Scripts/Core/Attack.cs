@@ -8,17 +8,20 @@ using Unity.Entities.UniversalDelegates;
 using System.Collections;
 using TMPro;
 using Unity.Mathematics;
+using Cyrcadian.UtilityAI;
 
 namespace Cyrcadian
 {
     public abstract class Attack : ScriptableObject
     {
-        // Called when the component gets added to a GameObject for the first time.
-        void Awake()
+
+        void OnEnable()
         {
             AttackPrefab.GetComponent<Damage_HealthBar>().damage = DamageValue;
             allowedToAttack = true;
         }
+
+
 
 
 #region Internal Timer Logic
@@ -56,14 +59,14 @@ namespace Cyrcadian
 
         // Once we TryAttacking, you must StartAttackTimer to know if you can do an attack.
         public bool allowedToAttack { get; private set; }
-
+        
         // Trys to find a HealthBar to attack, damage value should be given to DamageLogic.
         private Damage_HealthBar DamageLogic;
         [Tooltip("This value will attach itself to the DamageLogic, to hurt a healthbar if found.")]
         public int DamageValue;
 
         [Tooltip("CanAttack will only be allowed to return true, if something is in the Range of attacking")]
-        public float Range = 1f;
+        public float Range = 1.5f;
 
         [Tooltip("How long one should wait before being able to do this attack again")]
         public float Cooldown = 1f;
@@ -84,13 +87,15 @@ namespace Cyrcadian
         public Vector2 pitch = new Vector2(1,1);
 
 
-        private CalculateRangeDifference _rangeCalculationJob; 
+        
         // Will let us know if we can attack, using the job system to calculate range difference
         public virtual bool CanAttack()
         {   
+           
+#region logic for CanAttack()
             // Set up our JOB
-            NativeArray<bool> tempBoolArray = new NativeArray<bool>(1, Allocator.Persistent); 
-            _rangeCalculationJob = new CalculateRangeDifference(){
+            NativeArray<bool> tempBoolArray = new NativeArray<bool>(1, Allocator.TempJob); 
+            CalculateRangeDifference _rangeCalculationJob = new CalculateRangeDifference(){
                 attacker = WhoIsAttacking.position,
                 victim = WhatIsBeingAttacked.position,
                 range = Range,
@@ -101,10 +106,11 @@ namespace Cyrcadian
 
             // Execute JOB on multi-thread
             rangeJobHandle.Complete();
-            bool isInRange = _rangeCalculationJob.isInRange[0];
-
-            tempBoolArray.Dispose();
+            bool isInRange;
+            isInRange = _rangeCalculationJob.isInRange[0];
             
+            tempBoolArray.Dispose();
+#endregion            
             return isInRange && allowedToAttack;
         }
 
@@ -113,20 +119,50 @@ namespace Cyrcadian
         public bool TryAttacking(MonoBehaviour thisMono, Transform target)
         {
             WhatIsBeingAttacked = target;
-            
+            WhoIsAttacking = thisMono.transform;
+           
             if(CanAttack())
             {   
                 StartAttackTimer(thisMono);
                 DoAttack(thisMono, target);
+                // We performed an attack!
                 return true;
             }
             else
+                // We did not perform an attack.
                 return false;
         }
 
-        // Returns true if landed, returns false if didn't land
+        // Houses logic for the some abstract Attack. Will be defined by a specific attack.
         public abstract void DoAttack(MonoBehaviour mono, Transform target);
 
+
+        // simply checks if in range for this attack
+        public virtual bool IsInAttackRange(CreatureController creatureController, Transform target)
+        {   
+            WhoIsAttacking = creatureController.transform; 
+            WhatIsBeingAttacked = target;
+#region logic for CanAttack()
+            // Set up our JOB
+            NativeArray<bool> tempBoolArray = new NativeArray<bool>(1, Allocator.TempJob); 
+            CalculateRangeDifference _rangeCalculationJob = new CalculateRangeDifference(){
+                attacker = WhoIsAttacking.position,
+                victim = WhatIsBeingAttacked.position,
+                range = Range,
+                isInRange = tempBoolArray
+            };
+
+            rangeJobHandle = _rangeCalculationJob.Schedule();
+
+            // Execute JOB on multi-thread
+            rangeJobHandle.Complete();
+            bool isInRange;
+            isInRange = _rangeCalculationJob.isInRange[0];
+            
+            tempBoolArray.Dispose();
+#endregion            
+            return isInRange;
+        }
 
 
         // A method to play audioclips

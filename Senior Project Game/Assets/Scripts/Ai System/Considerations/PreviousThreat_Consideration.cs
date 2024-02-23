@@ -29,7 +29,7 @@ namespace Cyrcadian.UtilityAI.Considerations
                 else
                 {
                 thisCreature.awareness.KnownThreats.TryGetValue(nearestThreat, out Awareness.CreatureData creatureData);
-                
+               
 
                 // Get normalized scores based on distance they are from you, and how much health they beat out of you.
                 // Give distance a score from 0 to 1.5 but clamp its value at one. Subtract up to 0.5 points based on how much their health they've taken from you is.

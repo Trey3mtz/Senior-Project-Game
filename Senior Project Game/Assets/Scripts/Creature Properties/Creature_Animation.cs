@@ -80,15 +80,15 @@ namespace Cyrcadian.Creatures
         public void Attack()
         {
             isAnimationLocked = true;
-            mover.BrieflyPauseMove(.5f);
+            mover.BrieflyPauseMovement(.5f);
             animatorControl.CrossFade("Attack");
-            StartCoroutine(animationLockOut(.5f));
+            StartCoroutine(animationLockOut(animatorControl.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length));
         }
 
         public void Hurt()
         {   
             isAnimationLocked = true;
-            mover.BrieflyPauseMove(hurtTime);
+            mover.BrieflyPauseMovement(hurtTime);
             animatorControl.CrossFade("Hurt");
             AudioManager.Instance.PlaySoundFX(hurtSFX);
             StartCoroutine(animationLockOut(hurtTime));

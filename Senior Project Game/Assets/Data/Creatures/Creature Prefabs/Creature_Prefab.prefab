@@ -139,9 +139,10 @@ GameObject:
   - component: {fileID: 2416789588495629884}
   - component: {fileID: 7352599635187515440}
   - component: {fileID: 6684764355307714818}
+  - component: {fileID: 331048310784891487}
   m_Layer: 10
   m_Name: Creature_Prefab
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionsAvailable:
   - {fileID: 11400000, guid: c709975ad2191ef49b82ee4db6d35020, type: 2}
-  - {fileID: 11400000, guid: 9b9adfa41de75b74fb24c3149c01cbca, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: d1626c76f3d0a5048930643317735e86, type: 2}
   stats:
     healthPool: 0
@@ -248,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffd241be8fde8b4db3aaa313adfb579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MOVE_SPEED: 0
   responseCurve:
     serializedVersion: 2
     m_Curve:
@@ -276,6 +278,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 81920
+  canMove: 1
+  dashSpeedFactor: 3
 --- !u!114 &2416789588495629884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +311,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.15
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &6684764355307714818
@@ -323,6 +327,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitbox: {fileID: 0}
+--- !u!114 &331048310784891487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957270239124672070}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5241b7a1a0d8dae45b3f0809f34294e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creatureLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  avoidanceDistance: 0.75
+  sidestepDistance: 0.5
 --- !u!1 &5284969252281147671
 GameObject:
   m_ObjectHideFlags: 0
@@ -10456,7 +10477,7 @@ GameObject:
   - component: {fileID: 4428140478439080830}
   m_Layer: 10
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10706,6 +10727,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b655135c5490c2140933f0999b0a0b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.16552898
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.004840895
+      outSlope: -0.004840895
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.9744027
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   losingDistance: 5
   sqrLosingDistance: 0
 --- !u!1 &8398238256665006478

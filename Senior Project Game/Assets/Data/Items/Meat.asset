@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UniqueID: food_meat
   DisplayName: Meat
-  Type: 2
+  Type: 3
   ItemSprite: {fileID: 21300000, guid: e084afea35924304eb2cd7ab8ada2ecd, type: 3}
   MaxStackSize: 32
   Consumable: 1
@@ -23,7 +23,6 @@ MonoBehaviour:
   VisualPrefab: {fileID: 9165432250727607574, guid: 5296a998fe6f36b40bd1792ea763038e, type: 3}
   PlayerAnimatorTriggerUse: GenericToolSwing
   WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
-  ItemSpawnAnimation: {fileID: -4678534934533297577, guid: b62eb6b1f7890714385bc41d0c9a7949, type: 3}
   UseSound:
   - {fileID: 8300000, guid: c758d50866c38364395e6497487c1af3, type: 3}
   volume: {x: 0.5, y: 0.5}

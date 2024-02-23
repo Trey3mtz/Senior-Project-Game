@@ -1,6 +1,8 @@
 using System;
+using AnimationCurveManipulationTool;
 using Cyrcadian.Creatures;
 using Cyrcadian.UtilityAI;
+using Unity.Assertions;
 using UnityEngine;
 
 namespace Cyrcadian
@@ -56,6 +58,15 @@ namespace Cyrcadian
             hitbox = creature.collider2D;
             rb = creature.rb;
             
+            // Create all of our attacks as children
+            foreach(Attack attack in creature.ListOfPossibleAttacks)
+            {   
+                Assert.IsTrue(attack != null);
+                GameObject myAttack = Instantiate(attack.AttackPrefab, transform.Find("Body").Find("Mouth").transform);
+                myAttack.name = attack.name;
+                myAttack.SetActive(false);
+            }
+
 
             // Randomize a size for creatures to add variety
             float sizeFactor = 1;
@@ -77,7 +88,7 @@ namespace Cyrcadian
                 hunger.SetHunger(initialStats.currentHunger);
 
                 initialStats.currentStamina = initialStats.staminaPool;
-                initialStats.proteinScore = creature.GetProteinScore();
+                initialStats.proteinScore = creature.GetFoodScore();
 
             // Adjust shadow to look better for different sized creatures
             transform.Find("Body").Find("Shadow").position += new Vector3(0,creature.ShadowHeightAdjust);
@@ -105,11 +116,13 @@ namespace Cyrcadian
             animator = GetComponentInChildren<Animator>();
 
             rb = transform.root.GetComponent<Rigidbody2D>();
-            
-
-            creatureController.stats = initialStats;
 
             OnSpawn?.Invoke(this, new Creature() );
+        }
+
+        void Start()
+        {
+            creatureController.stats = initialStats;
         }
 
         void OnDestroy()

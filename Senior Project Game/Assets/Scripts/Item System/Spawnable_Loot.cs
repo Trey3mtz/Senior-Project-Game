@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 namespace Cyrcadian.Items
@@ -59,5 +60,25 @@ namespace Cyrcadian.Items
                 }
             }
         }
+
+
+        public float GetFoodScore()
+        {
+            float FoodScore = 0f;
+            // If this source drops food, increase FoodScore.
+            // Weighted so HighestAmount holds more influence than the LowestAmount, unless drop rate is 100%. 
+            for(int i = 0; i < spawnableLoot.Length; i++)
+            {  
+                if( spawnableLoot[i].item.Type == Item.ItemType.Food)
+                {
+                    Food thisItem = spawnableLoot[i].item as Food;
+                    float chance = Mathf.Clamp01(spawnableLoot[i].chance); 
+                    FoodScore += thisItem.GetFoodValue() * (spawnableLoot[i].highestDropAmount + (spawnableLoot[i].lowestDropAmount  * chance)) * chance;
+                }
+            }
+            
+            return FoodScore;
+        }
     }
+
 }

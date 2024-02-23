@@ -16,6 +16,12 @@ MonoBehaviour:
   Behavior: 2
   CircadianRhythm: 0
   Diet: 2
+  myDietSelection: 00000000010000000200000004000000
+  PossibleFoodSources:
+  - Creature
+  - Player
+  - Fruit
+  Hunting_Behavior: {fileID: 11400000, guid: 4684fcd1260a5934d91236d61ee72d89, type: 2}
   Stats:
     healthPool: 35
     currentHP: 35
@@ -35,17 +41,17 @@ MonoBehaviour:
   ListOfPossibleActions:
   - {fileID: 11400000, guid: c709975ad2191ef49b82ee4db6d35020, type: 2}
   - {fileID: 11400000, guid: e3b5915eec04e994baf9fcc9590eb2b2, type: 2}
-  - {fileID: 11400000, guid: 648da8a6e0c227d4f90e42fcda67deaa, type: 2}
-  PossibleAttacks:
+  - {fileID: 11400000, guid: 01b6317d68d1a964692b2493a69eedcf, type: 2}
+  ListOfPossibleAttacks:
   - {fileID: 11400000, guid: f2d046309dbea4e4380b48a48e5924cf, type: 2}
   CreaturePrefab: {fileID: 2241090838399489673, guid: fd044e6c20299254dbb08c14788d9f71, type: 3}
   CreatureSounds: []
   LootTable:
   - item: {fileID: 11400000, guid: d20ddcf74e352a74a8457f3754771ef7, type: 2}
     lowestDropAmount: 0
-    highestDropAmount: 0
+    highestDropAmount: 1
     chance: 0.5
   - item: {fileID: 11400000, guid: de9e332a4816e35449e9e1a8ab6e4d5d, type: 2}
     lowestDropAmount: 0
-    highestDropAmount: 0
+    highestDropAmount: 2
     chance: 0.5

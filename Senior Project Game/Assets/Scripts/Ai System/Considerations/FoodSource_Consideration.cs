@@ -13,6 +13,11 @@ namespace Cyrcadian.UtilityAI.Considerations
 
          public override float ScoreConsideration(CreatureController thisCreature)
          {
+            if(thisCreature.stats.staminaPool == 0)
+            {
+                return 0;
+            }
+
             // Graze Action is intended for Herbivores. Hunt Action is intended for Carnivores. FindFood Action is intended for Omnivores.
 
             // This consideration is intended to inluence what their next meal choice should be based on information they know about their
@@ -53,8 +58,13 @@ namespace Cyrcadian.UtilityAI.Considerations
                     // Keep track of the only the best value of a creature. 
                     foreach(Transform creature in thisCreature.awareness.VisibleCreatures)
                     {
+
+                        if(creature.CompareTag("Player"))
+                            continue;
+
                         CreatureController otherCreature = creature.GetComponent<CreatureController>();
                         
+                        Debug.Log(creature);
                         // NO CANIBALISM PLS
                         if(otherCreature.creatureSpecies == thisCreature.creatureSpecies)
                             continue;
@@ -66,15 +76,17 @@ namespace Cyrcadian.UtilityAI.Considerations
                         }
                     }
 
+                    
                     livingFoodWorth = (livingFoodWorth + (thisCreature.stats.stomachSize / thisCreature.stats.currentHunger + 0.01f)) * (thisCreature.stats.currentStamina / thisCreature.stats.staminaPool);
 
                     score = Mathf.Clamp01((score + livingFoodWorth) - (score - droppedFoodWorth));
-
+                    
                     break;
                 default:
                     break;
             }
 
+        Debug.Log(score);
 
             return responseCurve.Evaluate(score);
          }

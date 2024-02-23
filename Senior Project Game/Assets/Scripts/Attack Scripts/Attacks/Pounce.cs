@@ -15,10 +15,19 @@ namespace Cyrcadian.AttackSystem
         public override void DoAttack(MonoBehaviour thisMonobehaviour, Transform target)
         {
             Vector2 attackDirection = ( target.position - thisMonobehaviour.transform.position).normalized;
-            Rigidbody2D rb = WhoIsAttacking.GetComponent<Rigidbody2D>();
-
-            rb.AddForce(attackDirection * 5);
+            thisMonobehaviour.GetComponent<MoveController>().Dash(attackDirection, 4, Cooldown);
             thisMonobehaviour.GetComponentInChildren<Creature_Animation>().Attack();
+
+            GameObject myAttack = thisMonobehaviour.transform.Find("Body").Find("Mouth").Find("Pounce").gameObject;
+            
+            thisMonobehaviour.StartCoroutine(AttackCoroutine(myAttack, .2f));
+        }
+
+        IEnumerator AttackCoroutine(GameObject attack, float time)
+        {
+            attack.SetActive(true);
+            yield return new WaitForSeconds(time);
+            attack.SetActive(false);
         }
     }
 }

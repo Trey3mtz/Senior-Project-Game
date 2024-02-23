@@ -32,6 +32,11 @@ namespace Cyrcadian.UtilityAI
             {
                 ChooseBestAction(thisCreature.actionsAvailable);
             }
+
+                // This is an Asertion checker to make sure no values ever go above and beyond the range desired for our normalized scores.
+                // Scores that exist outside of the range 0f through 1f are not normalized.
+                foreach(Action action in thisCreature.actionsAvailable)
+                    action.AssertConsiderations(thisCreature);
         }
 
         // Loops through all possible actions to find the highest scoring action
@@ -48,41 +53,44 @@ namespace Cyrcadian.UtilityAI
                     score = actionsAvailable[i].score;
                 }
             }
-            Debug.Log(" next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " from creature " + transform);
+            //Debug.Log("Next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " from creature " + transform);
             bestAction = actionsAvailable[nextBestActionIndex];
             isFinishedDeciding = true;
         }
 
         // Below is a modified version of the commented out code block of ScoreAction() to use Unity's Job System for multithreaded performance
         // Leaving the old version behind for reference
-        private List<float> tempScoreList;
+        
         public float ScoreAction(Action action)
         {
             if(action.considerations.Length == 0)
                 return 0f;
             
-            tempScoreList = new List<float>();
+            List<float> tempScoreList = new List<float>();
 
             for(int i = 0; i < action.considerations.Length; i++)
                 tempScoreList.Add(action.considerations[i].ScoreConsideration(thisCreature));
 
-                NativeArray<float> Temp = new NativeArray<float>(tempScoreList.Count, Allocator.Persistent);
-                Temp.CopyFrom(tempScoreList.ToArray());
+                NativeArray<float> considerationsTemp = new NativeArray<float>(tempScoreList.Count, Allocator.TempJob);
+                considerationsTemp.CopyFrom(tempScoreList.ToArray());
+
+                NativeArray<float> finalScoreTemp = new NativeArray<float>(1, Allocator.TempJob);
 
             ScoreActionJob _scoreJob = new ScoreActionJob(){
                 modificationFactor = 1 - (1.0f / action.considerations.Length),
-                ConiderationScores = Temp,
+                ConiderationScores = considerationsTemp,
                 ArrayLength = action.considerations.Length,
-                FinalActionScore = new NativeArray<float>(1, Allocator.Persistent)
+                FinalActionScore = finalScoreTemp
             };
-            
+             
 
             ScoringJobHandle = _scoreJob.Schedule();
             ScoringJobHandle.Complete();
             
             action.score = _scoreJob.FinalActionScore[0];
 
-            Temp.Dispose();
+            considerationsTemp.Dispose();
+            finalScoreTemp.Dispose();
             
             return action.score;
         }

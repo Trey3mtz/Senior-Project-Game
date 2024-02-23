@@ -16,6 +16,9 @@ MonoBehaviour:
   Behavior: 1
   CircadianRhythm: 1
   Diet: 0
+  myDietSelection: 0300000005000000
+  PossibleFoodSources:
+  - Vegitation
   Stats:
     healthPool: 15
     currentHP: 15
@@ -39,6 +42,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17e9da88c52994649a1d0854f4e565be, type: 2}
   - {fileID: 11400000, guid: b9dd4d379a09d154d87d89d12415b8d1, type: 2}
   - {fileID: 11400000, guid: 0db6cfdc44a37524180e02c58bb40795, type: 2}
+  PossibleAttacks: []
   CreaturePrefab: {fileID: 957270239124672070, guid: 71f0a8ebf4d40fe4dbfa0526239e3eba, type: 3}
   CreatureSounds:
   - {fileID: 8300000, guid: b843950fcfa230b47bdbc1fd4069cc9a, type: 3}

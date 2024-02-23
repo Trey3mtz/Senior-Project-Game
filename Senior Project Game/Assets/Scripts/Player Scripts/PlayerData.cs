@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cyrcadian.PlayerSystems.InventorySystem;
 using Cyrcadian.Creatures;
+using System.Runtime.CompilerServices;
+using Cyrcadian.Items;
 
 
 namespace Cyrcadian.PlayerSystems
@@ -105,6 +107,31 @@ namespace Cyrcadian.PlayerSystems
             public HungerBar GetPlayerOxygen()
             {
                 return _oxygenBar;
+            }
+
+
+            // Score a player based on the amount of food they have in their inventory. Base value of 0.25f so creatures don't ignore player.
+            // Holding too many food items in your inventory will have consquences :) you smell good to the creatures
+            public float GetFoodScore()
+            {
+                float finalScore = 0.25f;
+                List<Inventory.InventoryEntry> playerInventory = _inventory.GetInventory();
+                
+                // For every Food item in player's inventory, multiply the value by stack size at 1/4th its value and add it to my food score.
+                foreach(Inventory.InventoryEntry itemEntry in playerInventory)
+                {
+                    if(itemEntry.item == null)
+                        continue;
+
+                    if(itemEntry.item.Type == Item.ItemType.Food)
+                    {
+                        Food thisItem = itemEntry.item as Food;
+                        
+                        finalScore += thisItem.GetFoodValue() * itemEntry.stackSize * 0.25f;
+                    }
+                }
+
+                return finalScore;
             }
         }
 }
