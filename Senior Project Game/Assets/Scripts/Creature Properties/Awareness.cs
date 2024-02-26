@@ -14,6 +14,8 @@ using Unity.Burst;
 using UnityEditor.UIElements;
 using UnityEditor.ShaderGraph;
 using Cyrcadian.Items;
+using System.Security.Cryptography;
+using Unity.Assertions;
 
 namespace Cyrcadian.Creatures
 {
@@ -92,6 +94,8 @@ namespace Cyrcadian.Creatures
         {
             if(!gameObject.activeInHierarchy)
                 return;
+            if(collider.gameObject.layer == 10 && !collider.GetComponentInParent<CreatureController>())
+                return;
             // Keep track of all visible creatures!
             if(collider.gameObject.layer == 10 && !VisibleCreatures.Contains(collider.transform.root))
                     VisibleCreatures.Add(collider.transform.root);
@@ -101,7 +105,7 @@ namespace Cyrcadian.Creatures
 
             // Check if whatever we collided with has something from myCreature.CreatureSpecies.PossibleFoodSources
             if(myCreature.creatureSpecies.PossibleFoodSources != null)
-                if(myCreature.creatureSpecies.PossibleFoodSources.Contains(collider.transform.root.tag) && !VisibleCreatures.Contains(collider.transform.root))
+                if(myCreature.creatureSpecies.PossibleFoodSources.Contains(collider.transform.root.tag) && !VisibleFoodSources.Contains(collider.transform.root))
                     VisibleFoodSources.Add(collider.transform.root);
         }
 
@@ -110,10 +114,15 @@ namespace Cyrcadian.Creatures
         {
             if(!gameObject.activeInHierarchy)
                 return;
+            if(collider.gameObject.layer == 10 && !collider.GetComponentInParent<CreatureController>())
+                return;
 
             // If we lost track of a creature that was visible,  wait a moment to remove them from the stack
+            // If they died, immediately remove their transform.
             if (collider.gameObject.layer == 10 && VisibleCreatures.Contains(collider.transform.root)) {
-                if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                if(collider.GetComponentInParent<CreatureController>().isDying)
+                    VisibleCreatures.Remove(collider.transform);
+                else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
                     StartCoroutine(CreatureOutOfVision(collider.transform.root));   
             }
             else if(collider.gameObject.layer == 15 && VisibleWorldItems.Contains(collider.transform))
@@ -123,7 +132,11 @@ namespace Cyrcadian.Creatures
                 StartCoroutine(TargetOutOfVision(collider.transform.root));
 
             if(VisibleFoodSources.Contains(collider.transform.root))
-                StartCoroutine(FoodSourceOutOfVision(collider.transform.root));
+            {
+                if(collider.GetComponentInParent<CreatureController>().isDying)
+                    VisibleFoodSources.Remove(collider.transform);
+                else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                    StartCoroutine(FoodSourceOutOfVision(collider.transform.root));}
         }
 
 
@@ -318,10 +331,10 @@ namespace Cyrcadian.Creatures
             {   
                 if(ScoreFoodSource(foodSource, highestFoodScore, out float score) > highestFinalScore)
                 {
-                    Debug.Log(transform.root.name + " saw "+ foodSource.name + " with score of " + score);
                     highestScoringChoice = foodSource;
                     highestFinalScore = score;
                 }
+                Debug.Log(transform.root.name + " saw "+ foodSource.name + " with score of " + score);
             }
         
             return highestScoringChoice;
@@ -369,6 +382,12 @@ namespace Cyrcadian.Creatures
             float score;
             foreach(Transform foodSource in VisibleFoodSources)
             {
+                if(!foodSource)
+                {
+                    VisibleFoodSources.Remove(foodSource);
+                    continue;
+                }
+
                 if(foodSource.root.tag == "Player")
                     score = foodSource.GetComponent<PlayerSystems.PlayerData>().GetFoodScore();
                 else if(foodSource.gameObject.layer == 10)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyrcadian.UtilityAI;
 using Cyrcadian.UtilityAI.Actions;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -59,7 +60,7 @@ namespace Cyrcadian.Creatures
             if(isAnimationLocked)
                 return;
 
-            if(mover.agent.velocity.sqrMagnitude == 0)
+            if(rb.velocity.sqrMagnitude == 0)
             {   
                 if(creature.alertness == CreatureController.AlertState.Unconcious)
                     animatorControl.CrossFade("Sleep");
@@ -68,11 +69,12 @@ namespace Cyrcadian.Creatures
                 else
                     animatorControl.CrossFade("Idle");
             }
-            else if(mover.agent.hasPath)
-            {
-                if(Mathf.Abs(mover.agent.velocity.sqrMagnitude) > 0.02f)
-                    animatorControl.OrientateBody(mover.agent.velocity.x);
-                animatorControl.CrossFade("Move");
+            else if(mover.IsMoving())
+            {   
+                if(math.abs(rb.velocity.sqrMagnitude) > 0.05f)
+                {
+                    animatorControl.OrientateBody(mover.moveDirection.x);
+                    animatorControl.CrossFade("Move");  }
             }
 
         }

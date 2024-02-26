@@ -124,10 +124,8 @@ namespace Cyrcadian.PlayerSystems
                         continue;
 
                     if(itemEntry.item.Type == Item.ItemType.Food)
-                    {
-                        Food thisItem = itemEntry.item as Food;
-                        
-                        finalScore += thisItem.GetFoodValue() * itemEntry.stackSize * 0.25f;
+                    {                 
+                        finalScore += itemEntry.item.GetFoodValue() * itemEntry.stackSize * 0.25f;
                     }
                 }
 

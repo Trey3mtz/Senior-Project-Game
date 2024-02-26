@@ -9,7 +9,7 @@ namespace Cyrcadian.UtilityAI
     public class SimpleHunting : HuntingBehavior
     {
         /*
-        High level psudo code example for Simple Hunting
+        High level psudo code example for Simple Hunting (not real)
 
         Root Selector
             Sequence (Chase "Task" and Attack "Task")
@@ -30,22 +30,11 @@ namespace Cyrcadian.UtilityAI
         */
         public override Node Execute(CreatureController myCreature)
         {  
-                Node root = new Selector(new List<Node>
+            // Either chase them or attack them. If dead return.
+                Node root = new Sequence(new List<Node>
                 {
-
-                    //  First prioritize attack?
-                    new Sequence(new List<Node>
-                    {
-                        new SimpleChase(myCreature)
-                    }),
-
-
-                    new Sequence(new List<Node>
-                    {
-                        new ShortestRangeAttack(myCreature)
-                    }),   
-
-                  
+                    new SimpleChase(myCreature),
+                    new ShortestRangeAttack(myCreature)
                 });
 
 
@@ -66,10 +55,32 @@ namespace Cyrcadian.UtilityAI
         public override NodeState Evaluate()
         {
             TARGET = GetData("Target");
+
+
             target = TARGET as Transform;            
             // If no target, FAILED (they either escaped, or are dead already)
             if(TARGET == null)
             {
+                StopBehavior();
+                myCreature.UponCompletedAction();
+                state = NodeState.FAILURE;
+                return state;
+            }
+            // If target is dead
+            if(!target)
+            {   
+                //              NOTE : StopBehavior CLEARS ALL DATA. Data will refresh.
+                StopBehavior();
+                myCreature.UponCompletedAction();
+                state = NodeState.FAILURE;
+                return state;
+            }
+            // If I lost sight of my target.
+            if(!myCreature.awareness.VisibleFoodSources.Contains(target))
+            {
+                target = null;
+                StopBehavior();
+                myCreature.UponCompletedAction();
                 state = NodeState.FAILURE;
                 return state;
             }
@@ -94,7 +105,7 @@ namespace Cyrcadian.UtilityAI
             }
 
             // Move to their position
-            myCreature.mover.MoveTo(target.position);
+            myCreature.mover.UpdatePath(target.position);
 
 
             state = NodeState.RUNNING;
@@ -141,6 +152,9 @@ namespace Cyrcadian.UtilityAI
                 if(myCreature.creatureSpecies.ListOfPossibleAttacks.Find(x => x.UniqueName.Contains("Pounce")).TryAttacking(myCreature, target))
                 {    
                     myCreature.stats.currentStamina -= 2;
+
+                    StopBehavior();
+                    myCreature.UponCompletedAction();
                     state = NodeState.SUCCESS;
                     return state;
                 }

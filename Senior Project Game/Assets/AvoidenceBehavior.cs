@@ -54,7 +54,7 @@ public class AvoidanceBehavior : MonoBehaviour
             Vector2 sidestepDirection = Quaternion.Euler(0, 0, randomAngle) * avoidanceDirection.normalized;
             Vector2 newDestination = (Vector2)transform.position + sidestepDirection * sidestepDistance;
             Debug.Log("Moving away" );
-            aiMover.MoveTo(newDestination);
+            aiMover.UpdatePath(newDestination);
             targetCreature = null;
         }
     }

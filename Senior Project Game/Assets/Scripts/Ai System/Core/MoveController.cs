@@ -1,6 +1,9 @@
 using System.Collections;
+using NavMeshPlus.Extensions;
+using TMPro;
 using TreeEditor;
 using Unity.Burst;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,15 +28,17 @@ namespace Cyrcadian.UtilityAI
     
         public NavMeshAgent agent { get; private set; }
         private NavMeshPath path;
-        // NavMeshPath's are made up of a list of pathSteps. This will represent what index its at.
-        private int pathStepIndex = 0;
+        private int stepIndex = 0;
 
         // all agents can set move speed in inspector
-        [SerializeField] float MOVE_SPEED;
-
+        [SerializeField] float ACCELERATION = 15f; // Adjust as needed
+        public Vector3 moveDirection{get; private set;}
+        [HideInInspector]public bool canMove = true;
+        
+        
         // method to return move speed provides a central place
         //  to implement movement speed modifiers
-        public float GetMoveSpeed() { return MOVE_SPEED; }
+        public float GetAcceleration() { return ACCELERATION; }
         public AnimationCurve responseCurve;
 
         // Not used to navigate, but for information and for certain actions 
@@ -44,98 +49,107 @@ namespace Cyrcadian.UtilityAI
         [SerializeField] LayerMask layerMask;
 
         private float originalSpeed, originalAcceleration;
-
+        
 
         void Awake()
         {
+            moveDirection = new();
             agent = GetComponent<NavMeshAgent>();
+            agent.updatePosition = false;
             rb = GetComponent<Rigidbody2D>();            
         }
         
         void Start()
         {
-
             originalSpeed = agent.speed;
             originalAcceleration = agent.acceleration;   
 
             path = new NavMeshPath();
+            StartCoroutine(slowdebuglog());
+        }
+   
+    IEnumerator slowdebuglog()
+    {
+        while(true)
+        {
+            yield return new WaitForSecondsRealtime(.25f);
+            Debug.Log("Path length : " + path.corners.Length);
+        }
+    }
+    
+        void FixedUpdate()
+        {    // Using Euler's number for fun. Not significant.                                           
+            rb.AddForce(moveDirection * ACCELERATION * 2.718f);
+        }
+        
+        void Update()
+        {
+            if(canMove)
+            {
+                // If no path or path is done, clear move direction.
+                if(!UpdatePath())
+                    moveDirection = new();
+            }
+            else
+                moveDirection = new();
         }
 
-        // may be called with a new end point or the same end point
-        // return true if moving along path, false if not (no path or path complete)
-        public bool UpdatePathMove(Vector2 end)
+        public bool UpdatePath()
         {
-
-            // if we have no path or it is a new endpoint, calculate a new path to it
-            if (path.corners.Length == 0 || (Vector2)path.corners[path.corners.Length-1] != end)
+            // no path or path is finished
+            if(stepIndex < path.corners.Length)
             {
-                if (!UnityEngine.AI.NavMesh.CalculatePath((Vector2)transform.position, end, UnityEngine.AI.NavMesh.AllAreas, path)) {
+                Vector2 nextWaypoint = path.corners[stepIndex];
+                moveDirection = (nextWaypoint - (Vector2)transform.position).normalized;             
+                
+
+
+                // draw path in scene for debugging
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                    Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+                    
+
+                if(QuickMafs.DistanceLength(transform.position, nextWaypoint) < 0.1f)
+                    stepIndex++;
+                
+                
+                // always succeeds if we have a path
+                return true;
+            }
+            
+            return false;
+        }
+
+        public bool UpdatePath(Vector3 destination)
+        {
+            // if we have no path or it is a new endpoint, calculate a new path to it
+            if (path.corners.Length == 0 || (Vector2)path.corners[path.corners.Length-1] != (Vector2)destination)
+            {
+                if (!UnityEngine.AI.NavMesh.CalculatePath((Vector2)transform.position, destination, UnityEngine.AI.NavMesh.AllAreas, path)) {
                     // no path found
                     return false;
                 }
                 // path corner[0] is the starting point, first waypoint is corner[1]
-                pathStepIndex = 1;
+                stepIndex = 1;
             }
 
-            return UpdatePathMove();
-        }
-
-        // when called with no end point, continue ongoing movement (or do nothing)
-        // return true if moving along path, false if not (no path or path complete)
-        public bool UpdatePathMove()
-        {
-            // no path or path is finished
-            if (pathStepIndex >= path.corners.Length)
-            {
-                return false;
-            }
-
-            // move towards next waypoint, advance to next next waypoint on arrival
-            Vector2 leg = path.corners[pathStepIndex] - transform.position;
-            if (leg.magnitude < GetMoveSpeed() * Time.deltaTime) {
-                transform.position = path.corners[pathStepIndex];
-                pathStepIndex++;
-            } else {
-                transform.position += (Vector3)leg.normalized * GetMoveSpeed() * Time.deltaTime;
-            }
-
-            // draw path in scene for debugging
-            for (int i = 0; i < path.corners.Length - 1; i++)
-                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
-
-            // always succeeds if we have a path
-            return true;
+            return UpdatePath();
         }
 
         // called to clear current path and stop ongoing movement
         public void StopPathMove() { path.ClearCorners(); }
 
- 
 
-        // Update is called once per frame
-        void Update()
-        {
-            if(agent.isPathStale)
-                agent.path = null;
-        }
 
+      
         public bool IsMoving()
         {
-            if (agent != null)
-            {
-                return !agent.isStopped;
-            }
-            return false;
+            return moveDirection != new Vector3();   
         }
 
-    [HideInInspector]public bool canMove = true;
-    public void MoveTo(Vector3 destination)
-    {
-        if (agent != null && canMove)
-        {
-            agent.SetDestination(destination);
-        }
-    }
+
+
+    
 
             // Speed/Acceleration changes value by a factor of itself, from a max of double it's original values or making them zero.
             // Will only accept values 0 through 1, and clamping the rest.
@@ -167,54 +181,57 @@ namespace Cyrcadian.UtilityAI
             }
 
             public void IncreaseAcceleration(float addedAcceleration)
-            {
+            {Debug.Log(" WARNING WARNING WARNING ");
                 addedAcceleration = originalAcceleration * (1 + Mathf.Clamp01(addedAcceleration));
                 agent.acceleration = addedAcceleration;
             }
 
                 public void DecreaseMoveSpeed(float targetSpeed)
-                {
+                {Debug.Log(" WARNING WARNING WARNING ");
                     targetSpeed = agent.speed * (1 -  Mathf.Clamp01(targetSpeed));
                     StartCoroutine(ChangeSpeed(targetSpeed, 0.5f));
                 }
 
                 public void DecreaseAcceleration(float loweredAcceleration)
-                {
+                {Debug.Log(" WARNING WARNING WARNING ");
                     loweredAcceleration = originalAcceleration * (1 - Mathf.Clamp01(loweredAcceleration));
                     agent.acceleration = loweredAcceleration;
                 }
                     // The last methods of changing speed/acceleration, will reset to their original values
                     public void ResetSpeed()
-                    {
+                    {Debug.Log(" WARNING WARNING WARNING ");
                         agent.speed = originalSpeed;
                     }
 
                     public void ResetAcceleration()
-                    {
+                    {Debug.Log(" WARNING WARNING WARNING ");
                         agent.acceleration = originalAcceleration;
                     }
        
         public bool CanSeeTarget()
         {
-            return !Physics2D.Raycast(transform.position, (agent.destination - transform.position).normalized, agent.remainingDistance, layerMask);
+            return !Physics2D.Raycast(transform.position, 
+                                     (path.corners[path.corners.Length] - transform.position).normalized, 
+                                      QuickMafs.DistanceLength(path.corners[path.corners.Length], transform.position), 
+                                      layerMask);
         }
 
         public void BrieflyPauseMovement(float value)
         {    StartCoroutine(PauseMovement(value));    }
 
         IEnumerator PauseMovement(float value)
-        {
+        {Debug.Log(" WARNING WARNING WARNING ");
             agent.isStopped = true;
             yield return new WaitForSeconds(value);
             agent.isStopped = false;
         }
 
         public void ResetPath()
-        {    agent.ResetPath();    }
+        { Debug.Log(" WARNING WARNING WARNING ");   agent.ResetPath();    }
 
         [BurstCompile]
         public bool IsAtDestination()
-        {
+        {Debug.Log(" WARNING WARNING WARNING ");
             return agent.remainingDistance <= agent.stoppingDistance;
         }
  
@@ -226,7 +243,7 @@ namespace Cyrcadian.UtilityAI
             // If I successfully find a point, move to it, else try again
             if(RandomPoint(range, out randomPoint))
             {   Debug.DrawRay(transform.position, randomPoint-transform.position, Color.green, 0.5f);
-                agent.SetDestination(randomPoint);
+                UpdatePath(randomPoint);
             }
             else
                 MoveToRandomPoint(range);
@@ -275,7 +292,8 @@ namespace Cyrcadian.UtilityAI
             if (canDash)
             {
                 //dashDestination = transform.position + dashDirection.normalized * dashDistance;
-                agent.velocity = agent.velocity * dashSpeedFactor;
+                //agent.velocity = agent.velocity * dashSpeedFactor;
+                 rb.AddForce(dashDirection * dashDistance *dashSpeedFactor);
                 canDash = false;
                 StartCoroutine(StartDashCooldown(dashCooldown));
             }

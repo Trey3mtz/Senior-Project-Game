@@ -3,6 +3,9 @@ using Cyrcadian.Creatures;
 using Cyrcadian.WorldTime;
 using Cyrcadian.Items;
 using UnityEngine;
+using System.Collections.Generic;
+using Cyrcadian.BehaviorTrees;
+using TMPro;
 
 namespace Cyrcadian.UtilityAI
 {
@@ -13,6 +16,9 @@ namespace Cyrcadian.UtilityAI
         public MoveController mover{ get; set;}
         public AIBrain aiBrain { get; set;}
         public Action[] actionsAvailable;
+
+        // Can manage each Behavior tree of a creature.
+        public Dictionary<string, CreatureBehaviorTree> myBehaviorDictionary;
 
         public Creature_Stats stats;
         public Creature creatureSpecies;
@@ -50,6 +56,7 @@ namespace Cyrcadian.UtilityAI
 
         void Awake()
         {
+            myBehaviorDictionary = new();
             mover = GetComponent<MoveController>();
             aiBrain = GetComponent<AIBrain>();
             awareness = GetComponentInChildren<Awareness>();
@@ -66,6 +73,7 @@ namespace Cyrcadian.UtilityAI
 
         void Start()
         {
+            awarenessRange.enabled = true;
             awareness.SetCreature(this);
             lootTable.spawnableLoot = creatureSpecies.LootTable;
             alertness = AlertState.Calm;
@@ -291,7 +299,7 @@ namespace Cyrcadian.UtilityAI
                     while(awareness.IsThreatNearby())
                     {
                         fleeDirection = (transform.position - awareness.FindNearestThreat().position).normalized;
-                        mover.MoveTo((fleeDirection * 4) + transform.position);
+                        mover.UpdatePath((fleeDirection * 4) + transform.position);
 
                         yield return new WaitForSeconds(0.25f);
 
@@ -344,7 +352,12 @@ namespace Cyrcadian.UtilityAI
             mover.agent.isStopped = true;
 
             yield return new WaitForSeconds(.8f);
-            
+
+            foreach(var KeyValuePair in myBehaviorDictionary)
+            {
+                KeyValuePair.Value.DeleteTree();
+            }
+
             poofAnimator.CrossFade("PoofAnimation 1",0);
             poofParticle.Play();
             AudioManager.Instance.PlaySoundFX(poofSFX);
@@ -374,7 +387,7 @@ namespace Cyrcadian.UtilityAI
                     movingToRandomPoint = true;
 
                     // While still traveling a path, wait before deciding
-                    while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
+                    while(mover.IsMoving())
                     {
                         yield return new WaitForEndOfFrame();
                     }
@@ -391,7 +404,7 @@ namespace Cyrcadian.UtilityAI
                         yield break;
 
                     mover.IncreaseMoveSpeed(.1f);
-                    mover.MoveTo(target.position);
+                    mover.UpdatePath(target.position);
 
                     // If I have stamina, and they haven't gotten out of range
                     while( stats.currentStamina > 0 && awareness.VisibleCreatures.Contains(target) && target)
@@ -401,7 +414,7 @@ namespace Cyrcadian.UtilityAI
                         if(!target)
                             break;
 
-                        mover.MoveTo(target.position);
+                        mover.UpdatePath(target.position);
                     }
 
                     mover.ResetSpeed();

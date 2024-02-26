@@ -31,7 +31,10 @@ namespace Cyrcadian.UtilityAI.Actions
                 // DO NOT LET THIS MONOBEHAVIOUR INSTANCE STAY IN MEMORY
 
                 // Assume CreatureController is at the top of gameobject's hierarchy
-                thisCreature.gameObject.AddComponent<FindFoodTree>();
+                if(!thisCreature.myBehaviorDictionary.ContainsKey("FindFoodTree"))
+                    thisCreature.gameObject.AddComponent<FindFoodTree>();
+                else
+                    thisCreature.myBehaviorDictionary["FindFoodTree"].StartBehavior();
             }
 
 
@@ -41,7 +44,7 @@ namespace Cyrcadian.UtilityAI.Actions
             public FindFoodTree(CreatureController thisCreature)
             {
                 _myCreature = thisCreature;
-                
+                _myCreature.myBehaviorDictionary.TryAdd("FindFoodTree",this);
             }
 
             // Called on Start(), so make sure you initialize a the FindFoodTree with a creature.
@@ -65,8 +68,12 @@ namespace Cyrcadian.UtilityAI.Actions
                     new Sequence(new List<Node>
                     {
                         new CheckFoodIsNearby(thisCreature),
-                        new GoToFoodTask(this),
-                        new EatFoodTask(this)       // This destroys the monobehaviour and calls UponCompletedAction()
+                        // If food is nearby walk to it, then eat it.
+                        new Selector(new List<Node>
+                        {
+                            new GoToFoodTask(),         // StopBehavior() and calls UponCompletedAction() upon Success.
+                            new EatFoodTask()       // StopBehavior() and calls UponCompletedAction() upon success.
+                        }),                
                     }),
                     
                     //  No immediate food items on the ground, check for nearby sources of food
@@ -80,22 +87,25 @@ namespace Cyrcadian.UtilityAI.Actions
                         {
                             new Sequence(new List<Node>
                             {
-                                new WalkToFoodSourceTask(),
-                                // new Interact_With_Target_Task() // returns to the root success
-                            }),
+                                new CheckIfCreature(),
+                                thisCreature.creatureSpecies.Hunting_Behavior.Execute(thisCreature), // Execute() returns a new Selector node based on this Creature's hunting habits.
+                            }),      
 
                             new Sequence(new List<Node>
                             {
-                                thisCreature.creatureSpecies.Hunting_Behavior.Execute(thisCreature), // Execute() returns a new Selector node.
+                                // Check if they have a creature component? If so, HUNT them instead.
+                                new WalkToFoodSourceTask(),
+                                // new Interact_With_Target_Task() // returns to the root success                       INCOMPLETE NEED THIS NODE FOR NON-LIVING FOOD SOURCES
+                            }),
 
-                            }),                            
+                      
                         })
                        
                     
                     }),   
 
                     //  No food items or source found? Search for sources of our food.
-                    new SearchForFoodTask(thisCreature), // returns to root
+                    new RandomPatrolSearch(thisCreature),  // StopBehavior() and calls UponCompletedAction() upon success.
                 });
 
                 return root;
@@ -118,25 +128,35 @@ namespace Cyrcadian.UtilityAI.Actions
 
             public override NodeState Evaluate()
             {              
-                Assert.IsNotNull(parent);
-                Assert.IsNotNull(parent.parent);
+                                                    Assert.IsNotNull(parent);
+                                                    Assert.IsNotNull(parent.parent);
                 object t = GetData("NextMeal");
                 if(t == null)
-                {  Debug.Log(" Check for Food Items ");
+                {   //Debug.Log(" Check for Food Items ");
                     Transform nextMeal = null;
+                    List<Transform> considerationsForMeal = new();
                     foreach(Transform item in _myCreature.awareness.VisibleWorldItems)
                     {
                         if(!item)
                             continue;
 
-                        // If my food selection contains this item, make it my next meal and break. Looks for the first possible choice.
+                        // If my food selection contains this item, add it to my considerations for nextMeal.
                         if( _myCreature.creatureSpecies.GetFoodSelection().Contains( item.GetComponent<World_Item>().CheckFoodType()))
                         {
-                            nextMeal = item;
-                            break;
+                            considerationsForMeal.Add(item);
                         }
                     } 
-                    
+                    float score;
+                    float highestScore = -1;
+                    // Figure out the best option for a snack.
+                    foreach(Transform possibleSnack in considerationsForMeal)
+                    {
+                        score = possibleSnack.GetComponent<World_Item>().GetFoodValue();
+                        if(score > highestScore)
+                        {   highestScore = score;
+                            nextMeal = possibleSnack;}
+                    }
+                    // If I didn't find anything, fail check.
                     if(!nextMeal) 
                     {   state = NodeState.FAILURE;
                         return state;   }
@@ -170,33 +190,56 @@ namespace Cyrcadian.UtilityAI.Actions
                 
                 object t = GetData("Target");
                 if(t == null)
-                { Debug.Log("Checking for Food Sources ");
+                {   //Debug.Log("Checking for Food Sources ");
+                    //Debug.Log(myCreature.awareness.VisibleFoodSources.Count + " amount of creatures");
                     // If there are visible foodSources
                     if(myCreature.awareness.VisibleFoodSources.Count > 0)
-                    {
+                    {   //Debug.Log("I see some possible food sources!");
                         // Target the BEST option. Which is determined by a Utility System taking into consideration distance from me and value of their food item drops.
                         _target = myCreature.awareness.DetermineBestFoodSource();
 
-                       
+                        // We assert since VisibleFoodSources being greater than 1 implies a target will exist.
                         Assert.IsNotNull(_target);
-                        // Didn't find anything..?
-                        if(!_target)
-                        {
-                            state = NodeState.FAILURE;
-                            return state;
-                        }
 
                         parent.parent.SetData("Target", _target);
                         
                         state = NodeState.SUCCESS;
                         return state;
                     }
-
+                    // We didn't have any visible Food Sources
+                    state = NodeState.FAILURE;
+                    return state;
+                }
+                
+                // Target has died or doesn't exist.
+                if(!_target)
+                {
+                    ClearData("Target");
                     state = NodeState.FAILURE;
                     return state;
                 }
 
-                state = NodeState.SUCCESS;
+                // We already have a target, for now we will stick to it [LOCKED IN]
+                state = NodeState.RUNNING;
+                return state;
+            }
+        }
+
+        public class CheckIfCreature : Node
+        {
+            public override NodeState Evaluate()
+            {
+                object target = GetData("Target");
+                
+                var myTarget = (Transform)target;
+               // Debug.Log("Check my target if Creature :  target = " + myTarget );
+                if(myTarget.root.gameObject.layer == 10)
+                {
+                    state = NodeState.SUCCESS;
+                    return state;
+                }
+
+                state = NodeState.FAILURE;
                 return state;
             }
         }
@@ -204,30 +247,29 @@ namespace Cyrcadian.UtilityAI.Actions
 
 #region Tasks
         class GoToFoodTask : Node
-        {
-            MonoBehaviour _mono;
-            bool isAlreadyMoving = false;
+        {           
             CreatureController myCreature;
-            public GoToFoodTask(MonoBehaviour monoBehaviour)
-            {   _mono = monoBehaviour;  }
-
+            bool beganWalking = false;
+            
             public override NodeState Evaluate()
             {
-                Debug.Log(" Moving towards food ");
-                object t = GetData("NextMeal");
-                // Food is eaten, or not assigned?
-                if(t == null)
+                //Debug.Log(" Moving towards food ");
+                Transform nextMeal = (Transform)GetData("NextMeal");
+                // Food is eaten, or destroyed?
+                if(!nextMeal)
                 {
+                    ClearData("NextMeal");
+                    beganWalking = false;
                     state = NodeState.FAILURE;
                     return state;
                 }
 
-                if(!isAlreadyMoving)
+                // If my creature hadn't yet starting their path
+                if( !beganWalking)
                 {
-                    isAlreadyMoving = true;
+                    beganWalking = true;
                     myCreature = (CreatureController)GetData("MyCreature");
-                    Transform nextMeal = (Transform)GetData("NextMeal");
-                    myCreature.mover.MoveTo(nextMeal.position);
+                    myCreature.mover.UpdatePath(nextMeal.position);
 
                     state = NodeState.RUNNING;
                     return state;
@@ -235,7 +277,10 @@ namespace Cyrcadian.UtilityAI.Actions
 
                 if(myCreature.mover.IsAtDestination())
                 {
+                    beganWalking = false;
                     state = NodeState.SUCCESS;
+                    StopBehavior();
+                    myCreature.UponCompletedAction();
                     return state;
                 }
 
@@ -249,16 +294,13 @@ namespace Cyrcadian.UtilityAI.Actions
             private World_Item _foodStack;
             private Transform _foodTransform;
             private CreatureController myCreature;
-            bool isChewing = false;
-            bool isFinished = false;
-            MonoBehaviour _mono;
-
-            public EatFoodTask(MonoBehaviour mono)
-            { _mono = mono; }
+            bool beganChewing = false;
+            float _chewTime = 1f;
+            float timer;
 
             public override NodeState Evaluate()
             {
-                Debug.Log(" Eating Food Item ");
+                //Debug.Log(" Eating Food Item ");
                 object t = GetData("NextMeal");
                 // Food is eaten, or not assigned?
                 if(t == null)
@@ -266,43 +308,44 @@ namespace Cyrcadian.UtilityAI.Actions
                     state = NodeState.FAILURE;
                     return state;
                 }
+                _foodTransform = (Transform)t;
 
-                if(!isChewing)
+                if(!_foodTransform)
                 {
-                    _foodTransform = (Transform)GetData("NextMeal");
-                    _foodStack = _foodTransform.GetComponent<World_Item>();
-
-                    isChewing = true;
-                    myCreature = (CreatureController)GetData("MyCreature");
-                    myCreature.isEating = true;
-                    _mono.StartCoroutine(Wait(myCreature));
+                    state = NodeState.FAILURE;
+                    return state;
                 }
 
-                if(isFinished)
+                if(!beganChewing)
                 {
+                    
+                    _foodStack = _foodTransform.GetComponent<World_Item>();
+                    timer = _chewTime;
+                    beganChewing = true;
+                    myCreature = (CreatureController)GetData("MyCreature");
+                    myCreature.isEating = true;
+                    
+                }
+
+                if(timer > 0)
+                {
+                    beganChewing = false;
+
                     myCreature.GetComponent<HungerBar>().ChangeHunger(_foodStack.GetFoodValue());
                     myCreature.awareness.VisibleWorldItems.Remove(_foodTransform);
                     Destroy(_foodTransform.gameObject);
 
-                    // We found and ate food, destroy this MonoBehaviour                            // FINISHED
-                    ClearAllData();
+                    // We found and ate food, done.                          // FINISHED
+                    StopBehavior();
                     myCreature.UponCompletedAction();
-                    Destroy(_mono);
+                    state = NodeState.SUCCESS;
+                    return state;
                 }
 
                 state = NodeState.RUNNING;
                 return state;
             }   
 
-            IEnumerator Wait(CreatureController myCreature)
-            {    
-                while(myCreature.isEating)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-                myCreature.isEating = false;
-                isFinished = true;
-            } 
         }
 
 /*
@@ -358,13 +401,7 @@ namespace Cyrcadian.UtilityAI.Actions
             {
                 myCreature = (CreatureController)GetData("MyCreature");
                 
-                // If herbivore do NOT walk... Hunt instead
-                if(myCreature.creatureSpecies.Diet != Creature.DietarySystem.Herbivore)
-                {
-                    state = NodeState.FAILURE;
-                    return state;
-                }
-                Debug.Log("(Herbivore) Found food source , moving towards it  ");
+                //Debug.Log("(static source) Found food source , moving towards it  ");
                 object t = GetData("Target");
                 // Food is eaten, or not assigned?
                 if(t == null)
@@ -378,7 +415,7 @@ namespace Cyrcadian.UtilityAI.Actions
                     isAlreadyMoving = true;
                     
                     Transform target = (Transform)t;
-                    myCreature.mover.MoveTo(target.position);
+                    myCreature.mover.UpdatePath(target.position);
 
                     state = NodeState.RUNNING;
                     return state;
@@ -397,37 +434,45 @@ namespace Cyrcadian.UtilityAI.Actions
         }
 
 // Revisit... I want to break behavior when needed, like being attacked
-    class SearchForFoodTask : Node
+    class RandomPatrolSearch : Node
     {
-        bool isSearching = false;
- 
+        bool isWaiting = false;
+        float _waitCounter = 0;
+
         CreatureController myCreature;
 
-        public SearchForFoodTask(CreatureController thisCreature)
+        public RandomPatrolSearch(CreatureController thisCreature)
         {   
             myCreature = thisCreature;
         }
 
         public override NodeState Evaluate()
         {
-            if(isSearching)
-            {
-                object t = GetData("Target");
-                if(t != null)
-                {
-                    isSearching = false;
-                    state = NodeState.SUCCESS;
-                    return state;
-                }
 
-            }
-            else
-            {Debug.Log(" Searching ");
-                object t = GetData("Target");
-                if(t == null)
-                {
-                    isSearching = true;
+            // If I am still waiting to randomly roam again
+            if (isWaiting)
+            {
+                _waitCounter += Time.deltaTime;
+                // Stand still after roaming for (low number, high number) seconds
+                if (_waitCounter >= UnityEngine.Random.Range(.8f , 1.2f))
+                {   
+                    isWaiting = false;
                     myCreature.DoRandomRoam();
+                }
+            }
+            // I finished waiting, I will now randomly roam.
+            else
+            {
+                // Actively walking and searching / sniffing around
+                if(myCreature.mover.IsMoving())
+                {
+                    // I am already moving...
+                    // Could do custom "Searching" animation logic later by calling myCreature.GetComponentInChildren<Creature_Animation>().SearchingAndMoving();
+                }
+                else
+                {
+                    _waitCounter = 0f;
+                    isWaiting = true;
                 }
             }         
 
