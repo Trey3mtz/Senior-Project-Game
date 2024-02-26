@@ -3,11 +3,9 @@ using Cyrcadian.Creatures;
 using Cyrcadian.WorldTime;
 using Cyrcadian.Items;
 using UnityEngine;
-using DG.Tweening;
-using Unity.VisualScripting;
-using NavMeshPlus.Extensions;
-using UnityEditor.Callbacks;
-
+using System.Collections.Generic;
+using Cyrcadian.BehaviorTrees;
+using TMPro;
 
 namespace Cyrcadian.UtilityAI
 {
@@ -19,8 +17,12 @@ namespace Cyrcadian.UtilityAI
         public AIBrain aiBrain { get; set;}
         public Action[] actionsAvailable;
 
+        // Can manage each Behavior tree of a creature.
+        public Dictionary<string, CreatureBehaviorTree> myBehaviorDictionary;
+
         public Creature_Stats stats;
         public Creature creatureSpecies;
+        public Creature.BehaviorType behavior;
         Spawnable_Loot lootTable;
 
         // Keeps track of nearby Creatures, and Items so far.
@@ -42,18 +44,19 @@ namespace Cyrcadian.UtilityAI
         
 
         public enum AlertState{
-            Asleep,
-            Awake,
+            Unconcious,
+            Calm,
             Alert
         }
 
         public AlertState alertness;
-        public bool isEating;
+        public bool isEating = false;
 
         // Start is called before the first frame update
 
         void Awake()
         {
+            myBehaviorDictionary = new();
             mover = GetComponent<MoveController>();
             aiBrain = GetComponent<AIBrain>();
             awareness = GetComponentInChildren<Awareness>();
@@ -70,9 +73,10 @@ namespace Cyrcadian.UtilityAI
 
         void Start()
         {
-            stats = creatureSpecies.Stats;
+            awarenessRange.enabled = true;
+            awareness.SetCreature(this);
             lootTable.spawnableLoot = creatureSpecies.LootTable;
-            alertness = AlertState.Awake;
+            alertness = AlertState.Calm;
             myShadow = transform.Find("Body").Find("Shadow");
             DayCycle  = FindAnyObjectByType<Day_Cycle>();
         }
@@ -86,6 +90,7 @@ namespace Cyrcadian.UtilityAI
 
             if(aiBrain.isFinishedDeciding)
             {
+                //Debug.Log(" next action is " + aiBrain.bestAction.name + " with score : " + aiBrain.bestAction.score + " from creature " + transform.name);
                 aiBrain.isFinishedDeciding = false;
                 aiBrain.bestAction.Execute(this);
             }
@@ -94,7 +99,7 @@ namespace Cyrcadian.UtilityAI
             stats.currentHP = health.CurrentHP();
             stats.currentHunger = hungerBar.CurrentHunger();
 
-            if(health.wasRecentlyAttacked)
+            if(health.WasHit())
                 alertness = AlertState.Alert;
 
 
@@ -104,7 +109,7 @@ namespace Cyrcadian.UtilityAI
 
         // Upon completing an Action, choose the next best action from all available actions
         public void UponCompletedAction()
-        {    aiBrain.ChooseBestAction(actionsAvailable);    }
+        {   aiBrain.ChooseBestAction(actionsAvailable);    }
         
     
 
@@ -116,61 +121,59 @@ namespace Cyrcadian.UtilityAI
         */
 
         public void DoIdle(float time)
-        {   StartCoroutine(IdleCoroutine(time));     }
+        {   StartCoroutine(IdleCoroutine(time));    }
 
-        IEnumerator IdleCoroutine(float time)
-        {   
-            float counter = time;
-            while(counter > 0 && alertness != AlertState.Alert)
-            {
-                yield return new WaitForSeconds(2f);
-                
-                stats.currentStamina += 1;
-                if(stats.currentStamina > stats.staminaPool)
-                    stats.currentStamina = stats.staminaPool;
+                IEnumerator IdleCoroutine(float time)
+                {   
+                    float counter = time;
+                    float timeSpentIdle = 0; 
 
-                counter--;
-            }
-            UponCompletedAction();
-        }
+                    while(counter > 0 && alertness != AlertState.Alert)
+                    {
+                        yield return new WaitForEndOfFrame();
 
-                public void DoGraze()
-                {   StartCoroutine(GrazeCoroutine());     }
+                        timeSpentIdle += Time.deltaTime;
+                        counter -= Time.deltaTime;
+                    }
+                        
+                    // Increases stamina by the time for every whole second I was able to spend in Idle.
+                    stats.currentStamina += Mathf.FloorToInt(timeSpentIdle);
+                    Mathf.Clamp(stats.currentStamina, 0, stats.staminaPool);
+
+                    UponCompletedAction();
+                }
+
+        public void DoGraze()
+        {   StartCoroutine(GrazeCoroutine());   }
 
                 IEnumerator GrazeCoroutine()
                 {
+                    //Current: Move to random spot and eat there.
+                    //Future: Pick a random point, and validate it (make sure I can walk there and it's a grass tile)
+                    //        If point isn't valid, try check another spot(repeat until found spot). Once a valid point is found move there and then eat grass.
+
                     DoRandomRoam();
 
-                    while(mover.agent.velocity.sqrMagnitude != 0)
+                    // BUG HERE : WILL GET STUCK BECAUSE THEY AREN'T MOVING AND REMAINING DISTANCE NEVER GOES BELOW STOPPING DISTANCE
+                    while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
                     {
                         yield return new WaitForEndOfFrame();
                     }
 
-                    // Grass eating holds a static food value of 5 for now
-                    DoEat(1f, 5);
+                    // Grass eating holds a static food value of 4 for now.
+                    isEating = true;
+                    yield return new WaitForSeconds(2);
+                    hungerBar.ChangeHunger(4);
+                    isEating = false;
 
                     yield return new WaitForEndOfFrame();
                     
                     UponCompletedAction();
-                }
-
-        
-        public void DoEat(float time, int foodValue)
-        {   StartCoroutine(EatCoroutine(time, foodValue));     }
-
-        IEnumerator EatCoroutine(float time, int foodValue)
-        {
-            isEating = true;
-            yield return new WaitForSeconds(time);
-            hungerBar.ChangeHunger(foodValue);
-            isEating = false;
-
-            UponCompletedAction();
         }
 
 
-                public void DoAlert()
-                {   StartCoroutine(AlertCoroutine());}
+        public void DoAlert()
+        {   StartCoroutine(AlertCoroutine());   }
 
                 IEnumerator AlertCoroutine()
                 {  
@@ -186,45 +189,30 @@ namespace Cyrcadian.UtilityAI
                 }
 
 
-        public void DoRandomRoam()
-        {   StartCoroutine(RandomRoam());   }
-
-        IEnumerator RandomRoam()
-        {
-            mover.MoveToRandomPoint(awarenessRange.bounds.extents.x * 0.5f);
-            
-            // While still traveling a path, wait before deciding
-            while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
-            UponCompletedAction();
-        }
 
 
-                public void DoSleep()
-                {    StartCoroutine(SleepCoroutine());    }
+        public void DoSleep()
+        {   StartCoroutine(SleepCoroutine());   }
                 
                 IEnumerator SleepCoroutine()
-                {       
+                {
 
-                    alertness = AlertState.Asleep;
+                    alertness = AlertState.Unconcious;
                     sleepParticle.Play();
                     awarenessRange.enabled = false;
                     
                     switch(creatureSpecies.CircadianRhythm) 
                     {
                         case Creature.CyrcadianRhythm.Nocturnal:
-                            while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;   }
                             break;
                         case Creature.CyrcadianRhythm.Diurnal:
-                            while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Crepuscular:
-                            while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Asleep)
+                            while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Unconcious)
                             {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Cathemeral:
@@ -234,8 +222,8 @@ namespace Cyrcadian.UtilityAI
                             break;
                     }
                    
-                    if(alertness == AlertState.Asleep)
-                        alertness = AlertState.Awake;
+                    if(alertness == AlertState.Unconcious)
+                        alertness = AlertState.Calm;
 
                     stats.currentStamina = stats.staminaPool;
                     sleepParticle.Stop();
@@ -244,78 +232,118 @@ namespace Cyrcadian.UtilityAI
                     UponCompletedAction();
                 }
 
+        // Check immediate awareness for a creature to hunt, if none, move to a random point and check along that path. 
+        // If found target, chase them and until they are taken down. If no target still, complete the action of Hunting.
+        public void DoHunt()
+        {    StartCoroutine(HuntCoroutine());    }
 
-        public void DoFindFood()
-        {    StartCoroutine(FindFoodCoroutine(3));    }
-
-        IEnumerator FindFoodCoroutine(float time)
-        {
-            float counter = time;
-            while(counter > 0)
-            {
-                yield return new WaitForSeconds(1f);
-                counter--;
-            }
-            UponCompletedAction();
-        }
-
-
-                public void DoChase()
-                {   StartCoroutine(ChaseCoroutine());    }
-
-                IEnumerator ChaseCoroutine()
+                IEnumerator HuntCoroutine()
                 {
-                    mover.IncreaseMoveSpeed(.2f);
+                    Transform huntingTarget;
+                    huntingTarget = awareness.FindTastiestCreature(this);
 
-                    while(mover.agent.hasPath)
-                    {
-                        yield return new WaitForEndOfFrame();
-                        mover.MoveTo(mover.agent.nextPosition);
+                    if(!huntingTarget)
+                    { Debug.Log("Searching for creature to hunt");
+                        DoRandomRoam();
+                        // Wait till I reach a random point in roaming, or find a target to hunt before continuing.
+                        while(movingToRandomPoint && !awareness.FindTastiestCreature(this, out huntingTarget))
+                        { yield return new WaitForEndOfFrame(); }
+                        
+                        DoWait(Random.Range(0.8f, 2f));
+   
+                        while(isWaiting)
+                        { yield return new WaitForEndOfFrame(); }
                     }
 
-                    mover.ResetSpeed();
+                    // If found, chase that target
+                    if(huntingTarget)
+                    {  
+                        DoChase(huntingTarget);
+                        while(huntingTarget && stats.currentStamina > 0)
+                        {
+                            yield return new WaitForEndOfFrame();
+                            if(!huntingTarget)
+                                break;
+
+                            // Check first if an attack exists for this creature
+                            if(creatureSpecies.ListOfPossibleAttacks.Count != 0 )
+                            {// If I was able to attempt an attack, reduce stamina
+                                if(creatureSpecies.ListOfPossibleAttacks.Find(x => x.UniqueName.Contains("Pounce")).TryAttacking(this, huntingTarget))
+                                    stats.currentStamina -= 2;
+                            }
+                        }    
+
+                        awareness.VisibleCreatures.Remove(huntingTarget);            
+                    }
+
+                    
                     UponCompletedAction();
                 }
+
+
+
 
 
         public void DoFlee()
         {   StartCoroutine(FleeCoroutine());    }
 
-        IEnumerator FleeCoroutine()
-        {
-            if(stats.currentStamina > stats.staminaPool * 0.5f)
-            {
-                mover.IncreaseMoveSpeed(.1f);
-                mover.IncreaseAcceleration(.1f);
-            }
+                IEnumerator FleeCoroutine()
+                {
+                    if(stats.currentStamina > stats.staminaPool * 0.5f)
+                    {
+                        mover.IncreaseMoveSpeed(.1f);
+                        mover.IncreaseAcceleration(.1f);
+                    }
 
-            while(awareness.IsThreatNearby())
-            {
-                Vector3 fleeDirection = (transform.position - awareness.NearestThreat().position).normalized;
-                mover.MoveTo((fleeDirection * 4) + transform.position);
+                    Vector3 fleeDirection;
+                    while(awareness.IsThreatNearby())
+                    {
+                        fleeDirection = (transform.position - awareness.FindNearestThreat().position).normalized;
+                        mover.UpdatePath((fleeDirection * 4) + transform.position);
 
-                yield return new WaitForSeconds(0.25f);
+                        yield return new WaitForSeconds(0.25f);
 
-                if(stats.currentStamina > 0)
-                    stats.currentStamina -= 2;
-                else
-                    stats.currentStamina = 0;
+                        if(stats.currentStamina > 0)
+                            stats.currentStamina -= 2;
+                        else
+                            stats.currentStamina = 0;
 
-                mover.DrainingStamina(this);
-            }
+                        mover.DrainingStamina(this);
+                    }
 
-            // By here we have successfully flee-d from danger
-            alertness = AlertState.Awake;
-            mover.agent.ResetPath();
-            mover.ResetSpeed();
-            mover.ResetAcceleration();
-            UponCompletedAction();
-        }
+                    // By here we have successfully flee-d from danger
+                    alertness = AlertState.Calm;
+                    mover.agent.ResetPath();
+                    mover.ResetSpeed();
+                    mover.ResetAcceleration();
+                    UponCompletedAction();
+                }
 
 
+        public void DoCalmDown()
+                {   StartCoroutine(CalmDownCoroutine());    }
+
+                IEnumerator CalmDownCoroutine()
+                {
+                    yield return new WaitForEndOfFrame();
+                    if(!awareness.IsThreatNearby())
+                        alertness = AlertState.Calm;
+                    
+                    UponCompletedAction();
+                }
+
+
+
+                
         #endregion
 
-
+        #region HelperMethods
+        /*****************************************************************************************************************
+            This region contains helper methods that will only ever be called from inside this class
+            For example, dying is something handled only internally in this script.
+            Transitioning phases between actions perhaps, like awaking up, would be another example as its implied to happen with anything that can sleep.
+            Likely will use less Coroutines in this region to handle logic so it can happen sequentially.
+        */
 
         public bool isDying = false;
         IEnumerator DEATH()
@@ -324,7 +352,12 @@ namespace Cyrcadian.UtilityAI
             mover.agent.isStopped = true;
 
             yield return new WaitForSeconds(.8f);
-            
+
+            foreach(var KeyValuePair in myBehaviorDictionary)
+            {
+                KeyValuePair.Value.DeleteTree();
+            }
+
             poofAnimator.CrossFade("PoofAnimation 1",0);
             poofParticle.Play();
             AudioManager.Instance.PlaySoundFX(poofSFX);
@@ -338,6 +371,72 @@ namespace Cyrcadian.UtilityAI
 
             Destroy(transform.root.gameObject);
         }
+
+
+
+        public void DoRandomRoam()
+        {   if(!movingToRandomPoint)StartCoroutine(RandomRoam());   }
+
+                bool movingToRandomPoint = false;
+                IEnumerator RandomRoam()
+                {
+                    if(movingToRandomPoint)
+                        yield break;
+
+                    mover.MoveToRandomPoint(awarenessRange.bounds.extents.x * 0.5f);
+                    movingToRandomPoint = true;
+
+                    // While still traveling a path, wait before deciding
+                    while(mover.IsMoving())
+                    {
+                        yield return new WaitForEndOfFrame();
+                    }
+
+                    movingToRandomPoint = false;
+                }
+
+        public void DoChase(Transform transform)
+        {   StartCoroutine(ChaseCoroutine(transform));    }
+
+                IEnumerator ChaseCoroutine(Transform target)
+                {
+                    if(!target)
+                        yield break;
+
+                    mover.IncreaseMoveSpeed(.1f);
+                    mover.UpdatePath(target.position);
+
+                    // If I have stamina, and they haven't gotten out of range
+                    while( stats.currentStamina > 0 && awareness.VisibleCreatures.Contains(target) && target)
+                    {
+                        // Increase move speed as they get closer?
+                        yield return new WaitForEndOfFrame();
+                        if(!target)
+                            break;
+
+                        mover.UpdatePath(target.position);
+                    }
+
+                    mover.ResetSpeed();
+                }        
+
+        bool isWaiting = false;
+        public void DoWait(float time)
+        {   StartCoroutine(WaitCoroutine(time));    }
+
+                IEnumerator WaitCoroutine(float time)
+                {
+                    isWaiting = true;
+                    float counter = time;
+
+                    while(counter > 0 && alertness != AlertState.Alert)
+                    {
+                        yield return new WaitForEndOfFrame();
+                        counter -= Time.deltaTime;
+                    }
+                    isWaiting = false;
+                }
+        #endregion
 
     }
 }
