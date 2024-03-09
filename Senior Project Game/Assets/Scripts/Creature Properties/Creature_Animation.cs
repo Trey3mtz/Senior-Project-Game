@@ -60,7 +60,14 @@ namespace Cyrcadian.Creatures
             if(isAnimationLocked)
                 return;
 
-            if(rb.velocity.sqrMagnitude == 0)
+            if(mover.IsMoving())
+            {   
+                if(math.abs(rb.velocity.sqrMagnitude) > 0.05f)
+                {
+                    animatorControl.OrientateBody(mover.moveDirection.x);
+                    animatorControl.CrossFade("Move");  }
+            }
+            else
             {   
                 if(creature.alertness == CreatureController.AlertState.Unconcious)
                     animatorControl.CrossFade("Sleep");
@@ -69,13 +76,7 @@ namespace Cyrcadian.Creatures
                 else
                     animatorControl.CrossFade("Idle");
             }
-            else if(mover.IsMoving())
-            {   
-                if(math.abs(rb.velocity.sqrMagnitude) > 0.05f)
-                {
-                    animatorControl.OrientateBody(mover.moveDirection.x);
-                    animatorControl.CrossFade("Move");  }
-            }
+
 
         }
 

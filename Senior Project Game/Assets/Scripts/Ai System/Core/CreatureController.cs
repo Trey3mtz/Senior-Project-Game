@@ -291,7 +291,6 @@ namespace Cyrcadian.UtilityAI
                 {
                     if(stats.currentStamina > stats.staminaPool * 0.5f)
                     {
-                        mover.IncreaseMoveSpeed(.1f);
                         mover.IncreaseAcceleration(.1f);
                     }
 
@@ -314,7 +313,6 @@ namespace Cyrcadian.UtilityAI
                     // By here we have successfully flee-d from danger
                     alertness = AlertState.Calm;
                     mover.agent.ResetPath();
-                    mover.ResetSpeed();
                     mover.ResetAcceleration();
                     UponCompletedAction();
                 }
@@ -403,7 +401,7 @@ namespace Cyrcadian.UtilityAI
                     if(!target)
                         yield break;
 
-                    mover.IncreaseMoveSpeed(.1f);
+                    mover.IncreaseAcceleration(.1f);
                     mover.UpdatePath(target.position);
 
                     // If I have stamina, and they haven't gotten out of range
@@ -417,7 +415,7 @@ namespace Cyrcadian.UtilityAI
                         mover.UpdatePath(target.position);
                     }
 
-                    mover.ResetSpeed();
+                    mover.ResetAcceleration();
                 }        
 
         bool isWaiting = false;

@@ -15,7 +15,7 @@ namespace Cyrcadian.AttackSystem
         public override void DoAttack(MonoBehaviour thisMonobehaviour, Transform target)
         {
             Vector2 attackDirection = ( target.position - thisMonobehaviour.transform.position).normalized;
-            thisMonobehaviour.GetComponent<MoveController>().Dash(attackDirection, 4, Cooldown);
+            thisMonobehaviour.GetComponent<MoveController>().Dash(attackDirection, Cooldown);
             thisMonobehaviour.GetComponentInChildren<Creature_Animation>().Attack();
 
             GameObject myAttack = thisMonobehaviour.transform.Find("Body").Find("Mouth").Find("Pounce").gameObject;

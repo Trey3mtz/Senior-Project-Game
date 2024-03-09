@@ -162,7 +162,7 @@ namespace Cyrcadian.UtilityAI.Actions
                         return state;   }
                     else   
                     {
-                        parent.parent.SetData("NextMeal", nextMeal);
+                        SetRootData("NextMeal", nextMeal);
                         state = NodeState.SUCCESS;
                         return state;
 
@@ -198,6 +198,12 @@ namespace Cyrcadian.UtilityAI.Actions
                         // Target the BEST option. Which is determined by a Utility System taking into consideration distance from me and value of their food item drops.
                         _target = myCreature.awareness.DetermineBestFoodSource();
 
+                        if(!_target)
+                        {
+                            state = NodeState.FAILURE;
+                            return state;
+                        }
+
                         // We assert since VisibleFoodSources being greater than 1 implies a target will exist.
                         Assert.IsNotNull(_target);
 
@@ -232,6 +238,13 @@ namespace Cyrcadian.UtilityAI.Actions
                 object target = GetData("Target");
                 
                 var myTarget = (Transform)target;
+
+                if(!myTarget)
+                {
+                    state = NodeState.FAILURE;
+                    return state;
+                }
+
                // Debug.Log("Check my target if Creature :  target = " + myTarget );
                 if(myTarget.root.gameObject.layer == 10)
                 {
@@ -275,7 +288,7 @@ namespace Cyrcadian.UtilityAI.Actions
                     return state;
                 }
 
-                if(myCreature.mover.IsAtDestination())
+                if(!myCreature.mover.UpdatePath())
                 {
                     beganWalking = false;
                     state = NodeState.SUCCESS;
@@ -305,6 +318,8 @@ namespace Cyrcadian.UtilityAI.Actions
                 // Food is eaten, or not assigned?
                 if(t == null)
                 {
+                    StopBehavior();
+                    myCreature.UponCompletedAction();
                     state = NodeState.FAILURE;
                     return state;
                 }
@@ -312,34 +327,43 @@ namespace Cyrcadian.UtilityAI.Actions
 
                 if(!_foodTransform)
                 {
+                    StopBehavior();
+                    myCreature.UponCompletedAction();
                     state = NodeState.FAILURE;
                     return state;
                 }
 
-                if(!beganChewing)
+                _foodStack = _foodTransform.GetComponent<World_Item>();
+                myCreature = (CreatureController)GetData("MyCreature");
+
+                // Start chewing
+                if(timer <= 0 && !beganChewing)
                 {
-                    
-                    _foodStack = _foodTransform.GetComponent<World_Item>();
                     timer = _chewTime;
                     beganChewing = true;
-                    myCreature = (CreatureController)GetData("MyCreature");
                     myCreature.isEating = true;
-                    
                 }
 
+                // Animation timer countdown
                 if(timer > 0)
                 {
-                    beganChewing = false;
+                    timer -= Time.deltaTime;
+                }
 
+                // Finished animation
+                if(timer <= 0 && beganChewing)
+                {
                     myCreature.GetComponent<HungerBar>().ChangeHunger(_foodStack.GetFoodValue());
                     myCreature.awareness.VisibleWorldItems.Remove(_foodTransform);
                     Destroy(_foodTransform.gameObject);
 
-                    // We found and ate food, done.                          // FINISHED
+                    beganChewing = false;
+
+                    
                     StopBehavior();
                     myCreature.UponCompletedAction();
                     state = NodeState.SUCCESS;
-                    return state;
+                    return state;                    
                 }
 
                 state = NodeState.RUNNING;
@@ -422,7 +446,7 @@ namespace Cyrcadian.UtilityAI.Actions
                 }
 
 
-                if(myCreature.mover.IsAtDestination())
+                if(!myCreature.mover.UpdatePath())
                 {
                     state = NodeState.SUCCESS;
                     return state;

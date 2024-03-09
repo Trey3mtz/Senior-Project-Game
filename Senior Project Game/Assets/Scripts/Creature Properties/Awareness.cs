@@ -327,6 +327,10 @@ namespace Cyrcadian.Creatures
             Transform highestScoringChoice = null;
             float highestFoodScore = GetHighestRawFoodScore();
 
+            // If there is nothing in my list
+            if(highestFinalScore == -1)
+                return null;
+
             foreach(Transform foodSource in VisibleFoodSources)
             {   
                 if(ScoreFoodSource(foodSource, highestFoodScore, out float score) > highestFinalScore)
@@ -380,11 +384,16 @@ namespace Cyrcadian.Creatures
         {
             float highestScore = 0;
             float score;
+
+            if(VisibleFoodSources.Count == 1 && !VisibleFoodSources[0])
+                return -1;
+
             foreach(Transform foodSource in VisibleFoodSources)
             {
                 if(!foodSource)
-                {
+                {   
                     VisibleFoodSources.Remove(foodSource);
+                    VisibleFoodSources.TrimExcess();
                     continue;
                 }
 
