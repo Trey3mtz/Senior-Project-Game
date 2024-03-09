@@ -48,7 +48,7 @@ namespace Cyrcadian.UtilityAI
         [Tooltip("This indicates what will block your vision")] 
         [SerializeField] LayerMask layerMask;
 
-        private float originalSpeed, originalAcceleration;
+        private float originalAcceleration;
         
 
         void Awake()
@@ -61,21 +61,11 @@ namespace Cyrcadian.UtilityAI
         
         void Start()
         {
-            originalSpeed = agent.speed;
-            originalAcceleration = agent.acceleration;   
+            originalAcceleration = ACCELERATION;
 
             path = new NavMeshPath();
-            StartCoroutine(slowdebuglog());
         }
    
-    IEnumerator slowdebuglog()
-    {
-        while(true)
-        {
-            yield return new WaitForSecondsRealtime(.25f);
-            Debug.Log("Path length : " + path.corners.Length);
-        }
-    }
     
         void FixedUpdate()
         {    // Using Euler's number for fun. Not significant.                                           
@@ -101,7 +91,6 @@ namespace Cyrcadian.UtilityAI
             {
                 Vector2 nextWaypoint = path.corners[stepIndex];
                 moveDirection = (nextWaypoint - (Vector2)transform.position).normalized;             
-                
 
 
                 // draw path in scene for debugging
@@ -138,9 +127,6 @@ namespace Cyrcadian.UtilityAI
 
         // called to clear current path and stop ongoing movement
         public void StopPathMove() { path.ClearCorners(); }
-
-
-
       
         public bool IsMoving()
         {
@@ -153,59 +139,23 @@ namespace Cyrcadian.UtilityAI
 
             // Speed/Acceleration changes value by a factor of itself, from a max of double it's original values or making them zero.
             // Will only accept values 0 through 1, and clamping the rest.
-            public void IncreaseMoveSpeed(float targetSpeed)
-            {
-                targetSpeed = originalSpeed * (1 + Mathf.Clamp01(targetSpeed));
-                StartCoroutine(ChangeSpeed(targetSpeed, 0.5f));
-            }
-
-            IEnumerator ChangeSpeed(float targetSpeed, float timeDuration)
-            {
-                float elapsedTime = timeDuration;
-                float startingSpeed = agent.speed;
-
-                // Smoothly change speed based on floats and ratios
-                while(elapsedTime > 0)
-                {
-                    yield return new WaitForEndOfFrame();
-
-                    float ratio = Mathf.Clamp01(1 - (elapsedTime / timeDuration));
-                    ratio = responseCurve.Evaluate(ratio);
-                    
-                    agent.speed = Mathf.Lerp(startingSpeed, targetSpeed, ratio);
-             
-                    elapsedTime -= Time.deltaTime;
-                }
-                // Snap remainder of the speed straight to the target.
-                agent.speed = targetSpeed;
-            }
 
             public void IncreaseAcceleration(float addedAcceleration)
-            {Debug.Log(" WARNING WARNING WARNING ");
+            {
                 addedAcceleration = originalAcceleration * (1 + Mathf.Clamp01(addedAcceleration));
-                agent.acceleration = addedAcceleration;
+                ACCELERATION = addedAcceleration;
             }
 
-                public void DecreaseMoveSpeed(float targetSpeed)
-                {Debug.Log(" WARNING WARNING WARNING ");
-                    targetSpeed = agent.speed * (1 -  Mathf.Clamp01(targetSpeed));
-                    StartCoroutine(ChangeSpeed(targetSpeed, 0.5f));
+                public void DecreaseAcceleration(float loweredAcceleration)
+                {
+                    loweredAcceleration = originalAcceleration * (1 - Mathf.Clamp01(loweredAcceleration));
+                    ACCELERATION = loweredAcceleration;
                 }
 
-                public void DecreaseAcceleration(float loweredAcceleration)
-                {Debug.Log(" WARNING WARNING WARNING ");
-                    loweredAcceleration = originalAcceleration * (1 - Mathf.Clamp01(loweredAcceleration));
-                    agent.acceleration = loweredAcceleration;
-                }
-                    // The last methods of changing speed/acceleration, will reset to their original values
-                    public void ResetSpeed()
-                    {Debug.Log(" WARNING WARNING WARNING ");
-                        agent.speed = originalSpeed;
-                    }
 
                     public void ResetAcceleration()
-                    {Debug.Log(" WARNING WARNING WARNING ");
-                        agent.acceleration = originalAcceleration;
+                    {
+                        ACCELERATION = originalAcceleration;
                     }
        
         public bool CanSeeTarget()
@@ -220,19 +170,10 @@ namespace Cyrcadian.UtilityAI
         {    StartCoroutine(PauseMovement(value));    }
 
         IEnumerator PauseMovement(float value)
-        {Debug.Log(" WARNING WARNING WARNING ");
-            agent.isStopped = true;
+        {
+            canMove = true;
             yield return new WaitForSeconds(value);
-            agent.isStopped = false;
-        }
-
-        public void ResetPath()
-        { Debug.Log(" WARNING WARNING WARNING ");   agent.ResetPath();    }
-
-        [BurstCompile]
-        public bool IsAtDestination()
-        {Debug.Log(" WARNING WARNING WARNING ");
-            return agent.remainingDistance <= agent.stoppingDistance;
+            canMove = false;
         }
  
         [BurstCompile]
@@ -276,24 +217,22 @@ namespace Cyrcadian.UtilityAI
             if(thisCreature.stats.currentStamina > thisCreature.stats.staminaPool * 0.5f || thisCreature.stats.currentStamina < thisCreature.stats.staminaPool * 0.1f)
                 return false;
             
-            DecreaseMoveSpeed(thisCreature.stats.currentStamina / (thisCreature.stats.staminaPool * 0.1f));
+            DecreaseAcceleration(thisCreature.stats.currentStamina / (thisCreature.stats.staminaPool * 0.1f));
 
             return true;
         }
 
 
         //private Vector3 dashDestination;
-        [SerializeField] float dashSpeedFactor = 2;
+        [SerializeField] float dashForce = 15;
         private bool canDash = true;
 
         [BurstCompile]
-        public void Dash(Vector3 dashDirection, float dashDistance, float dashCooldown)
+        public void Dash(Vector3 dashDirection, float dashCooldown)
         {
             if (canDash)
             {
-                //dashDestination = transform.position + dashDirection.normalized * dashDistance;
-                //agent.velocity = agent.velocity * dashSpeedFactor;
-                 rb.AddForce(dashDirection * dashDistance *dashSpeedFactor);
+                rb.AddForce(dashDirection  * dashForce,  ForceMode2D.Impulse);
                 canDash = false;
                 StartCoroutine(StartDashCooldown(dashCooldown));
             }
