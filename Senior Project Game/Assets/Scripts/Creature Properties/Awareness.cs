@@ -328,7 +328,7 @@ namespace Cyrcadian.Creatures
             float highestFoodScore = GetHighestRawFoodScore();
 
             // If there is nothing in my list
-            if(highestFinalScore == -1)
+            if(highestFoodScore == -1)
                 return null;
 
             foreach(Transform foodSource in VisibleFoodSources)
@@ -340,7 +340,7 @@ namespace Cyrcadian.Creatures
                 }
                 Debug.Log(transform.root.name + " saw "+ foodSource.name + " with score of " + score);
             }
-        
+
             return highestScoringChoice;
         }
 
