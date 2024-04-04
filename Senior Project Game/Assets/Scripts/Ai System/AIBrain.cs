@@ -53,7 +53,7 @@ namespace Cyrcadian.UtilityAI
                     score = actionsAvailable[i].score;
                 }
             }
-            //Debug.Log("Next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " from creature " + transform);
+            Debug.Log("Next action is " + actionsAvailable[nextBestActionIndex].name + " with score : " +actionsAvailable[nextBestActionIndex].score + " from creature " + transform);
             bestAction = actionsAvailable[nextBestActionIndex];
             isFinishedDeciding = true;
         }

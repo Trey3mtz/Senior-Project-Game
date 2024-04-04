@@ -132,7 +132,7 @@ namespace Cyrcadian.UtilityAI.Actions
                                                     Assert.IsNotNull(parent.parent);
                 object t = GetData("NextMeal");
                 if(t == null)
-                {   Debug.Log(" Check for Food Items ");
+                {   //Debug.Log(" Check for Food Items ");
                     Transform nextMeal = null;
                     List<Transform> considerationsForMeal = new();
 
@@ -140,8 +140,6 @@ namespace Cyrcadian.UtilityAI.Actions
                     {   
                         if(!item)
                             continue;
-                        
-                        Debug.Log(" I see an item : " + item.GetComponent<World_Item>().GetItem());
 
                         // If my food selection contains this item, add it to my considerations for nextMeal.
                         if( _myCreature.creatureSpecies.GetFoodSelection().Contains( item.GetComponent<World_Item>().CheckFoodType()))
@@ -165,7 +163,7 @@ namespace Cyrcadian.UtilityAI.Actions
                     
                     // If I didn't find anything, fail check.
                     if(!nextMeal) 
-                    {   Debug.Log("Didn't find food item");
+                    {   //Debug.Log("Didn't find food item");
                         state = NodeState.FAILURE;
                         return state;   
                     }
@@ -175,7 +173,7 @@ namespace Cyrcadian.UtilityAI.Actions
                     }
                 }
 
-                Debug.Log("I have found an edible item");
+                //Debug.Log("I have found an edible item");
                 state = NodeState.SUCCESS;
                 return state;
             }
@@ -197,8 +195,7 @@ namespace Cyrcadian.UtilityAI.Actions
                 
                 object t = GetData("Target");
                 if(t == null)
-                {   Debug.Log("Checking for Food Sources ");
-                    //Debug.Log(myCreature.awareness.VisibleFoodSources.Count + " amount of creatures");
+                {
                     // If there are visible foodSources
                     if(myCreature.awareness.VisibleFoodSources.Count > 0)
                     {   Debug.Log("I see some possible food sources!");
@@ -302,7 +299,7 @@ namespace Cyrcadian.UtilityAI.Actions
 
                 if(Vector3.Distance(nextMeal.position, myCreature.gameObject.transform.position) > 0.1f)
                 {   
-                    Debug.Log("Arrived at food");
+                    //Debug.Log("Arrived at food");
                     beganWalking = false;
                     state = NodeState.SUCCESS;
                     return state;

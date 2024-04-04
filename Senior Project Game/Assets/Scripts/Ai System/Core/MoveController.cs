@@ -28,12 +28,13 @@ namespace Cyrcadian.UtilityAI
     
         public NavMeshAgent agent { get; private set; }
         private NavMeshPath path;
-        private int stepIndex = 0;
+        private int stepIndex = 1;
 
         // all agents can set move speed in inspector
         [SerializeField] float ACCELERATION = 15f; // Adjust as needed
         public Vector3 moveDirection{get; private set;}
         [HideInInspector]public bool canMove = true;
+        private bool isMoving = false;
         
         
         // method to return move speed provides a central place
@@ -50,20 +51,16 @@ namespace Cyrcadian.UtilityAI
 
         private float originalAcceleration;
         
-
-        void Awake()
-        {
-            moveDirection = new();
-            agent = GetComponent<NavMeshAgent>();
-            agent.updatePosition = false;
-            rb = GetComponent<Rigidbody2D>();            
-        }
-        
         void Start()
         {
+            agent = GetComponent<NavMeshAgent>();
+            rb = GetComponent<Rigidbody2D>();         
             originalAcceleration = ACCELERATION;
+            agent.updatePosition = false;
+            agent.updateRotation = false;
 
             path = new NavMeshPath();
+            moveDirection = new();
         }
    
     
@@ -74,11 +71,18 @@ namespace Cyrcadian.UtilityAI
         
         void Update()
         {
+            agent.Warp(transform.position);
+
             if(canMove)
             {
                 // If no path or path is done, clear move direction.
                 if(!UpdatePath())
                     moveDirection = new();
+
+                if(moveDirection != new Vector3())
+                    isMoving = true;
+                else
+                    isMoving = false;
             }
             else
                 moveDirection = new();
@@ -97,8 +101,8 @@ namespace Cyrcadian.UtilityAI
                 for (int i = 0; i < path.corners.Length - 1; i++)
                     Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
                     
-
-                if(QuickMafs.DistanceLength(transform.position, nextWaypoint) < 0.1f)
+                Debug.Log(QuickMafs.DistanceLength(nextWaypoint, transform.position));
+                if(QuickMafs.DistanceLength(nextWaypoint, transform.position) < 0.1f)
                     stepIndex++;
                 
                 
@@ -114,10 +118,14 @@ namespace Cyrcadian.UtilityAI
             // if we have no path or it is a new endpoint, calculate a new path to it
             if (path.corners.Length == 0 || (Vector2)path.corners[path.corners.Length-1] != (Vector2)destination)
             {
-                if (!UnityEngine.AI.NavMesh.CalculatePath((Vector2)transform.position, destination, UnityEngine.AI.NavMesh.AllAreas, path)) {
+
+                if (!agent.CalculatePath((Vector2)destination, path)) {
                     // no path found
+                    Debug.Log("Invalid path");
+                    
                     return false;
                 }
+
                 // path corner[0] is the starting point, first waypoint is corner[1]
                 stepIndex = 1;
             }
@@ -130,7 +138,7 @@ namespace Cyrcadian.UtilityAI
       
         public bool IsMoving()
         {
-            return moveDirection != new Vector3();   
+            return isMoving;
         }
 
 

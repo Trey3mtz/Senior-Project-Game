@@ -100,7 +100,9 @@ namespace Cyrcadian.UtilityAI
             stats.currentHunger = hungerBar.CurrentHunger();
 
             if(health.WasHit())
-                alertness = AlertState.Alert;
+                {Debug.Log("I WAS HIT");
+                Debug.Log(awareness.FindNearestThreat());
+                    alertness = AlertState.Alert;}
 
 
             if(health.CurrentHP() <= 0)
@@ -294,25 +296,31 @@ namespace Cyrcadian.UtilityAI
                         mover.IncreaseAcceleration(.1f);
                     }
 
+                    float timer = 0.25f;
                     Vector3 fleeDirection;
                     while(awareness.IsThreatNearby())
-                    {
+                    { 
                         fleeDirection = (transform.position - awareness.FindNearestThreat().position).normalized;
-                        mover.UpdatePath((fleeDirection * 4) + transform.position);
+                        mover.UpdatePath((fleeDirection *3) + transform.position);
 
-                        yield return new WaitForSeconds(0.25f);
+                        yield return new WaitForEndOfFrame();
+                        
+                        if(timer <= 0)
+                        {
+                            timer = 0.25f;
+                            if(stats.currentStamina > 0)
+                                stats.currentStamina -= 2;
+                            else
+                                stats.currentStamina = 0;
 
-                        if(stats.currentStamina > 0)
-                            stats.currentStamina -= 2;
+                            mover.DrainingStamina(this);                            
+                        }
                         else
-                            stats.currentStamina = 0;
-
-                        mover.DrainingStamina(this);
+                            timer -= Time.deltaTime;
                     }
 
                     // By here we have successfully flee-d from danger
                     alertness = AlertState.Calm;
-                    mover.agent.ResetPath();
                     mover.ResetAcceleration();
                     UponCompletedAction();
                 }

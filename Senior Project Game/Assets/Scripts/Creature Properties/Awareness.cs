@@ -50,7 +50,6 @@ namespace Cyrcadian.Creatures
                 if(CurrentlyTargetedCreatures.TryGetValue(incomingCreature, out CreatureData oldValue))
                     updatedHealthInfluenced = oldValue.healthInfluenced + healthInfluenced;   
                 
-            Debug.Log(incomingCreature.name);
 
             // If they don't exist, add them to the dictionary, if they do already, update their data.
             if(!CurrentlyTargetedCreatures.TryAdd(incomingCreature, new CreatureData(){isThreat = isThreat,  healthInfluenced = updatedHealthInfluenced}))

@@ -83,7 +83,7 @@ namespace Cyrcadian.UtilityAI
                 state = NodeState.FAILURE;
                 return state;
             }
-                Debug.Log("Hunting: Chase target");
+                
 
             // If in range to attack, SUCCESS
             // Look for the shortest ranged attack, hopefully they in order...
