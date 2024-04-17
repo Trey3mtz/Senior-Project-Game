@@ -249,7 +249,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
         {   
             if(justPressedDown)
                 return;
-
+             Tooltip_System.Instance.ToggleVisibilityOn();
             if(eventData.button == PointerEventData.InputButton.Left && currentlyHoldingItem)
             {
                 // Create a list of Raycast Results
@@ -282,7 +282,7 @@ namespace Cyrcadian.PlayerSystems.InventorySystem
                         Transform playerPosition = GameObject.Find("Player").transform;
                         World_Item.SpawnWorldItem(playerPosition.position, item, amountStacked);
                         AudioManager.Instance.PlaySoundFX(removeFX);
-                        Tooltip_System.Instance.ToggleVisibilityOn();
+                       
                     Destroy(gameObject);
                 }
                 else if(isOverSomeSlot)

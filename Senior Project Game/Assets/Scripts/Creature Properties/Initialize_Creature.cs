@@ -1,12 +1,9 @@
 using System;
+using AnimationCurveManipulationTool;
 using Cyrcadian.Creatures;
 using Cyrcadian.UtilityAI;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor;
-using UnityEditor.Animations;
+using Unity.Assertions;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Cyrcadian
 {
@@ -43,18 +40,57 @@ namespace Cyrcadian
             creatureController.creatureSpecies = creature;
             creatureController.actionsAvailable = creature.ListOfPossibleActions;
             spriteRenderer.sprite = creature.Sprite;
+            if(creature.MatOverride)
+                 spriteRenderer.material = creature.MatOverride;
             animator.runtimeAnimatorController = creature.AnimatorController;
+
+            // If we want a Random Behavior at birth, pick a random number. (Random.Range is MaxEXCLUSIVE so it does not include the last Behavior, which is Random Behavior)
+            if(creature.Behavior == Creature.BehaviorType.RandomizeAtBirth)
+            {
+                int totalAmountOfBehaviors = Enum.GetNames(typeof(Creature.BehaviorType)).Length;
+                int randomBehavior = UnityEngine.Random.Range( 0, totalAmountOfBehaviors);
+                creatureController.behavior = (Creature.BehaviorType)randomBehavior;
+            }
+            else
+                creatureController.behavior = creature.Behavior;
+
 
             hitbox = creature.collider2D;
             rb = creature.rb;
+            
+            // Create all of our attacks as children
+            foreach(Attack attack in creature.ListOfPossibleAttacks)
+            {   
+                Assert.IsTrue(attack != null);
+                GameObject myAttack = Instantiate(attack.AttackPrefab, transform.Find("Body").Find("Mouth").transform);
+                myAttack.name = attack.name;
+                myAttack.SetActive(false);
+            }
+
+
+            // Randomize a size for creatures to add variety
+            float sizeFactor = 1;
+            if(UnityEngine.Random.Range(0,3) == 0)
+            {   sizeFactor = UnityEngine.Random.Range(0.9f, 1.1f);
+                gameObject.transform.localScale *= sizeFactor;  }
 
             initialStats = creature.Stats;
-            health.MaxHP = initialStats.healthPool;
-            health.SetHealth(initialStats.healthPool);
-            hunger.StomachSize = initialStats.stomachSize;
-            hunger.SetHunger(initialStats.stomachSize);
 
-            // Adjust shadow to look better
+                initialStats.healthPool = (int)(initialStats.healthPool * sizeFactor);
+                initialStats.stomachSize = (int)(initialStats.stomachSize * sizeFactor);
+
+                health.MaxHP = initialStats.healthPool;
+                initialStats.currentHP = initialStats.healthPool;            
+                health.SetHealth(initialStats.currentHP);
+
+                hunger.StomachSize = initialStats.stomachSize;
+                initialStats.currentHunger = initialStats.stomachSize;
+                hunger.SetHunger(initialStats.currentHunger);
+
+                initialStats.currentStamina = initialStats.staminaPool;
+                initialStats.proteinScore = creature.GetFoodScore();
+
+            // Adjust shadow to look better for different sized creatures
             transform.Find("Body").Find("Shadow").position += new Vector3(0,creature.ShadowHeightAdjust);
             transform.Find("Body").Find("Shadow").localScale = new Vector3(1.5f + creature.ShadowLengthAdjust,1,1);
 
@@ -71,6 +107,7 @@ namespace Cyrcadian
         void Awake()
         {
             brain = GetComponentInChildren<AIBrain>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             creatureController= GetComponentInChildren<CreatureController>();
             moveController = GetComponentInChildren<MoveController>();
             health = GetComponentInChildren<HealthBar>();
@@ -79,11 +116,13 @@ namespace Cyrcadian
             animator = GetComponentInChildren<Animator>();
 
             rb = transform.root.GetComponent<Rigidbody2D>();
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
-            creatureController.stats = initialStats;
 
             OnSpawn?.Invoke(this, new Creature() );
+        }
+
+        void Start()
+        {
+            creatureController.stats = initialStats;
         }
 
         void OnDestroy()

@@ -11,7 +11,7 @@ namespace Cyrcadian
         [SerializeField] Creature creature;
 
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
             Initialize_Creature.SpawnCreature(transform.position, creature);
         }

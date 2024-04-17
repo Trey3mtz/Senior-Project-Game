@@ -8,8 +8,21 @@ namespace Cyrcadian.Items
     [CreateAssetMenu(fileName = "Food", menuName = "2D Survival/Items/Food")]
     public class Food : Item
     {
-        [SerializeField] int foodValue = 5; 
+        // Useful for different types of meat eaters and vegi eaters.
+        // Can Add more types if needed like fish, grasses, seeds, etc.
+        public enum FoodType{
+            Meats,
+            Fishes,
+            Bugs,
+            Vegetables,
+            Fruits,
+            grasses,
+            NonEdibles
+        }
+
+        [SerializeField] public int foodValue = 5; 
         [SerializeField] GameObject foodParticles;
+        [SerializeField] FoodType foodType = FoodType.NonEdibles;
         
         public override bool CanUse(Vector3Int target)
         {
@@ -30,6 +43,16 @@ namespace Cyrcadian.Items
 
             PlaySound(1.5f);
             return true;
+        }
+
+        public FoodType GetFoodType()
+        {
+            return foodType;
+        }
+
+        public override int GetFoodValue()
+        {
+            return foodValue;
         }
     }
 }

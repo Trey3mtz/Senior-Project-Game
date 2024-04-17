@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Cyrcadian.UtilityAI.Considerations
@@ -12,11 +13,11 @@ namespace Cyrcadian.UtilityAI.Considerations
         {
             if(thisCreature.alertness == CreatureController.AlertState.Alert)
                 score = 1f;
-            else if(thisCreature.alertness == CreatureController.AlertState.Awake)
+            else if(thisCreature.alertness == CreatureController.AlertState.Calm)
                 score = .5f;
             else
                 score = 0f;
-            
+        
 
             score = responseCurve.Evaluate(score);
           

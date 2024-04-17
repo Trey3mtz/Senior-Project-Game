@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cyrcadian.Creatures;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Cyrcadian.UtilityAI.Considerations
@@ -20,16 +21,23 @@ namespace Cyrcadian.UtilityAI.Considerations
             if(thisCreature.awareness.IsThreatNearby())
             {
                 float sqrLosingDistance = thisCreature.awareness.sqrLosingDistance;
+                Transform nearestThreat = thisCreature.awareness.FindNearestThreat();
+                if(!nearestThreat)
+                {
+                    score = 1;
+                }
+                else
+                {
+                thisCreature.awareness.KnownThreats.TryGetValue(nearestThreat, out Awareness.CreatureData creatureData);
+               
 
-                thisCreature.awareness.KnownThreats.TryGetValue(thisCreature.awareness.NearestThreat(), out Awareness.CreatureData creatureData);
-                
                 // Get normalized scores based on distance they are from you, and how much health they beat out of you.
                 // Give distance a score from 0 to 1.5 but clamp its value at one. Subtract up to 0.5 points based on how much their health they've taken from you is.
-                float scoreDistanceAway = Mathf.Clamp01((thisCreature.awareness.NearestThreat().position - thisCreature.transform.position).sqrMagnitude / sqrLosingDistance * 0.5f);
+                float scoreDistanceAway = Mathf.Clamp01((thisCreature.awareness.FindNearestThreat().position - thisCreature.transform.position).sqrMagnitude / sqrLosingDistance * 0.5f);
                 float scoreHealthInfluenced = Mathf.Clamp01( creatureData.healthInfluenced / thisCreature.stats.healthPool) * 0.5f;
 
 
-                score = scoreDistanceAway - scoreHealthInfluenced;
+                score = scoreDistanceAway - scoreHealthInfluenced;Debug.Log("score for nearby threat"+score);}
             }
             else
                 score = 1;
