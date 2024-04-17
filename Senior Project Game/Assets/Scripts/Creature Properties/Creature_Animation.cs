@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyrcadian.UtilityAI;
 using Cyrcadian.UtilityAI.Actions;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 
 namespace Cyrcadian.Creatures
 {
@@ -44,7 +49,6 @@ namespace Cyrcadian.Creatures
             animatorControl.animator = GetComponentInChildren<Animator>();
         }
 
-        
         void Update()
         {
             if(isAnimationLocked)
@@ -58,29 +62,38 @@ namespace Cyrcadian.Creatures
             if(isAnimationLocked)
                 return;
 
-            if(mover.agent.velocity.sqrMagnitude == 0)
+            if(mover.IsMoving())
+            {  
+                if(math.abs(rb.velocity.sqrMagnitude) > 0.25f )
+                { 
+                    animatorControl.OrientateBody(mover.moveDirection.x);
+                    animatorControl.CrossFade("Move");  }
+            }
+            else
             {   
-                if(creature.alertness == CreatureController.AlertState.Asleep)
+                if(creature.alertness == CreatureController.AlertState.Unconcious)
                     animatorControl.CrossFade("Sleep");
                 else if(creature.isEating)
                     animatorControl.CrossFade("Eating");
                 else
                     animatorControl.CrossFade("Idle");
             }
-            else if(mover.agent.hasPath)
-            {
-                if(Mathf.Abs(mover.agent.velocity.sqrMagnitude) > 0.02f)
-                    animatorControl.OrientateBody(mover.agent.velocity.x);
-                animatorControl.CrossFade("Move");
-            }
+
 
         }
 
+        public void Attack()
+        {
+            isAnimationLocked = true;
+            mover.BrieflyPauseMovement(.5f);
+            animatorControl.CrossFade("Attack");
+            StartCoroutine(animationLockOut(animatorControl.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length));
+        }
 
         public void Hurt()
         {   
             isAnimationLocked = true;
-            mover.BrieflyPauseMove(hurtTime);
+            mover.BrieflyPauseMovement(hurtTime);
             animatorControl.CrossFade("Hurt");
             AudioManager.Instance.PlaySoundFX(hurtSFX);
             StartCoroutine(animationLockOut(hurtTime));

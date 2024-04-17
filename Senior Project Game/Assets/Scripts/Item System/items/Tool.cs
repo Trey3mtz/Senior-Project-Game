@@ -1,6 +1,6 @@
 using System.Collections;
 using Cyrcadian.PlayerSystems;
-using DG.Tweening;
+using Cyrcadian.AttackSystem;
 using UnityEngine;
 
 namespace Cyrcadian.Items
@@ -41,9 +41,9 @@ namespace Cyrcadian.Items
             // If this tool is can double as a weapon as well, set it's attack properties
             if(this.Type == ItemType.Weapon)
             {
-                obj.AddComponent<Attack_HealthBar>();
-                obj.GetComponent<Attack_HealthBar>().damage = damageDealt;
-                obj.GetComponent<Attack_HealthBar>().SFX = hitSFX;
+                obj.AddComponent<Damage_HealthBar>();
+                obj.GetComponent<Damage_HealthBar>().damage = damageDealt;
+                obj.GetComponent<Damage_HealthBar>().SFX = hitSFX;
             }
 
             gameObject.GetComponentInChildren<Player_animation_logic>().tool.GetComponent<SpriteRenderer>().sprite = ItemSprite;

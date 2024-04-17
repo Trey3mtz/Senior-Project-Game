@@ -1,9 +1,10 @@
 using Cyrcadian.Creatures;
+using Cyrcadian.UtilityAI;
 using UnityEngine;
 
-namespace Cyrcadian
+namespace Cyrcadian.AttackSystem
 {
-    public class Attack_HealthBar : MonoBehaviour
+    public class Damage_HealthBar : MonoBehaviour
     {
         [SerializeField] public AudioClip SFX;
         public int damage = 1;

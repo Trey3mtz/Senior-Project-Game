@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO.Pipes;
+using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Burst;
 using UnityEngine;
+using Unity.Collections;
 
 namespace Cyrcadian.UtilityAI
 {
@@ -26,7 +29,21 @@ namespace Cyrcadian.UtilityAI
             score = 0;
          }
 
-        public abstract void Execute(CreatureController thisCreature);
+        public abstract void Execute(CreatureController thisCreature);     
+
+    public void AssertConsiderations(CreatureController myCreature)
+    {
+        float minValue = 0f; // Define the minimum acceptable value
+        float maxValue = 1f; // Define the maximum acceptable value
+
+        foreach (Consideration consideration in considerations)
+        {
+            float result = consideration.ScoreConsideration(myCreature);
+
+            // Assert that the returned value falls within the specified range
+            Debug.Assert(result >= minValue && result <= maxValue, $"Consideration {consideration.GetType().Name} returned value out of range: {result}");
+        }
+    }
 
     }
 }

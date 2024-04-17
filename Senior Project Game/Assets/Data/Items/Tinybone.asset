@@ -23,9 +23,10 @@ MonoBehaviour:
   VisualPrefab: {fileID: 0}
   PlayerAnimatorTriggerUse: GenericToolSwing
   WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
-  ItemSpawnAnimation: {fileID: 0}
   UseSound:
   - {fileID: 8300000, guid: 7168e15fecd5cb44f86441af0a244125, type: 3}
   volume: {x: 0.5, y: 0.5}
   pitch: {x: 1, y: 1}
   item_Tag: Particle
+  damageDealt: 0
+  hitSFX: {fileID: 0}
