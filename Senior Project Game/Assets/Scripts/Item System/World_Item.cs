@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Cyrcadian.Items;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 
 namespace Cyrcadian
 {
@@ -43,6 +44,8 @@ public class World_Item : MonoBehaviour
     {   
         this.item = item;
         spriteRenderer.sprite = item.ItemSprite;
+
+
             
         if(amountDroped > 1)
             textMeshPro.SetText(amountDroped.ToString());

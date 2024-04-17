@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using Cyrcadian.UtilityAI;
 using Cyrcadian.UtilityAI.Actions;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 
 namespace Cyrcadian.Creatures
@@ -46,7 +49,6 @@ namespace Cyrcadian.Creatures
             animatorControl.animator = GetComponentInChildren<Animator>();
         }
 
-
         void Update()
         {
             if(isAnimationLocked)
@@ -61,9 +63,9 @@ namespace Cyrcadian.Creatures
                 return;
 
             if(mover.IsMoving())
-            {   
-                if(math.abs(rb.velocity.sqrMagnitude) > 0.05f)
-                {
+            {  
+                if(math.abs(rb.velocity.sqrMagnitude) > 0.25f )
+                { 
                     animatorControl.OrientateBody(mover.moveDirection.x);
                     animatorControl.CrossFade("Move");  }
             }

@@ -249,7 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cffd241be8fde8b4db3aaa313adfb579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MOVE_SPEED: 0
+  ACCELERATION: 15
+  canMove: 1
   responseCurve:
     serializedVersion: 2
     m_Curve:
@@ -278,8 +279,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 81920
-  canMove: 1
-  dashSpeedFactor: 3
+  dashForce: 15
 --- !u!114 &2416789588495629884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +312,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0.15
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!114 &6684764355307714818
 MonoBehaviour:

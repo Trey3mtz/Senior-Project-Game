@@ -28,12 +28,14 @@ namespace Cyrcadian.UtilityAI
     
         public NavMeshAgent agent { get; private set; }
         private NavMeshPath path;
-        private int stepIndex = 0;
+        private int stepIndex = 1;
 
         // all agents can set move speed in inspector
         [SerializeField] float ACCELERATION = 15f; // Adjust as needed
         public Vector3 moveDirection{get; private set;}
         [HideInInspector]public bool canMove = true;
+        private bool isWalking = false;
+
         
         
         // method to return move speed provides a central place
@@ -50,38 +52,41 @@ namespace Cyrcadian.UtilityAI
 
         private float originalAcceleration;
         
-
-        void Awake()
-        {
-            moveDirection = new();
-            agent = GetComponent<NavMeshAgent>();
-            agent.updatePosition = false;
-            rb = GetComponent<Rigidbody2D>();            
-        }
-        
         void Start()
         {
+            agent = GetComponent<NavMeshAgent>();
+            rb = GetComponent<Rigidbody2D>();         
             originalAcceleration = ACCELERATION;
+            agent.updatePosition = false;
+            agent.updateRotation = false;
 
             path = new NavMeshPath();
+            moveDirection = new();
         }
    
     
         void FixedUpdate()
-        {    // Using Euler's number for fun. Not significant.                                           
-            rb.AddForce(moveDirection * ACCELERATION * 2.718f);
+        {    // Using Euler's number for fun. Not significant. 
+            if(moveDirection != Vector3.zero)
+                rb.AddForce(moveDirection * ACCELERATION * 2.718f);
+            if(rb.velocity.sqrMagnitude <= 0.1f)
+                rb.velocity *= 0.5f;
         }
         
         void Update()
         {
+            agent.Warp(transform.position);
+
             if(canMove)
             {
                 // If no path or path is done, clear move direction.
                 if(!UpdatePath())
-                    moveDirection = new();
+                    moveDirection = Vector3.zero;
+
             }
             else
-                moveDirection = new();
+                moveDirection = Vector3.zero;
+                
         }
 
         public bool UpdatePath()
@@ -97,16 +102,16 @@ namespace Cyrcadian.UtilityAI
                 for (int i = 0; i < path.corners.Length - 1; i++)
                     Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
                     
-
-                if(QuickMafs.DistanceLength(transform.position, nextWaypoint) < 0.1f)
+                
+                if(QuickMafs.DistanceLength(nextWaypoint, transform.position) < 0.4f)
                     stepIndex++;
                 
                 
                 // always succeeds if we have a path
-                return true;
+                return isWalking = true;
             }
-            
-            return false;
+            else 
+                return isWalking = false;
         }
 
         public bool UpdatePath(Vector3 destination)
@@ -114,10 +119,12 @@ namespace Cyrcadian.UtilityAI
             // if we have no path or it is a new endpoint, calculate a new path to it
             if (path.corners.Length == 0 || (Vector2)path.corners[path.corners.Length-1] != (Vector2)destination)
             {
-                if (!UnityEngine.AI.NavMesh.CalculatePath((Vector2)transform.position, destination, UnityEngine.AI.NavMesh.AllAreas, path)) {
-                    // no path found
+
+                if (!agent.CalculatePath((Vector2)destination, path)) {
+                    // no path found                    
                     return false;
                 }
+     
                 // path corner[0] is the starting point, first waypoint is corner[1]
                 stepIndex = 1;
             }
@@ -130,7 +137,7 @@ namespace Cyrcadian.UtilityAI
       
         public bool IsMoving()
         {
-            return moveDirection != new Vector3();   
+            return isWalking;
         }
 
 
@@ -142,14 +149,14 @@ namespace Cyrcadian.UtilityAI
 
             public void IncreaseAcceleration(float addedAcceleration)
             {
-                addedAcceleration = originalAcceleration * (1 + Mathf.Clamp01(addedAcceleration));
-                ACCELERATION = addedAcceleration;
+                addedAcceleration = ACCELERATION * (1 + Mathf.Clamp01(addedAcceleration));
+                StartCoroutine(ChangeSpeed(addedAcceleration, 0.5f));
             }
 
                 public void DecreaseAcceleration(float loweredAcceleration)
                 {
-                    loweredAcceleration = originalAcceleration * (1 - Mathf.Clamp01(loweredAcceleration));
-                    ACCELERATION = loweredAcceleration;
+                    loweredAcceleration = ACCELERATION * (1 - Mathf.Clamp01(loweredAcceleration));
+                    StartCoroutine(ChangeSpeed(loweredAcceleration, 0.5f));
                 }
 
 
@@ -157,6 +164,25 @@ namespace Cyrcadian.UtilityAI
                     {
                         ACCELERATION = originalAcceleration;
                     }
+
+            IEnumerator ChangeSpeed(float targetSpeed, float timeDuration)
+            {
+                float elapsedTime = timeDuration;
+                float startingSpeed = agent.speed;
+
+                while(elapsedTime > 0)
+                {
+                    yield return new WaitForEndOfFrame();
+
+                    float ratio = Mathf.Clamp01(1 - (elapsedTime / timeDuration));
+                    ratio = responseCurve.Evaluate(ratio);
+                    ACCELERATION = Mathf.Lerp(startingSpeed, targetSpeed, ratio);
+             
+                    elapsedTime -= Time.deltaTime;
+                }
+
+                ACCELERATION = targetSpeed;
+            }
        
         public bool CanSeeTarget()
         {
@@ -171,9 +197,9 @@ namespace Cyrcadian.UtilityAI
 
         IEnumerator PauseMovement(float value)
         {
-            canMove = true;
-            yield return new WaitForSeconds(value);
             canMove = false;
+            yield return new WaitForSeconds(value);
+            canMove = true;
         }
  
         [BurstCompile]
@@ -217,7 +243,7 @@ namespace Cyrcadian.UtilityAI
             if(thisCreature.stats.currentStamina > thisCreature.stats.staminaPool * 0.5f || thisCreature.stats.currentStamina < thisCreature.stats.staminaPool * 0.1f)
                 return false;
             
-            DecreaseAcceleration(thisCreature.stats.currentStamina / (thisCreature.stats.staminaPool * 0.1f));
+            DecreaseAcceleration(thisCreature.stats.currentStamina / thisCreature.stats.staminaPool * 0.1f);
 
             return true;
         }
