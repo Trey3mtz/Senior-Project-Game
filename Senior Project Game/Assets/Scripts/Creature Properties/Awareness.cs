@@ -16,6 +16,7 @@ using UnityEditor.ShaderGraph;
 using Cyrcadian.Items;
 using System.Security.Cryptography;
 using Unity.Assertions;
+using UnityEditor.Experimental.GraphView;
 
 namespace Cyrcadian.Creatures
 {
@@ -94,7 +95,9 @@ namespace Cyrcadian.Creatures
             if(!gameObject.activeInHierarchy)
                 return;
             if(collider.gameObject.layer == 10 && !collider.GetComponentInParent<CreatureController>())
-                return;
+                if(collider.transform.root.tag != "Player")
+                    return;
+
             // Keep track of all visible creatures!
             if(collider.gameObject.layer == 10 && !VisibleCreatures.Contains(collider.transform.root))
                     VisibleCreatures.Add(collider.transform.root);
@@ -108,36 +111,80 @@ namespace Cyrcadian.Creatures
                     VisibleFoodSources.Add(collider.transform.root);
         }
 
-
+        CreatureController tempCreature;
         void OnTriggerExit2D(Collider2D collider)
         {
             if(!gameObject.activeInHierarchy)
                 return;
-            if(collider.gameObject.layer == 10 && !collider.GetComponentInParent<CreatureController>())
-                return;
 
-            // If we lost track of a creature that was visible,  wait a moment to remove them from the stack
-            // If they died, immediately remove their transform.
-            if (collider.gameObject.layer == 10 && VisibleCreatures.Contains(collider.transform.root)) {
-                if(collider.GetComponentInParent<CreatureController>().isDying)
-                    VisibleCreatures.Remove(collider.transform);
-                else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
-                    StartCoroutine(CreatureOutOfVision(collider.transform.root));   
-            }
-            else if(collider.gameObject.layer == 15 && VisibleWorldItems.Contains(collider.transform))
+            if(collider.gameObject.layer == 10)
+            {
+                bool isPlayer = collider.transform.root.tag == "Player";
+                if(!isPlayer && !collider.GetComponentInParent<CreatureController>())
+                    return;
+                else
+                    tempCreature = collider.GetComponentInParent<CreatureController>();              
+
+
+                // If we lost track of a creature that was visible,  wait a moment to remove them from the stack
+                // If they died, immediately remove their transform.
+                if (VisibleCreatures.Contains(collider.transform.root)) {
+                    if(isPlayer) 
+                    {
+                        if(collider.GetComponentInChildren<HealthBar>().CurrentHP() <= 0)
+                            VisibleCreatures.Remove(collider.transform.root);   
+                        else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                            StartCoroutine(CreatureOutOfVision(collider.transform.root));                    
+                    }
+                    else if(tempCreature.isDying)
+                        {VisibleCreatures.Remove(collider.transform.root);}
+                    else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                        StartCoroutine(CreatureOutOfVision(collider.transform.root));   
+                }
+
+                if(CurrentlyTargetedCreatures.ContainsKey(collider.transform.root))
+                    StartCoroutine(TargetOutOfVision(collider.transform.root));
+
+                if(VisibleFoodSources.Contains(collider.transform.root))
+                {
+                    if(isPlayer)
+                    {
+                        if(collider.GetComponentInChildren<HealthBar>().CurrentHP() <= 0)
+                            VisibleFoodSources.Remove(collider.transform.root);
+                        else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                            StartCoroutine(FoodSourceOutOfVision(collider.transform.root));      
+                    }
+                    else if(tempCreature.isDying)
+                            VisibleFoodSources.Remove(collider.transform.root);
+                    else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                            StartCoroutine(FoodSourceOutOfVision(collider.transform.root));                            
+
+                }
+            } 
+
+
+
+            else if(collider.gameObject.layer == 15)
+            {
+                if(VisibleWorldItems.Contains(collider.transform))
                 {   VisibleWorldItems.Remove(collider.transform);       VisibleWorldItems.TrimExcess();}
 
-            if(CurrentlyTargetedCreatures.ContainsKey(collider.transform.root))
-                StartCoroutine(TargetOutOfVision(collider.transform.root));
-
-            if(VisibleFoodSources.Contains(collider.transform.root))
-            {
-                if(collider.GetComponentInParent<CreatureController>().isDying)
-                    VisibleFoodSources.Remove(collider.transform);
-                else if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
-                    StartCoroutine(FoodSourceOutOfVision(collider.transform.root));}
+                if(VisibleFoodSources.Contains(collider.transform.root))
+                {
+                    if((collider.transform.position - gameObject.transform.position).sqrMagnitude > sqrLosingDistance)     
+                        StartCoroutine(FoodSourceOutOfVision(collider.transform.root));
+                } 
+            }
         }
 
+
+        private bool CheckIfTargetInRange(Transform target)
+        {
+            if(Mathf.Abs((target.position - transform.position).sqrMagnitude) > sqrLosingDistance)
+                return false;
+            else
+                return true;
+        }
 
         // If Target stepped out of vision, wait for 1 seconds and check if they are in the list still.
         // If Target is in list of visible creatures, try again Until they leave.
@@ -148,7 +195,7 @@ namespace Cyrcadian.Creatures
 
             if(!VisibleCreatures.Contains(target))
                 CurrentlyTargetedCreatures.Remove(target);
-            else if(Mathf.Abs((target.position - transform.position).sqrMagnitude) > sqrLosingDistance)
+            else if(!CheckIfTargetInRange(target))
             {   
                 // In case we missed the first check for if out of vision.
                 VisibleCreatures.Remove(target);
@@ -164,7 +211,7 @@ namespace Cyrcadian.Creatures
         {
             yield return new WaitForSeconds(.5f);
 
-            if(Mathf.Abs((targetTransform.position - transform.position).sqrMagnitude) > sqrLosingDistance)
+            if(!CheckIfTargetInRange(targetTransform))
             {            
                 VisibleCreatures.Remove(targetTransform);
                 VisibleCreatures.TrimExcess();
@@ -175,7 +222,7 @@ namespace Cyrcadian.Creatures
         {
             yield return new WaitForSeconds(.5f);
 
-            if(Mathf.Abs((targetTransform.position - transform.position).sqrMagnitude) > sqrLosingDistance)
+            if(!CheckIfTargetInRange(targetTransform))
             {            
                 VisibleFoodSources.Remove(targetTransform);
                 VisibleFoodSources.TrimExcess();
@@ -188,7 +235,12 @@ namespace Cyrcadian.Creatures
 
             foreach(Transform knownThreat in KnownThreats.Keys)
             {
-                foundThreat = VisibleCreatures.Contains(knownThreat);
+                foundThreat = CheckIfTargetInRange(knownThreat);
+
+                // Edge case
+                if(!foundThreat && VisibleCreatures.Contains(knownThreat))
+                    VisibleCreatures.Remove(knownThreat);
+
                 if(foundThreat)
                     break;
             }

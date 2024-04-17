@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cyrcadian.BehaviorTrees;
 using TMPro;
+using UnityEditor.Callbacks;
 
 namespace Cyrcadian.UtilityAI
 {
@@ -132,6 +133,9 @@ namespace Cyrcadian.UtilityAI
 
                     while(counter > 0 && alertness != AlertState.Alert)
                     {
+                        if(awareness.IsThreatNearby())          
+                        {alertness = AlertState.Alert;    break;}
+                            
                         yield return new WaitForEndOfFrame();
 
                         timeSpentIdle += Time.deltaTime;
@@ -153,18 +157,28 @@ namespace Cyrcadian.UtilityAI
                     //Current: Move to random spot and eat there.
                     //Future: Pick a random point, and validate it (make sure I can walk there and it's a grass tile)
                     //        If point isn't valid, try check another spot(repeat until found spot). Once a valid point is found move there and then eat grass.
-
                     DoRandomRoam();
 
                     // BUG HERE : WILL GET STUCK BECAUSE THEY AREN'T MOVING AND REMAINING DISTANCE NEVER GOES BELOW STOPPING DISTANCE
                     while(mover.agent.remainingDistance > mover.agent.stoppingDistance)
                     {
+                        if(awareness.IsThreatNearby())          
+                        {alertness = AlertState.Alert;    break;}
                         yield return new WaitForEndOfFrame();
                     }
 
                     // Grass eating holds a static food value of 4 for now.
                     isEating = true;
-                    yield return new WaitForSeconds(2);
+                    float timer = 2f;
+                    while(timer > 0)
+                    {
+                        if(awareness.IsThreatNearby())          
+                        {alertness = AlertState.Alert;    break;}
+
+                        yield return new WaitForEndOfFrame();
+                        timer -= Time.deltaTime;
+                    }
+
                     hungerBar.ChangeHunger(4);
                     isEating = false;
 
@@ -198,7 +212,6 @@ namespace Cyrcadian.UtilityAI
                 
                 IEnumerator SleepCoroutine()
                 {
-
                     alertness = AlertState.Unconcious;
                     sleepParticle.Play();
                     awarenessRange.enabled = false;
@@ -207,18 +220,18 @@ namespace Cyrcadian.UtilityAI
                     {
                         case Creature.CyrcadianRhythm.Nocturnal:
                             while(DayCycle.GetTimeOfDay() != 0 && alertness == AlertState.Unconcious)
-                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;   }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.5f) break;   }
                             break;
                         case Creature.CyrcadianRhythm.Diurnal:
                             while(DayCycle.GetTimeOfDay() != 1 && alertness == AlertState.Unconcious)
-                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.5f){break;  }   }
                             break;
                         case Creature.CyrcadianRhythm.Crepuscular:
                             while(DayCycle.GetTimeOfDay() != 2 && alertness == AlertState.Unconcious)
-                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.5f) break;    }
                             break;
                         case Creature.CyrcadianRhythm.Cathemeral:
-                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.1f) break;    }
+                            {    yield return new WaitForEndOfFrame(); if(mover.rb.velocity.sqrMagnitude > 0.5f) break;    }
                             break;
                         default:
                             break;
@@ -318,9 +331,9 @@ namespace Cyrcadian.UtilityAI
                         else
                             timer -= Time.deltaTime;
                     }
-
+                    
                     // By here we have successfully flee-d from danger
-                    alertness = AlertState.Calm;
+                    Debug.Log("Made it to safety");
                     mover.ResetAcceleration();
                     UponCompletedAction();
                 }
