@@ -15,6 +15,13 @@ MonoBehaviour:
   CreatureName: Bone Hound
   Behavior: 2
   CircadianRhythm: 0
+  Diet: 2
+  myDietSelection: 00000000010000000200000004000000
+  PossibleFoodSources:
+  - Creature
+  - Player
+  - Fruit
+  Hunting_Behavior: {fileID: 11400000, guid: 4684fcd1260a5934d91236d61ee72d89, type: 2}
   Stats:
     healthPool: 35
     currentHP: 35
@@ -22,8 +29,10 @@ MonoBehaviour:
     currentHunger: 35
     staminaPool: 35
     currentStamina: 35
+    proteinScore: 0
   Sprite: {fileID: -1788492484457194654, guid: 38e8934423d578847b07f3242ed6eead, type: 3}
   AnimatorController: {fileID: -8628718470066728925, guid: 38e8934423d578847b07f3242ed6eead, type: 3}
+  MatOverride: {fileID: 2100000, guid: e1b2335aa54784e4e976383ad8d24fc2, type: 2}
   ShadowHeightAdjust: -0.1
   ShadowLengthAdjust: 1.1
   rb: {fileID: 0}
@@ -32,17 +41,17 @@ MonoBehaviour:
   ListOfPossibleActions:
   - {fileID: 11400000, guid: c709975ad2191ef49b82ee4db6d35020, type: 2}
   - {fileID: 11400000, guid: e3b5915eec04e994baf9fcc9590eb2b2, type: 2}
-  - {fileID: 11400000, guid: b9dd4d379a09d154d87d89d12415b8d1, type: 2}
-  - {fileID: 11400000, guid: 9b9adfa41de75b74fb24c3149c01cbca, type: 2}
-  - {fileID: 11400000, guid: d1626c76f3d0a5048930643317735e86, type: 2}
-  CreaturePrefab: {fileID: 957270239124672070, guid: 71f0a8ebf4d40fe4dbfa0526239e3eba, type: 3}
+  - {fileID: 11400000, guid: 01b6317d68d1a964692b2493a69eedcf, type: 2}
+  ListOfPossibleAttacks:
+  - {fileID: 11400000, guid: f2d046309dbea4e4380b48a48e5924cf, type: 2}
+  CreaturePrefab: {fileID: 2241090838399489673, guid: fd044e6c20299254dbb08c14788d9f71, type: 3}
   CreatureSounds: []
   LootTable:
   - item: {fileID: 11400000, guid: d20ddcf74e352a74a8457f3754771ef7, type: 2}
-    lowestAmount: 1
-    highestAmount: 2
+    lowestDropAmount: 0
+    highestDropAmount: 1
     chance: 0.5
   - item: {fileID: 11400000, guid: de9e332a4816e35449e9e1a8ab6e4d5d, type: 2}
-    lowestAmount: 1
-    highestAmount: 2
+    lowestDropAmount: 0
+    highestDropAmount: 2
     chance: 0.5

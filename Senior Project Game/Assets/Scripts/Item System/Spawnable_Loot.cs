@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 namespace Cyrcadian.Items
@@ -8,8 +9,8 @@ namespace Cyrcadian.Items
     public struct SpawnableLoot
     {
         public Item item;
-        public int lowestAmount;
-        public int highestAmount;
+        public int lowestDropAmount;
+        public int highestDropAmount;
         public float chance;
     }
 
@@ -38,7 +39,7 @@ namespace Cyrcadian.Items
             for(int i = 0; i < spawnableLoot.Length; i++)
             {   
                 // First find out how many of this item from the loot table we want to spawn
-                generatedAmount = UnityEngine.Random.Range(spawnableLoot[i].lowestAmount, spawnableLoot[i].highestAmount);
+                generatedAmount = UnityEngine.Random.Range(spawnableLoot[i].lowestDropAmount, spawnableLoot[i].highestDropAmount + 1);
                 // Unlucky
                 if(generatedAmount <= 0)
                     break;
@@ -59,5 +60,25 @@ namespace Cyrcadian.Items
                 }
             }
         }
+
+
+        public float GetFoodScore()
+        {
+            float FoodScore = 0f;
+            // If this source drops food, increase FoodScore.
+            // Weighted so HighestAmount holds more influence than the LowestAmount, unless drop rate is 100%. 
+            for(int i = 0; i < spawnableLoot.Length; i++)
+            {  
+                if( spawnableLoot[i].item.Type == Item.ItemType.Food)
+                {
+                    Food thisItem = spawnableLoot[i].item as Food;
+                    float chance = Mathf.Clamp01(spawnableLoot[i].chance); 
+                    FoodScore += thisItem.GetFoodValue() * (spawnableLoot[i].highestDropAmount + (spawnableLoot[i].lowestDropAmount  * chance)) * chance;
+                }
+            }
+            
+            return FoodScore;
+        }
     }
+
 }

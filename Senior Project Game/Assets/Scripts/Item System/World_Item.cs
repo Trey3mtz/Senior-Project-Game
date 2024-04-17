@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using DG.Tweening;
+using Cyrcadian.Items;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 
 namespace Cyrcadian
 {
@@ -43,6 +44,8 @@ public class World_Item : MonoBehaviour
     {   
         this.item = item;
         spriteRenderer.sprite = item.ItemSprite;
+
+
             
         if(amountDroped > 1)
             textMeshPro.SetText(amountDroped.ToString());
@@ -70,6 +73,30 @@ public class World_Item : MonoBehaviour
 
     public void DestroySelf()
     {    Destroy(gameObject);    }
+
+    public int GetFoodValue()
+    {
+        // If not food, return a value of 0.
+        if(item.Type != Item.ItemType.Food)
+            return 0;
+
+        int foodValue = item.GetFoodValue() * amountDroped;
+
+        
+
+        return foodValue;
+    }
+
+    public Food.FoodType CheckFoodType()
+    {   
+        if(item is Food)
+        {
+            Food thisItem = (Food)item;
+            return thisItem.GetFoodType();
+        }
+        else
+            return Food.FoodType.NonEdibles;
+    }
     
 
     public IEnumerator WaitToPickUp()
