@@ -17,6 +17,7 @@ using Cyrcadian.Items;
 using System.Security.Cryptography;
 using Unity.Assertions;
 using UnityEditor.Experimental.GraphView;
+using System.Xml.Serialization;
 
 namespace Cyrcadian.Creatures
 {
@@ -423,6 +424,18 @@ namespace Cyrcadian.Creatures
             ScoringJobHandle.Complete();
             
             score = _scoreJob.FinalActionScore[0];
+
+            // Edge cases
+            if(Single.IsNaN(score))
+            {
+                if(thisSource.root.tag == "Player")
+                    score = thisSource.GetComponent<PlayerSystems.PlayerData>().GetFoodScore();
+                else if(thisSource.gameObject.layer == 10)
+                    score = thisSource.GetComponent<CreatureController>().creatureSpecies.GetFoodScore();
+                else
+                    score = thisSource.GetComponentInChildren<Spawnable_Loot>().GetFoodScore();                
+            }
+
 
             considerationsTemp.Dispose();
             finalScoreTemp.Dispose();

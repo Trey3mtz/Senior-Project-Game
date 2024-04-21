@@ -257,8 +257,9 @@ namespace Cyrcadian.UtilityAI
         public void Dash(Vector3 dashDirection, float dashCooldown)
         {
             if (canDash)
-            {
-                rb.AddForce(dashDirection  * dashForce,  ForceMode2D.Impulse);
+            {   
+                moveDirection = dashDirection;
+                rb.AddForce(dashDirection  * dashForce * 2,  ForceMode2D.Impulse);
                 canDash = false;
                 StartCoroutine(StartDashCooldown(dashCooldown));
             }

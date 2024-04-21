@@ -37,7 +37,7 @@ namespace Cyrcadian.UtilityAI.Considerations
                 float scoreHealthInfluenced = Mathf.Clamp01( creatureData.healthInfluenced / thisCreature.stats.healthPool) * 0.5f;
 
 
-                score = scoreDistanceAway - scoreHealthInfluenced;Debug.Log("score for nearby threat"+score);}
+                score = scoreDistanceAway - scoreHealthInfluenced;}
             }
             else
                 score = 1;
