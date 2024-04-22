@@ -85,6 +85,7 @@ namespace Cyrcadian.Creatures
         public void Attack()
         {
             isAnimationLocked = true;
+            animatorControl.OrientateBody(mover.moveDirection.x);
             mover.BrieflyPauseMovement(.5f);
             animatorControl.CrossFade("Attack");
             StartCoroutine(animationLockOut(animatorControl.animator.GetCurrentAnimatorClipInfo(0)[0].clip.length));

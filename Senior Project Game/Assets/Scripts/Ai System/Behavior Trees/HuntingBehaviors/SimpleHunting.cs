@@ -34,7 +34,10 @@ namespace Cyrcadian.UtilityAI
                 Node root = new Sequence(new List<Node>
                 {
                     new SimpleChase(myCreature),
-                    new ShortestRangeAttack(myCreature)
+                        new Sequence(new List<Node>
+                        {
+                            new ShortestRangeAttack(myCreature)
+                        }),
                 });
 
 
@@ -100,13 +103,14 @@ namespace Cyrcadian.UtilityAI
             // One of our attacks is in Range
             if(attack_name != "")
             {
+                Debug.Log("Return SUCCESS for chase");
                 state = NodeState.SUCCESS;
                 return state;
             }
-
+            
             // Move to their position
             myCreature.mover.UpdatePath(target.position);
-
+            Debug.Log("Chasing target, return RUNNING");
 
             state = NodeState.RUNNING;
             return state;
@@ -155,9 +159,12 @@ namespace Cyrcadian.UtilityAI
 
                     StopBehavior();
                     myCreature.UponCompletedAction();
+                                    Debug.Log("attack return SUCCESS");
+
                     state = NodeState.SUCCESS;
                     return state;
                 }
+                Debug.Log("Try attack failed...");
             }
 
             // Either we have no attacks, or we didn't attack.
