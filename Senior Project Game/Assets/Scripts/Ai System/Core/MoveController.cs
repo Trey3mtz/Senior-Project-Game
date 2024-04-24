@@ -31,7 +31,7 @@ namespace Cyrcadian.UtilityAI
         private int stepIndex = 1;
 
         // all agents can set move speed in inspector
-        [SerializeField] float ACCELERATION = 15f; // Adjust as needed
+        [SerializeField] float ACCELERATION = 20f; // Adjust as needed
         public Vector3 moveDirection{get; private set;}
         [HideInInspector]public bool canMove = true;
         private bool isWalking = false;
@@ -257,8 +257,9 @@ namespace Cyrcadian.UtilityAI
         public void Dash(Vector3 dashDirection, float dashCooldown)
         {
             if (canDash)
-            {
-                rb.AddForce(dashDirection  * dashForce,  ForceMode2D.Impulse);
+            {   
+                moveDirection = dashDirection;
+                rb.AddForce(dashDirection  * dashForce * 3,  ForceMode2D.Impulse);
                 canDash = false;
                 StartCoroutine(StartDashCooldown(dashCooldown));
             }
