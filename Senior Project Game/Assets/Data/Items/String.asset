@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0f2b17d88496745a2f554ef80dba0f, type: 3}
   m_Name: String
   m_EditorClassIdentifier: 
-  UniqueID: DefaultID
-  DisplayName: 
+  UniqueID: String
+  DisplayName: String
   Type: 0
   ItemSprite: {fileID: 0}
   MaxStackSize: 32
   Consumable: 1
-  Tooltip_header: 
+  Tooltip_header: String
   Tooltip_content: 
   VisualPrefab: {fileID: 0}
   PlayerAnimatorTriggerUse: GenericToolSwing
-  WorldItemPrefab: {fileID: 0}
+  WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
   UseSound: []
   volume: {x: 0.5, y: 0.5}
   pitch: {x: 1, y: 1}

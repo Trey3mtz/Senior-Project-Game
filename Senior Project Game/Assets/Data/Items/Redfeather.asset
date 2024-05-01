@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad1628f7893d2ec4085b9b42b85a5714, type: 3}
   m_Name: Redfeather
   m_EditorClassIdentifier: 
-  UniqueID: DefaultID
-  DisplayName: 
-  Type: 0
-  ItemSprite: {fileID: 0}
+  UniqueID: Red Feather
+  DisplayName: Red Feather
+  Type: 4
+  ItemSprite: {fileID: 21300000, guid: bd338d315654a364f92780c2e433e3bc, type: 3}
   MaxStackSize: 32
   Consumable: 1
-  Tooltip_header: 
+  Tooltip_header: Red Feather
   Tooltip_content: 
   VisualPrefab: {fileID: 0}
   PlayerAnimatorTriggerUse: GenericToolSwing
-  WorldItemPrefab: {fileID: 0}
+  WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
   UseSound: []
   volume: {x: 0.5, y: 0.5}
   pitch: {x: 1, y: 1}
