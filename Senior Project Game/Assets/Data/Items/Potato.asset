@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4b8051714ff5d498de0d2a87354524, type: 3}
+  m_Name: Potato
+  m_EditorClassIdentifier: 
+  UniqueID: Potato
+  DisplayName: Potato
+  Type: 3
+  ItemSprite: {fileID: 21300000, guid: a264f63ab5687d641a3a4ab88239e21f, type: 3}
+  MaxStackSize: 32
+  Consumable: 1
+  Tooltip_header: Potato
+  Tooltip_content: potato potato its a potato
+  VisualPrefab: {fileID: 0}
+  PlayerAnimatorTriggerUse: GenericToolSwing
+  WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
+  UseSound: []
+  volume: {x: 0.5, y: 0.5}
+  pitch: {x: 1, y: 1}
+  foodValue: 5
+  foodParticles: {fileID: 0}
+  foodType: 3
