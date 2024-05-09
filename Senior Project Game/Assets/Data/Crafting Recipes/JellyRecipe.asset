@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 376445f0086f1384aa4294d112ee41e8, type: 3}
+  m_Name: JellyRecipe
+  m_EditorClassIdentifier: 
+  Recipe:
+  - item: {fileID: 11400000, guid: a6e93540822a9744f9934f10494271b6, type: 2}
+    amount: 2
+  RecipeResult: {fileID: 11400000, guid: 3cec5f6b74091bb4d8995354bc280d2b, type: 2}
+  ResultAmount: 1

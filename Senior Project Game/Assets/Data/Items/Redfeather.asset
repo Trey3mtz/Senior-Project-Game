@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad1628f7893d2ec4085b9b42b85a5714, type: 3}
-  m_Name: Leaf
+  m_Name: Redfeather
   m_EditorClassIdentifier: 
-  UniqueID: generic_pinkleaf
-  DisplayName: Pink Leaf
+  UniqueID: Red Feather
+  DisplayName: Red Feather
   Type: 4
-  ItemSprite: {fileID: 21300000, guid: 745c397e7323328498ec864fcf9a4d92, type: 3}
+  ItemSprite: {fileID: 21300000, guid: bd338d315654a364f92780c2e433e3bc, type: 3}
   MaxStackSize: 32
-  Consumable: 0
-  Tooltip_header: Pink Leaf
-  Tooltip_content: 'Pinky winky '
+  Consumable: 1
+  Tooltip_header: Red Feather
+  Tooltip_content: 
   VisualPrefab: {fileID: 0}
   PlayerAnimatorTriggerUse: GenericToolSwing
   WorldItemPrefab: {fileID: 1431901154711501868, guid: baf9d558bab3d6a4e905af18c68e6c50, type: 3}
